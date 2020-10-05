@@ -1,12 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 .env
-REACT_APP_API_KEY= AIzaSyAGnYwhyS02qmEHsPY96tgWWdgRH-QRNQo
-REACT_APP_AUTH_DOMAIN= fully-bright.firebaseapp.com
-REACT_APP_DATABASE_URL= https://fully-bright.firebaseio.com
-REACT_APP_PROJECT_ID= fully-bright
-REACT_APP_STORAGE_BUCKET= fully-bright.appspot.com
-REACT_APP_MESSAGING_SENDER_ID= 360670498960
-    
 src/.env
 # dependencies
 /node_modules

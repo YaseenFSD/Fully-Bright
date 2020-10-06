@@ -3,16 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter } from "react-router-dom";
 import { ReactQueryCacheProvider, QueryCache } from "react-query"
 
 const queryCache = new QueryCache()
 ReactDOM.render(
   <React.StrictMode>
     <ReactQueryCacheProvider queryCache={queryCache}>
+    <BrowserRouter>
       <App />
+    </BrowserRouter>
     </ReactQueryCacheProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

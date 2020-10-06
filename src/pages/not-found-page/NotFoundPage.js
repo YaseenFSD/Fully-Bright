@@ -1,6 +1,6 @@
 import React from "react"
 export * from "./NotFoundPage"
-import { Link } from "react-router-dom";
+import { Link, BrowserRouter, Switch } from "react-router-dom";
 
 export const NotFoundPage = () => {
     return (
@@ -11,8 +11,8 @@ export const NotFoundPage = () => {
             <p>Page Not Found</p>
     
 
-        <li><Link to="create-user-page"</Link>Create-User</li>
-        <li><Link to="login-page"</Link>Login-Page</li>
+        {/* <li><Link to="create-user-page"</Link>Create-User</li>
+        <li><Link to="login-page"</Link>Login-Page</li> */}
 
     </>
 

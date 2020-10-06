@@ -1,6 +1,5 @@
 import React from "react"
-export * from "./NotFoundPage"
-import { Link, BrowserRouter, Switch } from "react-router-dom";
+import { Link, Switch } from "react-router-dom";
 
 export const NotFoundPage = () => {
     return (

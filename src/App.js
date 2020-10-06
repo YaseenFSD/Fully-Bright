@@ -4,6 +4,7 @@ import { LoginPage } from "./pages"
 import './App.css';
 import './firebase/config'
 
+
 function App() {
   return (
     <div className="App">

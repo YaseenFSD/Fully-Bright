@@ -1,15 +1,29 @@
 import React from "react"
-import { BrowserRouter, Switch } from "react-router-dom"
+import { Switch, Route } from "react-router-dom"
+import { LoginPage } from "../../pages"
 
 
-export const Navigation = () => (
-    <BrowserRouter>
+
+export const Navigation = () => {
+    
+    return(
         <Switch>
-            <Route path
-            exact path="/"
-            component= { CreateUserPage }
+            <Route
+            exact path="/messages">
+                <div>
+                    messages
+                </div>
+            </Route>
             
-        
+            
+            
+
+            <Route
+            exact path="/"
+            component= { LoginPage }
+            />
+            
+
         
         
         
@@ -19,6 +33,7 @@ export const Navigation = () => (
         
         
         </Switch>
-        </BrowserRouter>
 
-)
+
+    )
+}

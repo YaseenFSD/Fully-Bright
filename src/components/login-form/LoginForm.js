@@ -30,9 +30,9 @@ export function LoginForm(props) {
             const userData = await auth.signInWithEmailAndPassword(email, password)
             setMessage("Signed in successful")
             console.log(userData)
-            reset()
             const user = userData.user
             await user.updateProfile({ displayName: `${email}`})
+            history.push('/profile')
             return user
            
             //return userData.user

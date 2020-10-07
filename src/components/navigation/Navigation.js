@@ -14,17 +14,17 @@ export const Navigation = () => {
         <UserProvider>
             <BrowserRouter>
                 <Switch>
-                    <Route
+                    <PrivateRoute
                     exact path="/messages">
                         <div>
                             messages
                         </div>
-                    </Route>
+                    </PrivateRoute>
                     
                     
                     
 
-                    <ProfileRedirect 
+                    <PrivateRoute 
                     exact path="/signup"
                     component= { LoginPage }
                     />

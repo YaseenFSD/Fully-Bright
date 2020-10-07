@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.css'
 import { signout } from '../../pages/signout-page/Signout'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Route } from 'react-router-dom'
 import { useSession } from '../../firebase/UserProvider'
 import { auth } from '../../firebase'
 import AppBar from '@material-ui/core/AppBar';
@@ -15,6 +15,7 @@ import { LoginPage } from '../../pages';
 import { SignedInLinks } from './SignedInLinks';
 
 import firebase from "firebase"
+import PrivateRoute from '../navigation/PrivateRoute'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -47,8 +48,14 @@ export function NavBar() {
     const history = useHistory();
     // const user = useSession();
     const classes = useStyles();
-    const user = firebase.auth().currentUser;
-    if (user != null) {
+    const user = auth.currentUser;
+    if (!user) {
+        history.push('/')
+        return(
+         <Route path="/" />
+        ) 
+        
+      }
       console.log(user)
 
     const signout = async () => {
@@ -74,11 +81,5 @@ export function NavBar() {
 
       </div>
 );
- } else {
-   return(
-     <div>not signed in</div>
-    
-   )
-   
- }
+ 
 }

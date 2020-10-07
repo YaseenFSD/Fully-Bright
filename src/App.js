@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import { LoginPage } from "./pages"
 import './App.css';
 import './firebase/config'
+import { CreateUserForm } from './components';
 
 
 function App() {

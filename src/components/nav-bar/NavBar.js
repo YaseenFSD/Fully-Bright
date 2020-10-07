@@ -15,70 +15,74 @@ import { LoginPage } from '../../pages';
 import { SignedInLinks } from './SignedInLinks';
 
 import firebase from "firebase"
+import { useQueryCache } from 'react-query'
 
 
 const useStyles = makeStyles((theme) => ({
-  '@global': {
-    ul: {
-      margin: 0,
-      padding: 0,
-      listStyle: 'none',
+    '@global': {
+        ul: {
+            margin: 0,
+            padding: 0,
+            listStyle: 'none',
+        },
     },
-  },
-  appBar: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-  toolbar: {
-    flexWrap: 'wrap',
-  },
-  toolbarTitle: {
-    flexGrow: 1,
-  },
-  link: {
-    margin: theme.spacing(1, 1.5),
-  },
-  
+    appBar: {
+        borderBottom: `1px solid ${theme.palette.divider}`,
+    },
+    toolbar: {
+        flexWrap: 'wrap',
+    },
+    toolbarTitle: {
+        flexGrow: 1,
+    },
+    link: {
+        margin: theme.spacing(1, 1.5),
+    },
+
 
 }));
 
 
-// TODO Create nav bar component here
 export function NavBar() {
     const history = useHistory();
     // const user = useSession();
     const classes = useStyles();
-    const user = firebase.auth().currentUser;
-    if (user != null) {
-      console.log(user)
+    const cache = useQueryCache()
+    const user = auth.currentUser;
+    if (user) {
+        console.log("user is defined: ", user)
 
-    const signout = async () => {
-        await auth.signOut();
-        history.push('/');
-    };
+        const signout = async () => {
+            await auth.signOut();
+            window.localStorage.setItem("userDataLocalStorage", null)
+            cache.setQueryData("userData", null)
 
-    return (
-      <div>
-        <CssBaseline />
-        <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
-          <Toolbar className={classes.toolbar}>
-            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-              Fully Bright
+            history.push('/');
+        };
+
+        return (
+            <div>
+                <CssBaseline />
+                <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
+                    <Toolbar className={classes.toolbar}>
+                        <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+                            Fully Bright
             </Typography>
-        <SignedInLinks />
-        {!!user &&
-            <Button onClick={signout} color="primary" variant="outlined" className={classes.link}>
-              LOGOUT
+                        <SignedInLinks />
+                        {!!user &&
+                            <Button onClick={signout} color="primary" variant="outlined" className={classes.link}>
+                                LOGOUT
             </Button>}
-          </Toolbar>
-        </AppBar>
+                    </Toolbar>
+                </AppBar>
 
-      </div>
-);
- } else {
-   return(
-     <div>not signed in</div>
-    
-   )
-   
- }
+            </div>
+        );
+    } else {
+        return (
+            <div>not signed in</div>
+
+        )
+
+    }
 }

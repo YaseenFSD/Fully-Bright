@@ -11,10 +11,10 @@ export function LoginForm(props) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
-    const { reset } = useForm()
+    // const { reset } = useForm()
     const [isLoading, setLoading] = useState(false)
     const history = useHistory()
-    
+
     //TODO Delete this before submission or when nessecary
     const cache = useQueryCache()
     //                  Query key     data
@@ -23,29 +23,31 @@ export function LoginForm(props) {
 
     const handleSignIn = async (event) => {
         event.preventDefault()
-        let user
         setLoading(true)
-        
+
         try {
             const userData = await auth.signInWithEmailAndPassword(email, password)
             setMessage("Signed in successful")
-            console.log(userData)
-            reset()
+
+            // Setting userData to be in the global state
+            cache.setQueryData("userData", userData)
+            const getUserData = JSON.stringify(cache.getQueryData("userData"))
+            console.log("getUserData", getUserData)
+            window.localStorage.setItem("userDataLocalStorage", getUserData)
+            
+            console.log("userData", userData)
+            // reset()
             const user = userData.user
-            await user.updateProfile({ displayName: `${email}`})
+            await user.updateProfile({ displayName: `${email}` })
+            history.push("/profile")
             return user
-           
+
             //return userData.user
         } catch (error) {
             setMessage(error.message)
             return
         }
         finally {
-            setLoading(false)
-        }
-        if (user) {
-            props.history.push("/profile")
-        } else {
             setLoading(false)
         }
 
@@ -56,35 +58,35 @@ export function LoginForm(props) {
     return (
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as='h2' color='teal' textAlign='center'>
-                Log-in to your account
+                <Header as='h2' color='teal' textAlign='center'>
+                    Log-in to your account
             </Header>
-            <Form size='large' className={formClassName} onSubmit={handleSignIn}>
-                <Segment stacked>
-                <Form.Input fluid 
-                    icon='user' 
-                    iconPosition='left' 
-                    onChange={(event) => setEmail(event.target.value)} 
-                    placeholder='E-mail address' 
-                />
-                <Form.Input
-                    fluid
-                    icon='lock'
-                    iconPosition='left'
-                    onChange={(event) => setPassword(event.target.value)}
-                    placeholder='Password'
-                    type='password'
-                />
-                <div className="field actions">
-                <Button color='teal' fluid size='large' type='submit'>
-                    Login
+                <Form size='large' className={formClassName} onSubmit={handleSignIn}>
+                    <Segment stacked>
+                        <Form.Input fluid
+                            icon='user'
+                            iconPosition='left'
+                            onChange={(event) => setEmail(event.target.value)}
+                            placeholder='E-mail address'
+                        />
+                        <Form.Input
+                            fluid
+                            icon='lock'
+                            iconPosition='left'
+                            onChange={(event) => setPassword(event.target.value)}
+                            placeholder='Password'
+                            type='password'
+                        />
+                        <div className="field actions">
+                            <Button color='teal' fluid size='large' type='submit'>
+                                Login
                 </Button>
-                <div>{message}</div>
+                            <div>{message}</div>
                 New to us?
                 <Link to="/signup"> Signup</Link>
-                </div>
-                </Segment>
-            </Form>
+                        </div>
+                    </Segment>
+                </Form>
             </Grid.Column>
         </Grid>
     )

@@ -1,6 +1,7 @@
 import React, { useState, Component } from 'react'
 import { auth, db } from "../../firebase"
 import { useQueryCache } from "react-query"
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 
 // THIS IS HOW IT IS WRITTEN INSIDE OF ../../firebase
@@ -40,27 +41,73 @@ export function CreateUserForm() {
         // console.log(data)
 
     }
+
+    
     return (
-        <form onSubmit={handleCreateUser}>
-            <h3>Sign Up</h3>
+        <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+        <Grid.Column style={{ maxWidth: 450 }}>
+        <Header as='h2' color='teal' textAlign='center'>
+            Sign Up
+        </Header>
+        <Form size='large' onSubmit={handleCreateUser}>
+            <Segment stacked>
+            <Form.Input fluid 
+                icon='email' 
+                iconPosition='left' 
+                onChange={(event) => setEmail(event.target.value)} 
+                placeholder='E-mail address' 
+            />
+            <Form.Input
+                fluid
+                icon='lock'
+                iconPosition='left'
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder='Password'
+                type='password'
+            />
+            <Form.Input
+                fluid
+                icon='lock'
+                iconPosition='left'
+                onChange={(event) => setConfirm(event.target.value)}
+                placeholder='Password'
+                type='password'
+            />
 
-            <div className="form-group">
-                <label>Email address</label>
-                <input type="email" onChange={(event) => setEmail(event.target.value)} className="form-control" placeholder="Enter email" />
-            </div>
+            <Button color='teal' fluid size='large'>
+                Sign Up
+            </Button>
+            </Segment>
+        </Form>
+        <Message>
+            Already registered? <a href='/'>Sign In</a>
+        </Message>
+        </Grid.Column>
+    </Grid>
+    )
+}     
+       
+       
+    //    <form onSubmit={handleCreateUser}>
+    //         <h3>Sign Up</h3>
 
-            <div className="form-group">
-                <label>Password</label>
-                <input type="password" onChange={(event) => setPassword(event.target.value)} className="form-control" placeholder="Enter password" />
-            </div>
+    //         <div className="form-group">
+    //             <label>Email address</label>
+    //             <input type="email" onChange={(event) => setEmail(event.target.value)} className="form-control" placeholder="Enter email" />
+    //         </div>
 
-            <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
-            <p className="sign-in text-right">
-                Already registered <a href="#">sign in?</a>
-            </p>
-        </form>
-        );
-    }   
+    //         <div className="form-group">
+    //             <label>Password</label>
+    //             <input type="password" onChange={(event) => setPassword(event.target.value)} className="form-control" placeholder="Enter password" />
+    //         </div>
+
+    //         <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+    //         <p className="sign-in text-right">
+    //             Already registered <a href="#">sign in?</a>
+    //         </p>
+    //     </form>
+    //     );
+    // }   
 
       
       

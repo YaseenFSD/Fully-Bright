@@ -39,7 +39,12 @@ export function LoginForm() {
             </Header>
             <Form size='large' onSubmit={handleSignIn}>
                 <Segment stacked>
-                <Form.Input fluid icon='user' iconPosition='left' onChange={(event) => setEmail(event.target.value)} placeholder='E-mail address' />
+                <Form.Input fluid 
+                    icon='user' 
+                    iconPosition='left' 
+                    onChange={(event) => setEmail(event.target.value)} 
+                    placeholder='E-mail address' 
+                />
                 <Form.Input
                     fluid
                     icon='lock'
@@ -55,7 +60,7 @@ export function LoginForm() {
                 </Segment>
             </Form>
             <Message>
-                New to us? <a href='#'>Sign Up</a>
+                New to us? <a href='/signup'>Sign Up</a>
             </Message>
             </Grid.Column>
         </Grid>

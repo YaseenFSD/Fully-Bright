@@ -1,4 +1,4 @@
-/* body {
+body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -73,7 +73,7 @@ body, html, .App, #root, .auth-wrapper {
   font-weight: 400;
 }
 
-/* .need-account,
+.need-account,
 .sign-in a {
   text-align: right;
   font-size: 13px;
@@ -84,4 +84,4 @@ body, html, .App, #root, .auth-wrapper {
 
 .need-account a {
   color: #167bff;
-}  */
+} 

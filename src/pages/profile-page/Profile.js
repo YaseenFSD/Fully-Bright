@@ -1,10 +1,11 @@
 import React from 'react'
+import { NavBar } from '../../components'
 
-import {userSession} from '../../firebase/UserProvider'
+import {useSession} from '../../firebase/UserProvider'
 
-const Profile = () => {
+export function Profile() {
 
-    const {user}=userSession()
+    const {user}=useSession()
 
     if(!user){
         return null
@@ -12,11 +13,11 @@ const Profile = () => {
     
     return (
         <div>
+           <NavBar />
            <p>Name: {user.displayName}</p> 
            <p>Email:{user.email}</p>
-           
+         
         </div>
     )
 }
 
-export default Profile

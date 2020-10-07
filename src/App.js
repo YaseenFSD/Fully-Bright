@@ -1,10 +1,10 @@
 import React from 'react';
-import { LoginPage } from "./pages"
 import { NavBar, Navigation } from "./components"
 import './App.css';
+import 'semantic-ui-css/semantic.min.css'
 import './firebase/config'
 import { ReactQueryDevtools } from "react-query-devtools"
-
+import { UserProvider } from './firebase/UserProvider'
 
 function App() {
   return (<>

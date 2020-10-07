@@ -1,15 +1,18 @@
 import React, { useState, Component } from 'react'
+import { useForm } from 'react-hook-form'
 import { auth } from "../../firebase"
 import { useQueryCache } from "react-query"
-import { CreateUserForm } from '../create-user-form/CreateUserForm'
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 
 // TODO Create Login form component
-export function LoginForm() {
+export function LoginForm(props) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
+    const { reset } = useForm()
+    const [isLoading, setLoading] = useState(false)
     
     //TODO Delete this before submission or when nessecary
     const cache = useQueryCache()
@@ -18,18 +21,31 @@ export function LoginForm() {
     //
 
     const handleSignIn = async (event) => {
+        let user
+        setLoading(true)
         event.preventDefault()
         try {
             const userData = await auth.signInWithEmailAndPassword(email, password)
             setMessage("Signed in successful")
-            console.log(userData)
+            reset()
+            const user = userData.user
+            await user.updateProfile({ displayName: `${email}`})
+            return user
+            //console.log(userData)
             // return userData.user
         } catch (error) {
             setMessage(error.message)
             return
         }
+        if (user) {
+            props.history.push(`/profile/${user.uid}`)
+        } else {
+            setLoading(false)
+        }
 
     }
+
+    const formClassName = `ui form ${isLoading ? 'loading' : ''}`
 
     return (
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
@@ -37,7 +53,7 @@ export function LoginForm() {
             <Header as='h2' color='teal' textAlign='center'>
                 Log-in to your account
             </Header>
-            <Form size='large' onSubmit={handleSignIn}>
+            <Form size='large' className={formClassName} onSubmit={handleSignIn}>
                 <Segment stacked>
                 <Form.Input fluid 
                     icon='user' 
@@ -53,15 +69,15 @@ export function LoginForm() {
                     placeholder='Password'
                     type='password'
                 />
-
-                <Button color='teal' fluid size='large'>
+                <div className="field actions">
+                <Button color='teal' fluid size='large' type='submit'>
                     Login
                 </Button>
+                New to us?
+                <Link to="/signup"> Signup</Link>
+                </div>
                 </Segment>
             </Form>
-            <Message>
-                New to us? <a href='/signup'>Sign Up</a>
-            </Message>
             </Grid.Column>
         </Grid>
     )

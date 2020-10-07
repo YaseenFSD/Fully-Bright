@@ -6,8 +6,8 @@ export const UserContext = React.createContext();
 export const UserProvider = (props) => {
   const [session, setSession] = useState({ user: null, loading: true });
 
-const unsubscribe = useEffect(() => {
-  firebase.auth().onAuthStateChanged((user) => {
+useEffect(() => {
+  const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
     setSession({ loading: false, user });
   });
   return ()=> unsubscribe()

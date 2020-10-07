@@ -1,7 +1,9 @@
 import React from 'react'
+import './style.css'
 import { signout } from '../../pages/signout-page/Signout'
 import { useHistory } from 'react-router-dom'
 import { useSession } from '../../firebase/UserProvider'
+import { Menu, Button, Header } from 'semantic-ui-react'
 
 // TODO Create nav bar component here
 export function NavBar() {
@@ -14,12 +16,15 @@ export function NavBar() {
     };
 
     return (
-        <div>
-            Nav bar here
-            {!!user && 
-            <button className="ui secondary button logout" onClick={signout}>
-                LOGOUT
-            </button>}
-        </div>
+        <Header> 
+            <h1>Fully Bright Kapstone</h1>
+            {/* {!!user && */}
+                <Button  class="ui button logout" onClick={signoutUser}>
+                    LOGOUT
+                </Button>
+        </Header>
+                
+           
+        
     )
 }

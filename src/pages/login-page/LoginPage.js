@@ -1,5 +1,6 @@
 import React from 'react'
-import { NavBar, LoginForm, CreateUserForm } from "../../components"
+import '../../components/nav-bar/style.css'
+import { NavBar, LoginForm } from "../../components"
 
 
 export function LoginPage() {
@@ -7,7 +8,6 @@ export function LoginPage() {
         <div className="LoginPage">
             <NavBar />
             <LoginForm />
-            <CreateUserForm />
         </div>
     )
 }

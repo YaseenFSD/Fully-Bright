@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, Component } from 'react'
 import { auth, db } from "../../firebase"
 import { useQueryCache } from "react-query"
 
@@ -41,15 +41,38 @@ export function CreateUserForm() {
 
     }
     return (
-        <div>
-            Create User Here
-            <form onSubmit={handleCreateUser}>
-                <input type="text" onChange={(event) => setEmail(event.target.value)} placeholder="email" />
-                <input type="password" onChange={(event) => setPassword(event.target.value)} placeholder="password" />
-                <input type="password" onChange={(event) => setConfirm(event.target.value)} placeholder="Confirm Password" />
-                <button type="submit">Create User</button>
-            </form>
-            <div>{message}</div>
-        </div>
-    )
-}
+        <form onSubmit={handleCreateUser}>
+            <h3>Sign Up</h3>
+
+            <div className="form-group">
+                <label>Email address</label>
+                <input type="email" onChange={(event) => setEmail(event.target.value)} className="form-control" placeholder="Enter email" />
+            </div>
+
+            <div className="form-group">
+                <label>Password</label>
+                <input type="password" onChange={(event) => setPassword(event.target.value)} className="form-control" placeholder="Enter password" />
+            </div>
+
+            <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+            <p className="sign-in text-right">
+                Already registered <a href="#">sign in?</a>
+            </p>
+        </form>
+        );
+    }   
+
+      
+      
+        // <div>
+        //     Create User Here
+        //     <form onSubmit={handleCreateUser}>
+        //         <input type="text" onChange={(event) => setEmail(event.target.value)} placeholder="email" />
+        //         <input type="password" onChange={(event) => setPassword(event.target.value)} placeholder="password" />
+        //         <input type="password" onChange={(event) => setConfirm(event.target.value)} placeholder="Confirm Password" />
+        //         <button type="submit">Create User</button>
+        //     </form>
+        //     <div>{message}</div>
+        // </div>
+    
+

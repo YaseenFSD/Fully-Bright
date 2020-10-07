@@ -7,10 +7,6 @@ import './firebase/config'
 import { ReactQueryDevtools } from "react-query-devtools"
 
 
-
-
-
-
 function App() {
   return (<>
     <div className="App">

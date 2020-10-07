@@ -4,7 +4,7 @@ import { LoginPage } from "../../pages"
 import { Profile } from "../../pages/profile-page/Profile"
 import ProfileRedirect from "./ProfileRedirect"
 import { UserProvider } from '../../firebase/UserProvider'
-import PrivateRoute from '../navigation'
+import PrivateRoute from './navigation'
 
 
 export const Navigation = () => {
@@ -12,21 +12,20 @@ export const Navigation = () => {
     return(
         <UserProvider>
             <BrowserRouter>
-            <Switch>
-            <Route
-            exact path="/messages">
-               
-                <div>
-                    Navbar
-                    <br/>
-                    messages
-                </div>
-            </Route>
+                <Switch>
+                    <PrivateRoute
+                    exact path="/messages">
+                        <div>
+                            Navbar
+                            <br/>
+                            messages
+                        </div>
+                    </PrivateRoute>
                     
                     
                     
 
-                    <ProfileRedirect 
+                    <PrivateRoute 
                     exact path="/signup"
                     component= { LoginPage }
                     />

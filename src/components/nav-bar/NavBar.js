@@ -1,6 +1,7 @@
 import React from 'react'
 import { signout } from "../signout"
-import { useHistory } from 'react-router-dom'
+import './style.css'
+import { useHistory, Route } from 'react-router-dom'
 import { useSession } from '../../firebase/UserProvider'
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -16,6 +17,7 @@ import { auth } from '../../firebase'
 
 import firebase from "firebase"
 import { useQueryCache } from 'react-query'
+import PrivateRoute from '../../navigation/PrivateRoute'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -47,8 +49,14 @@ const useStyles = makeStyles((theme) => ({
 export function NavBar() {
     const history = useHistory();
     const classes = useStyles();
-    const user = firebase.auth().currentUser;
-    if (user != null) {
+    const user = auth.currentUser;
+    if (!user) {
+        history.push('/')
+        return(
+         <Route path="/" />
+        ) 
+        
+      }
       console.log(user)
 
       const signoutUser = async () => {
@@ -56,28 +64,22 @@ export function NavBar() {
         history.push('/login');
     };
     return (
-    <div>
-         <CssBaseline />
-      <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-          <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-            Fully Bright
-          </Typography>
-     <SignedInLinks />
-      {!!user && 
-          <Button onClick={signout} color="primary" variant="outlined" className={classes.link}>
-            Logout
-          </Button>}
-        </Toolbar>
-      </AppBar>
-  
-    </div>
-  );
-    } else {
-      return(
-        <div>not signed in</div>
-       
-      )
-      
-    }
-  }
+      <div>
+        <CssBaseline />
+        <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
+          <Toolbar className={classes.toolbar}>
+            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+              Fully Bright
+            </Typography>
+        <SignedInLinks />
+        {!!user &&
+            <Button onClick={signout} color="primary" variant="outlined" className={classes.link}>
+              LOGOUT
+            </Button>}
+          </Toolbar>
+        </AppBar>
+
+      </div>
+);
+ 
+}

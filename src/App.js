@@ -1,16 +1,21 @@
 import React from 'react';
 import logo from './logo.svg';
 import { LoginPage } from "./pages"
+import { NavBar } from "./components"
+import { Navigation } from "./navigation"
 import './App.css';
 import './firebase/config'
-import { CreateUserForm } from './components';
-
+import { ReactQueryDevtools } from "react-query-devtools"
+import { UserProvider } from './firebase/UserProvider'
 
 function App() {
-  return (
+  return (<>
     <div className="App">
-      <LoginPage />
+      <Navigation />
     </div>
+    <ReactQueryDevtools />
+  </>
+
   );
 }
 

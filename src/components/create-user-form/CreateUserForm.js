@@ -13,11 +13,12 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useQueryCache } from "react-query"
 
 
 // THIS IS HOW IT IS WRITTEN INSIDE OF ../../firebase
-    // const auth = firebase.auth()
-    // const db = firebase.firestore()
+// const auth = firebase.auth()
+// const db = firebase.firestore()
 
 
     const useStyles = makeStyles((theme) => ({
@@ -50,6 +51,13 @@ export function CreateUserForm() {
     const classes = useStyles();
 
 
+    //TODO: delete this before submission or when necessary 
+    // React Query Sync Data Example 
+    const cache = useQueryCache()
+    //                                   This is the key of the Query (made inside of LoginForm.js)
+    let testingData = cache.getQueryData("TestingData")
+    console.log("Console.log from 'CreateUserForm.js:", testingData)
+    //
     const handleCreateUser = async (event) => {
         event.preventDefault()
         if (password !== confirmPassword) {
@@ -60,12 +68,12 @@ export function CreateUserForm() {
         try {
             await auth.createUserWithEmailAndPassword(email, password)
             setMessage("User has been created")
-            
+
         } catch (error) {
             setMessage(error.message)
-            
+
         }
-            // console.log(data)
+        // console.log(data)
 
     }
     return (

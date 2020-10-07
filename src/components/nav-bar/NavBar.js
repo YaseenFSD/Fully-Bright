@@ -19,10 +19,10 @@ export function NavBar() {
     return (
         <Header> 
             <h1>Fully Bright Kapstone</h1>
-            {/* {!!user && */}
+            {!!user &&
                 <Button  class="ui button logout" onClick={signout}>
                     LOGOUT
-                </Button>
+                </Button>}
         </Header>
                 
            

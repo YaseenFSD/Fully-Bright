@@ -5,7 +5,6 @@ import { CreateUserForm } from "../create-user-form"
 import { Profile } from "../../pages/profile-page/Profile"
 import ProfileRedirect from "./ProfileRedirect"
 import { UserProvider } from '../../firebase/UserProvider'
-// import PrivateRoute from "./PrivateRoute"
 import PrivateRoute from '../navigation/PrivateRoute'
 
 
@@ -27,18 +26,22 @@ export const Navigation = () => {
 
                     <ProfileRedirect 
                     exact path="/signup"
-                    component= { CreateUserForm }
-                    />
-
-                    <ProfileRedirect
-                    exact path="/profile/:id"
-                    component= { Profile }
+                    component= { LoginPage }
                     />
 
                     <PrivateRoute
+                    exact path="/profile"
+                    component= { Profile }
+                    />
+
+                    <Route
                     exact path="/"
                     component= { LoginPage }
                     />
+
+                    {/* <Route exact path="/">
+                        <Redirect to="/profile" />
+                    </Route> */}
                     
                     
         

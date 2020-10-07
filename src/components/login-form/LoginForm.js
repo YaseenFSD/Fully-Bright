@@ -33,7 +33,7 @@ export function LoginForm(props) {
             reset()
             const user = userData.user
             await user.updateProfile({ displayName: `${email}`})
-            // props.history.push(`/profile/${user.uid}`)
+            props.history.push(`/profile/${user.uid}`)
             return user
            
             //return userData.user

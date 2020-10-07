@@ -1,11 +1,15 @@
 import firebase from 'firebase/app';
-import 'firebase/auth'
+import {auth} from '../../firebase'
+
+
+
 
 
 export const signout = () => {
-    return firebase.auth().signOut()
+    return auth.signOut()
     .then(() => {
         console.log('Signed Out')
+        
     })
     .catch(e=>{
         console.log('Sign Out Error', e)

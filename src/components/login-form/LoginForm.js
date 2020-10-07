@@ -22,21 +22,27 @@ export function LoginForm(props) {
     //
 
     const handleSignIn = async (event) => {
+        event.preventDefault()
         let user
         setLoading(true)
-        event.preventDefault()
+        
         try {
             const userData = await auth.signInWithEmailAndPassword(email, password)
             setMessage("Signed in successful")
+            console.log(userData)
             reset()
             const user = userData.user
             await user.updateProfile({ displayName: `${email}`})
+            // props.history.push(`/profile/${user.uid}`)
             return user
-            //console.log(userData)
-            // return userData.user
+           
+            //return userData.user
         } catch (error) {
             setMessage(error.message)
             return
+        }
+        finally {
+            setLoading(false)
         }
         if (user) {
             props.history.push(`/profile/${user.uid}`)
@@ -74,6 +80,7 @@ export function LoginForm(props) {
                 <Button color='teal' fluid size='large' type='submit'>
                     Login
                 </Button>
+                <div>{message}</div>
                 New to us?
                 <Link to="/signup"> Signup</Link>
                 </div>

@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
             if (!!user && user.id === id) {
                 return <Component {...props} />
             } else {
-                return <Redirect to="/login" />
+                return <Redirect to="/" />
             }
         }} 
         />

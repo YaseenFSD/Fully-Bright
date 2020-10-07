@@ -3,9 +3,10 @@ import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom"
 import { LoginPage } from "../../pages"
 import { CreateUserForm } from "../create-user-form"
 import { Profile } from "../../pages/profile-page/Profile"
-// import ProfileRedirect from "./ProfileRedirect"
+import ProfileRedirect from "./ProfileRedirect"
 import { UserProvider } from '../../firebase/UserProvider'
-// import PrivateRoute from '../navigation/PrivateRoute'
+// import PrivateRoute from "./PrivateRoute"
+import PrivateRoute from '../navigation/PrivateRoute'
 
 
 export const Navigation = () => {
@@ -24,25 +25,22 @@ export const Navigation = () => {
                     
                     
 
-                    <Route 
+                    <ProfileRedirect 
                     exact path="/signup"
                     component= { CreateUserForm }
                     />
 
-                    <Route
+                    <ProfileRedirect
                     exact path="/profile/:id"
                     component= { Profile }
                     />
 
-                    <Route
-                    exact path="/login"
+                    <PrivateRoute
+                    exact path="/"
                     component= { LoginPage }
                     />
                     
-                    <Route 
-                    exact path="/">
-                        <Redirect to="/login" />
-                    </Route>
+                    
         
         
         

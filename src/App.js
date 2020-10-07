@@ -1,15 +1,9 @@
 import React from 'react';
-import logo from './logo.svg';
-import { LoginPage } from "./pages"
 import { NavBar, Navigation } from "./components"
 import './App.css';
 import './firebase/config'
 import { ReactQueryDevtools } from "react-query-devtools"
-
-
-
-
-
+import { UserProvider } from './firebase/UserProvider'
 
 function App() {
   return (<>

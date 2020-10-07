@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -18,7 +18,7 @@ code {
   box-sizing: border-box;
 }
 body {
-  background: white !important;
+  background: white;
   min-height: 100vh;
   display: flex;
   font-weight: 400;
@@ -80,8 +80,8 @@ body, html, .App, #root, .auth-wrapper {
   padding-top: 10px;
   color: #7f7d7d;
   margin: 0;
-} */
+}
 
 .need-account a {
   color: #167bff;
-}
+}  */

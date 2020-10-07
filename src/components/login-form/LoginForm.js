@@ -23,7 +23,7 @@ export function LoginForm() {
             const userData = await auth.signInWithEmailAndPassword(email, password)
             setMessage("Signed in successful")
             console.log(userData)
-
+            // return userData.user
         } catch (error) {
             setMessage(error.message)
             return

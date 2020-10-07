@@ -3,9 +3,9 @@ import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom"
 import { LoginPage } from "../../pages"
 import { CreateUserForm } from "../create-user-form"
 import { Profile } from "../../pages/profile-page/Profile"
-import ProfileRedirect from "./ProfileRedirect"
+// import ProfileRedirect from "./ProfileRedirect"
 import { UserProvider } from '../../firebase/UserProvider'
-import PrivateRoute from '../navigation/PrivateRoute'
+// import PrivateRoute from '../navigation/PrivateRoute'
 
 
 export const Navigation = () => {
@@ -24,17 +24,17 @@ export const Navigation = () => {
                     
                     
 
-                    <ProfileRedirect 
+                    <Route 
                     exact path="/signup"
                     component= { CreateUserForm }
                     />
 
-                    <PrivateRoute 
+                    <Route
                     exact path="/profile/:id"
                     component= { Profile }
                     />
 
-                    <ProfileRedirect
+                    <Route
                     exact path="/login"
                     component= { LoginPage }
                     />

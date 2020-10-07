@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { auth } from "../../firebase"
 import { useQueryCache } from "react-query"
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 
 // TODO Create Login form component
@@ -13,6 +13,7 @@ export function LoginForm(props) {
     const [message, setMessage] = useState("")
     const { reset } = useForm()
     const [isLoading, setLoading] = useState(false)
+    const history = useHistory()
     
     //TODO Delete this before submission or when nessecary
     const cache = useQueryCache()

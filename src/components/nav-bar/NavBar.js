@@ -11,7 +11,7 @@ export function NavBar() {
     const user = useSession();
 
     const signoutUser = async () => {
-        await signout();
+        signout();
         history.push('/login');
     };
 

@@ -9,38 +9,38 @@ import { NavBar } from "../components"
 export const Navigation = (props) => {
     const history = useHistory()
 
-    return(
+    return (
         <UserProvider>
             <BrowserRouter>
-                <Switch> 
-                    {props.isLoggedIn ? <>
-                    <NavBar />
+                <NavBar />
+                <Switch>
+                    {/* {props.isLoggedIn ? <> */}
+                    <Route exact path="/">
+                        {props.isLoggedIn ? <Profile /> : <LoginPage />}
+                    </Route>
                     <Route
-                    exact path="/messages">
+                        exact path="/messages">
                         <div>
                             messages
                         </div>
                     </Route>
-                    
-                    
+
+
                     {/* Add your routes here */}
 
-                   
+                    <Route path="*"> Not found </Route>
 
-                    <Route exact path="/" component= { Profile }/>
-                    </> : <>
-                    {history.push("/")}
-                    <Route path="/" component= { LoginPage }/>
-                    </>
-                    }
-                   
-                    
-                    
-        
-        
-        
-        
-        
+
+                    {/* <Route path="/" component= { LoginPage }/> */}
+                    {/* } */}
+
+
+
+
+
+
+
+
                 </Switch>
             </BrowserRouter>
         </UserProvider>

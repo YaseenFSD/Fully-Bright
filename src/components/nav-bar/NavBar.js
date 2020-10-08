@@ -15,6 +15,7 @@ import { LoginPage } from '../../pages';
 import { SignedInLinks } from './SignedInLinks';
 
 import firebase from "firebase"
+import { useQueryCache } from 'react-query'
 import PrivateRoute from '../navigation/PrivateRoute'
 
 
@@ -48,6 +49,8 @@ export function NavBar() {
     const history = useHistory();
     // const user = useSession();
     const classes = useStyles();
+    const cache = useQueryCache()
+    
     const user = auth.currentUser;
     if (!user) {
         history.push('/')
@@ -60,6 +63,9 @@ export function NavBar() {
 
     const signout = async () => {
         await auth.signOut();
+        window.localStorage.setItem("userDataLocalStorage", null)
+        cache.setQueryData("userData", null)
+        
         history.push('/');
     };
 
@@ -70,7 +76,7 @@ export function NavBar() {
           <Toolbar className={classes.toolbar}>
             <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
               Fully Bright
-            </Typography>
+      </Typography>
         <SignedInLinks />
         {!!user &&
             <Button onClick={signout} color="primary" variant="outlined" className={classes.link}>

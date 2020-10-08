@@ -49,6 +49,7 @@ export function NavBar() {
     // const user = useSession();
     const classes = useStyles();
     const cache = useQueryCache()
+    
     const user = auth.currentUser;
     if (!user) {
       history.push('/')
@@ -59,12 +60,11 @@ export function NavBar() {
       }
       console.log(user)
 
-        const signout = async () => {
-            await auth.signOut();
-            window.localStorage.setItem("userDataLocalStorage", null)
-            cache.setQueryData("userData", null)
-
-            history.push('/');
+    const signout = async () => {
+        await auth.signOut();
+        window.localStorage.setItem("userDataLocalStorage", null)
+        cache.setQueryData("userData", null)
+        history.push('/');
         };
 
         return (

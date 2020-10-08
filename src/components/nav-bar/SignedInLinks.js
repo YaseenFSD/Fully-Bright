@@ -41,6 +41,9 @@ export function SignedInLinks() {
             <Link variant="button" color="textPrimary" href="/messages" className={classes.link}>
               Messages
             </Link>
+            <Link variant="button" color="textPrimary" href="/" className={classes.link}>
+              Profile
+            </Link>
           </nav>
       
   

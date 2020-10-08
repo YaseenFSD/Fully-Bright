@@ -1,9 +1,5 @@
-import React, { useState, Component } from 'react'
-import { useForm } from 'react-hook-form'
-import { auth } from "../../firebase"
 import { useQueryCache } from "react-query"
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import React, { useState } from "react";
 import { auth } from "../../firebase";
 import Avatar from "@material-ui/core/Avatar";
@@ -64,15 +60,17 @@ export function LoginForm(props) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
-    // const { reset } = useForm()
     const [isLoading, setLoading] = useState(false)
     const history = useHistory()
+    const [openModal, setOpenModal] = useState(false);
 
     //TODO Delete this before submission or when nessecary
     const cache = useQueryCache()
     //                  Query key     data
     cache.setQueryData("TestingData", "This is made inside of 'LoginForm.js'")
     //
+
+    const classes = useStyles();
 
     const handleSignIn = async (event) => {
         event.preventDefault()
@@ -176,4 +174,5 @@ export function LoginForm(props) {
     </Grid>
   );
 }
+
 

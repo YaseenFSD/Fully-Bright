@@ -83,8 +83,7 @@ export function CreateUserForm(props) {
     
 
     return (
-
-        <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
@@ -143,7 +142,7 @@ export function CreateUserForm(props) {
         </Box>
       </Container>
     )
-}     
+}
 
     
 

@@ -1,8 +1,9 @@
 import React from 'react'
-import { signout } from "../signout"
 import './style.css'
-import { useHistory, Route } from 'react-router-dom'
+import { signout } from '../signout/Signout'
+import { useHistory } from 'react-router-dom'
 import { useSession } from '../../firebase/UserProvider'
+import { auth } from '../../firebase'
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,11 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { LoginPage } from '../../pages';
 import { SignedInLinks } from './SignedInLinks';
 
-import { auth } from '../../firebase'
-
 import firebase from "firebase"
 import { useQueryCache } from 'react-query'
-import PrivateRoute from '../../navigation/PrivateRoute'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,41 +43,46 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-// TODO Create nav bar component here
 export function NavBar() {
     const history = useHistory();
+    // const user = useSession();
     const classes = useStyles();
+    const cache = useQueryCache()
     const user = auth.currentUser;
-    if (!user) {
-        history.push('/')
-        return(
-         <Route path="/" />
-        ) 
-        
-      }
-      console.log(user)
+    if (user) {
+        console.log("user is defined: ", user)
 
-      const signoutUser = async () => {
-        await signout();
-        history.push('/login');
-    };
-    return (
-      <div>
-        <CssBaseline />
-        <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
-          <Toolbar className={classes.toolbar}>
-            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-              Fully Bright
+        const signout = async () => {
+            await auth.signOut();
+            window.localStorage.setItem("userDataLocalStorage", null)
+            cache.setQueryData("userData", null)
+
+            history.push('/');
+        };
+
+        return (
+            <div>
+                <CssBaseline />
+                <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
+                    <Toolbar className={classes.toolbar}>
+                        <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+                            Fully Bright
             </Typography>
-        <SignedInLinks />
-        {!!user &&
-            <Button onClick={signout} color="primary" variant="outlined" className={classes.link}>
-              LOGOUT
+                        <SignedInLinks />
+                        {!!user &&
+                            <Button onClick={signout} color="primary" variant="outlined" className={classes.link}>
+                                LOGOUT
             </Button>}
-          </Toolbar>
-        </AppBar>
+                    </Toolbar>
+                </AppBar>
 
-      </div>
-);
- 
+            </div>
+        );
+    } else {
+        return (
+            <div>not signed in</div>
+
+        )
+
+    }
 }

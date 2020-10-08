@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useQueryCache } from "react-query"
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
+import { useHistory } from 'react-router-dom'
+
 
 
 // THIS IS HOW IT IS WRITTEN INSIDE OF ../../firebase
@@ -51,12 +53,13 @@ export function CreateUserForm(props) {
     const { reset } = useForm()
     const [isLoading, setLoading] = useState(false)
     const classes = useStyles();
+    const history = useHistory();
 
 
     const handleCreateUser = async (event) => {
-        let newUser
+      event.preventDefault()  
+      let newUser
         setLoading(true)
-        event.preventDefault()
         if (password !== confirmPassword) {
             setMessage("Passwords do not match")
             return
@@ -65,18 +68,15 @@ export function CreateUserForm(props) {
         try {
             newUser = await auth.createUserWithEmailAndPassword(email, password)
             setMessage("User has been created")
+            history.push("/profile")
             
         } catch (error) {
             setMessage(error.message)
             
         }
-
-        if (newUser) {
-            props.history.push(`/profile/${newUser.uid}`)
-        } else {
-            setLoading(false)
-        }
-
+        finally {
+          setLoading(false)
+      }
     }
 
     const formClassName = `ui form ${isLoading ? 'loading' : ''}`

@@ -1,3 +1,5 @@
+import { useQueryCache } from "react-query"
+import { useHistory } from 'react-router-dom'
 import React, { useState } from "react";
 import { auth } from "../../firebase";
 import Avatar from "@material-ui/core/Avatar";
@@ -17,6 +19,7 @@ import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import Modal from "../create-user-form/Modal";
 import { CreateUserForm } from "../create-user-form/CreateUserForm";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,36 +56,58 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // TODO Create Login form component
-export function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [openModal, setOpenModal] = useState(false);
+export function LoginForm(props) {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [message, setMessage] = useState("")
+    const [isLoading, setLoading] = useState(false)
+    const history = useHistory()
+    const [openModal, setOpenModal] = useState(false);
 
-  const classes = useStyles();
+    //TODO Delete this before submission or when nessecary
+    const cache = useQueryCache()
+    //                  Query key     data
+    cache.setQueryData("TestingData", "This is made inside of 'LoginForm.js'")
+    //
 
-  const handleSignIn = async (event) => {
-    event.preventDefault();
-    try {
-      const userData = await auth.signInWithEmailAndPassword(email, password);
-      setMessage("Signed in successful");
-      console.log(userData);
-    } catch (error) {
-      setMessage(error.message);
-      return;
-    }
-  };
+    const classes = useStyles();
+
+    const handleSignIn = async (event) => {
+        event.preventDefault()
+        let user
+        setLoading(true)
+
+        try {
+            const userData = await auth.signInWithEmailAndPassword(email, password)
+            setMessage("Signed in successful")
+
+            // Setting userData to be in the global state
+            cache.setQueryData("userData", userData)
+            const getUserData = JSON.stringify(cache.getQueryData("userData"))
+            console.log("getUserData", getUserData)
+            window.localStorage.setItem("userDataLocalStorage", getUserData)
+            
+            console.log("userData", userData)
+            // reset()
+            const user = userData.user
+            await user.updateProfile({ displayName: `${email}` })
+            history.push("/profile")
+            return user
+
+            //return userData.user
+        } catch (error) {
+            setMessage(error.message)
+            return
+        }
+        finally {
+            setLoading(false)
+        }
+      }
+
+      const formClassName = `ui form ${isLoading ? 'loading' : ''}`
+
 
   return (
-    // <div>
-    //     Login here
-    //     <form onSubmit={handleSignIn}>
-    //         <input type="text" onChange={(event) => setEmail(event.target.value)} placeholder="Email" />
-    //         <input type="password" onChange={(event) => setPassword(event.target.value)} placeholder="Password" />
-    //         <button type="submit">Sign In</button>
-    //     </form>
-    //     <div>{message}</div>
-    // </div>
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -153,3 +178,5 @@ export function LoginForm() {
     </Grid>
   );
 }
+
+

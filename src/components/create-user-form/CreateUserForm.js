@@ -1,18 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, Component } from 'react'
+import { useForm } from 'react-hook-form'
 import { auth, db } from "../../firebase"
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useQueryCache } from "react-query"
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
+import { useHistory } from 'react-router-dom'
+
 
 
 // THIS IS HOW IT IS WRITTEN INSIDE OF ../../firebase
@@ -42,45 +45,45 @@ import Container from '@material-ui/core/Container';
          
 
 //TODO make a user form compononent
-export function CreateUserForm() {
+export function CreateUserForm(props) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirm] = useState("")
     const [message, setMessage] = useState("")
+    const { reset } = useForm()
+    const [isLoading, setLoading] = useState(false)
     const classes = useStyles();
+    const history = useHistory();
 
 
     const handleCreateUser = async (event) => {
-        event.preventDefault()
+      event.preventDefault()  
+      let newUser
+        setLoading(true)
         if (password !== confirmPassword) {
             setMessage("Passwords do not match")
             return
         }
         setMessage("")
         try {
-            await auth.createUserWithEmailAndPassword(email, password)
+            newUser = await auth.createUserWithEmailAndPassword(email, password)
             setMessage("User has been created")
+            history.push("/profile")
             
         } catch (error) {
             setMessage(error.message)
             
         }
-            // console.log(data)
-
+        finally {
+          setLoading(false)
+      }
     }
-    return (
-        // <div>
-        //     Create User Here
-        //     <form onSubmit={handleCreateUser}>
-        //         <input type="text" onChange={(event) => setEmail(event.target.value)} placeholder="email" />
-        //         <input type="password" onChange={(event) => setPassword(event.target.value)} placeholder="password" />
-        //         <input type="password" onChange={(event) => setConfirm(event.target.value)} placeholder="Confirm Password" />
-        //         <button type="submit">Create User</button>
-        //     </form>
-        //     <div>{message}</div>
-        // </div>
 
-        <Container component="main" maxWidth="xs">
+    const formClassName = `ui form ${isLoading ? 'loading' : ''}`
+    
+
+    return (
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
@@ -140,3 +143,6 @@ export function CreateUserForm() {
       </Container>
     )
 }
+
+    
+

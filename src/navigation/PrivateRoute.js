@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { useSession } from '../firebase/UserProvider'
+import { LoginPage } from '../pages'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     const user = useSession()

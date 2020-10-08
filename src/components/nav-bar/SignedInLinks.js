@@ -38,6 +38,9 @@ export function SignedInLinks() {
             <Link variant="button" color="textPrimary" href="/404" className={classes.link}>
               Chat
             </Link>
+            <Link variant="button" color="textPrimary" href="/messages" className={classes.link}>
+              Messages
+            </Link>
           </nav>
       
   

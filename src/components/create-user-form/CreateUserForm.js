@@ -1,5 +1,5 @@
 import React, { useState, Component } from 'react'
-import { useForm } from 'react-hook-form'
+// import { useForm } from 'react-hook-form'
 import { auth, db } from "../../firebase"
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,8 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useQueryCache } from "react-query"
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom'
+import Button from "@material-ui/core/Button";
 
 
 
@@ -50,7 +50,7 @@ export function CreateUserForm(props) {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirm] = useState("")
     const [message, setMessage] = useState("")
-    const { reset } = useForm()
+    // const { reset } = useForm()
     const [isLoading, setLoading] = useState(false)
     const classes = useStyles();
     const history = useHistory();

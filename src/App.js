@@ -4,7 +4,6 @@ import { LoginPage } from "./pages"
 import { NavBar } from "./components"
 import { Navigation } from "./navigation"
 import './App.css';
-import 'semantic-ui-css/semantic.min.css'
 import './firebase/config'
 import { ReactQueryDevtools } from "react-query-devtools"
 import { UserProvider } from './firebase/UserProvider'

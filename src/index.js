@@ -1,28 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'semantic-ui-css/semantic.min.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";
 import { ReactQueryCacheProvider, QueryCache } from "react-query"
 
-const queryCache = new QueryCache({
-  defaultConfig: {
-    queries: {
-      cacheTime: Infinity,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      refetchOnWindowFocus: false
-    },
-  },
-})
-
+const queryCache = new QueryCache()
 ReactDOM.render(
   <React.StrictMode>
     <ReactQueryCacheProvider queryCache={queryCache}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
     </ReactQueryCacheProvider>
   </React.StrictMode>,
 

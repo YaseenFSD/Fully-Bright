@@ -1,6 +1,6 @@
 import React from 'react'
 import '../../components/nav-bar/style.css'
-import { NavBar, LoginForm, CreateUserForm } from "../../components"
+import { LoginForm } from "../../components"
 
 
 export function LoginPage() {

@@ -21,5 +21,7 @@ return (
 }
 export const useSession = () => {
     const session =useContext(UserContext)
+    console.log(session)
+    console.log(UserContext)
     return session
 }

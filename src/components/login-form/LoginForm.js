@@ -94,7 +94,7 @@ export function LoginForm(props) {
             
             const user = userData.user
             await user.updateProfile({ displayName: `${email}`})
-            history.push('/profile')
+            // history.push('/profile')
             return user
            
             //return userData.user

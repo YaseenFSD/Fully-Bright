@@ -21,15 +21,7 @@ export const Navigation = () => {
                         </div>
                     </PrivateRoute>
                     
-                    
-            
-            
-            
-
-            <Route
-            exact path="/"
-            component= { LoginPage }
-            />
+                
 
 
                     <PrivateRoute 

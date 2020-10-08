@@ -1,5 +1,6 @@
 import React from 'react';
-import { NavBar, Navigation } from "./components"
+import { NavBar } from "./components"
+import { Navigation } from './navigation'
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'
 import './firebase/config'

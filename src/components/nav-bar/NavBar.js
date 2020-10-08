@@ -16,7 +16,7 @@ import { SignedInLinks } from './SignedInLinks';
 
 import firebase from "firebase"
 import { useQueryCache } from 'react-query'
-import PrivateRoute from '../navigation/PrivateRoute'
+import PrivateRoute from '../../navigation/PrivateRoute'
 
 
 const useStyles = makeStyles((theme) => ({

@@ -2,7 +2,6 @@ import React, { useState, Component } from 'react'
 import { useForm } from 'react-hook-form'
 import { auth } from "../../firebase"
 import { useQueryCache } from "react-query"
-// import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 import { Link, useHistory } from 'react-router-dom'
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";

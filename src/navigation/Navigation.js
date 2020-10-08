@@ -24,7 +24,7 @@ export const Navigation = (props) => {
                     
                     
                     {/* Add your routes here */}
-
+                    
                    
 
                     <Route exact path="/" component= { Profile }/>

@@ -76,7 +76,8 @@ export function CreateUserForm(props) {
           try {
               newUser = await auth.createUserWithEmailAndPassword(email, password)
               setMessage("User has been created")
-              history.push("/profile")
+              await newUser.user.updateProfile({ displayName: `${email.slice(0, email.indexOf("@"))}` })
+              history.push("/")
               
           } catch (error) {
               setMessage(error.message)

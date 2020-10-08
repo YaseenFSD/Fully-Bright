@@ -7,7 +7,6 @@ export function LoginPage() {
     return (
         <div className="LoginPage">
             <LoginForm />
-            <CreateUserForm />
         </div>
     )
 }

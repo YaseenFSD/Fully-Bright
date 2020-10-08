@@ -17,8 +17,8 @@ import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 
 // THIS IS HOW IT IS WRITTEN INSIDE OF ../../firebase
-// const auth = firebase.auth()
-// const db = firebase.firestore()
+    // const auth = firebase.auth()
+    // const db = firebase.firestore()
 
 
     const useStyles = makeStyles((theme) => ({
@@ -53,13 +53,6 @@ export function CreateUserForm(props) {
     const classes = useStyles();
 
 
-    //TODO: delete this before submission or when necessary 
-    // React Query Sync Data Example 
-    const cache = useQueryCache()
-    //                                   This is the key of the Query (made inside of LoginForm.js)
-    let testingData = cache.getQueryData("TestingData")
-    console.log("Console.log from 'CreateUserForm.js:", testingData)
-    //
     const handleCreateUser = async (event) => {
         let newUser
         setLoading(true)
@@ -72,11 +65,10 @@ export function CreateUserForm(props) {
         try {
             newUser = await auth.createUserWithEmailAndPassword(email, password)
             setMessage("User has been created")
-            reset()
-
+            
         } catch (error) {
             setMessage(error.message)
-
+            
         }
 
         if (newUser) {
@@ -84,7 +76,6 @@ export function CreateUserForm(props) {
         } else {
             setLoading(false)
         }
-        // console.log(data)
 
     }
 
@@ -92,16 +83,6 @@ export function CreateUserForm(props) {
     
 
     return (
-        // <div>
-        //     Create User Here
-        //     <form onSubmit={handleCreateUser}>
-        //         <input type="text" onChange={(event) => setEmail(event.target.value)} placeholder="email" />
-        //         <input type="password" onChange={(event) => setPassword(event.target.value)} placeholder="password" />
-        //         <input type="password" onChange={(event) => setConfirm(event.target.value)} placeholder="Confirm Password" />
-        //         <button type="submit">Create User</button>
-        //     </form>
-        //     <div>{message}</div>
-        // </div>
 
         <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -163,40 +144,6 @@ export function CreateUserForm(props) {
       </Container>
     )
 }     
-       
-       
-    //    <form onSubmit={handleCreateUser}>
-    //         <h3>Sign Up</h3>
 
-    //         <div className="form-group">
-    //             <label>Email address</label>
-    //             <input type="email" onChange={(event) => setEmail(event.target.value)} className="form-control" placeholder="Enter email" />
-    //         </div>
-
-    //         <div className="form-group">
-    //             <label>Password</label>
-    //             <input type="password" onChange={(event) => setPassword(event.target.value)} className="form-control" placeholder="Enter password" />
-    //         </div>
-
-    //         <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
-    //         <p className="sign-in text-right">
-    //             Already registered <a href="#">sign in?</a>
-    //         </p>
-    //     </form>
-    //     );
-    // }   
-
-      
-      
-        // <div>
-        //     Create User Here
-        //     <form onSubmit={handleCreateUser}>
-        //         <input type="text" onChange={(event) => setEmail(event.target.value)} placeholder="email" />
-        //         <input type="password" onChange={(event) => setPassword(event.target.value)} placeholder="password" />
-        //         <input type="password" onChange={(event) => setConfirm(event.target.value)} placeholder="Confirm Password" />
-        //         <button type="submit">Create User</button>
-        //     </form>
-        //     <div>{message}</div>
-        // </div>
     
 

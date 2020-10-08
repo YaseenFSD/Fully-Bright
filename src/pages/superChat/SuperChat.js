@@ -20,10 +20,16 @@ function SuperChat() {
     const [messages]=useCollectionData(query, {idField: 'id'})
     return (
         <div>
-            chat
+            {messages && messages.map(msg=><ChatMessage key= {msg.id} message={msg}/>)}
         </div>
     )
 }
+function ChatMessage(){
+    const {text,uid}=props.message
+    return(
+        <p>{text}</p>
+    )
+    }
 
 export default SuperChat
 

@@ -1,10 +1,10 @@
 import React from 'react'
 
-import {userSession} from '../../firebase/UserProvider'
+import {useSession} from '../../firebase/UserProvider'
 
 const Profile = () => {
 
-    const {user}=userSession()
+    const {user}=useSession()
 
     if(!user){
         return null

@@ -1,15 +1,11 @@
 import React from "react"
 import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom"
-import { LoginPage } from "../../pages"
-import { CreateUserForm } from "../create-user-form"
-import { Profile } from "../../pages/profile-page/Profile"
+import { LoginPage } from "../pages"
+import Profile from "../pages/profile-page/Profile"
 import ProfileRedirect from "./ProfileRedirect"
-import { UserProvider } from '../../firebase/UserProvider'
-import PrivateRoute from '../navigation/PrivateRoute'
-import { Switch, Route } from "react-router-dom"
-import { LoginPage } from "../pages"
-import { Switch, Route } from "react-router-dom"
-import { LoginPage } from "../pages"
+import { UserProvider } from '../firebase/UserProvider'
+import PrivateRoute from './PrivateRoute'
+
 export const Navigation = () => {
     
     return(

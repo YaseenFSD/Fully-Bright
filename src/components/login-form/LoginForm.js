@@ -74,6 +74,7 @@ export function LoginForm(props) {
 
     const handleSignIn = async (event) => {
         event.preventDefault()
+        let user
         setLoading(true)
 
         try {
@@ -102,6 +103,9 @@ export function LoginForm(props) {
             setLoading(false)
         }
       }
+
+      const formClassName = `ui form ${isLoading ? 'loading' : ''}`
+
 
   return (
     <Grid container component="main" className={classes.root}>

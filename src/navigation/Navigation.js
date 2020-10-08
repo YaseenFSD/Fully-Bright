@@ -22,8 +22,6 @@ export const Navigation = () => {
                     </PrivateRoute>
                     
                 
-
-
                     <PrivateRoute 
                     exact path="/signup"
                     component= { LoginPage }
@@ -38,6 +36,7 @@ export const Navigation = () => {
                     exact path="/"
                     component= { LoginPage }
                     />
+
 
                 </Switch>
             </BrowserRouter>

@@ -45,8 +45,6 @@ export function SignedInLinks() {
               Profile
             </Link>
           </nav>
-      
-  
-   
+
   );
 }

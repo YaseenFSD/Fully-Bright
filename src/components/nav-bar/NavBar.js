@@ -58,7 +58,7 @@ export function NavBar() {
         ) 
         
       }
-      console.log(user)
+      // console.log(user)
 
     const signout = async () => {
         await auth.signOut();

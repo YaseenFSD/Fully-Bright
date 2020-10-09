@@ -42,6 +42,7 @@ function SuperChat() {
     }
   
     return (<>
+    <h1>Bright Chat</h1>
       <main>
   
         {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
@@ -67,6 +68,7 @@ function ChatMessage(props){
   return (<>
     <div className={`message ${messageClass}`}>
       <img src={photoURL || '/lightbulb.png'} />
+      <p>{auth.currentUser.email}</p>
       <p>{text}</p>
     </div>
   </>)

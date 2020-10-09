@@ -35,7 +35,7 @@ export function SignedInLinks() {
             <Link variant="button" color="textPrimary" href="#" className={classes.link}>
               Leaderboard
             </Link>
-            <Link variant="button" color="textPrimary" href="/404" className={classes.link}>
+            <Link variant="button" color="textPrimary" href="/chat" className={classes.link}>
               Chat
             </Link>
             <Link variant="button" color="textPrimary" href="/messages" className={classes.link}>

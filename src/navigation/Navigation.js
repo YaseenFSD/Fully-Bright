@@ -1,47 +1,34 @@
-import React from "react"
-import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom"
-import { LoginPage } from "../pages"
-import {Profile} from "../pages/profile-page/Profile"
-import ProfileRedirect from "./ProfileRedirect"
-import { UserProvider } from '../firebase/UserProvider'
-import PrivateRoute from './PrivateRoute'
+import React from "react";
+import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
+import { LoginPage } from "../pages";
+import { Profile } from "../pages/profile-page/Profile";
+import ProfileRedirect from "./ProfileRedirect";
+import { UserProvider } from "../firebase/UserProvider";
+import PrivateRoute from "./PrivateRoute";
+import SuperChat from "../pages/superChat/SuperChat";
 
 export const Navigation = () => {
-    
-    return(
-        <UserProvider>
-            <BrowserRouter>
-                <Switch>
-                    <PrivateRoute
-                    exact path="/messages">
-                        <div>
-                            Navbar
-                            <br/>
-                            messages
-                        </div>
-                    </PrivateRoute>
-                    
-                
-                    <PrivateRoute 
-                    exact path="/signup"
-                    component= { LoginPage }
-                    />
+  return (
+    <UserProvider>
+      <BrowserRouter>
+        <Switch>
+          <PrivateRoute exact path="/messages">
+            <div>
+              Navbar
+              <br />
+              messages
+            </div>
+          </PrivateRoute>
 
-                    <PrivateRoute
-                    exact path="/profile"
-                    component= { Profile }
-                    />
+          <PrivateRoute exact path="/signup" component={LoginPage} />
 
-                    <Route
-                    exact path="/"
-                    component= { LoginPage }
-                    />
+          <PrivateRoute exact path="/profile" component={Profile} />
 
+          <PrivateRoute exact path="/chat" component={SuperChat} />
 
-                </Switch>
-            </BrowserRouter>
-        </UserProvider>
-
-
-    )
-}
+          <Route exact path="/" component={LoginPage} />
+        </Switch>
+      </BrowserRouter>
+    </UserProvider>
+  );
+};

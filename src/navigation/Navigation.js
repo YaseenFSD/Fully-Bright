@@ -24,9 +24,11 @@ export const Navigation = (props) => {
                             messages
                         </div>
                     </Route>
+                   
 
 
                     {/* Add your routes here */}
+              
                     
 
                     <Route path="*"> Not found </Route>

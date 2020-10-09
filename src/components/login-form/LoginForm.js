@@ -21,6 +21,7 @@ import { Alert } from "@material-ui/lab";
 import Modal from "../create-user-form/Modal";
 import { CreateUserForm } from "../create-user-form/CreateUserForm";
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
       height: "100vh",
@@ -176,8 +177,7 @@ export function LoginForm(props) {
             <Box mt={5}></Box>
           </form>
         </div>
-        <h1>{message}</h1>
-
+               
         <Modal openModal={openModal} setOpenModal={setOpenModal}>
           <CreateUserForm />
         </Modal>

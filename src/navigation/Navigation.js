@@ -1,30 +1,38 @@
-import React from "react";
-import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
-import { LoginPage } from "../pages";
-import { Profile } from "../pages/profile-page/Profile";
-import ProfileRedirect from "./ProfileRedirect";
-import { UserProvider } from "../firebase/UserProvider";
-import PrivateRoute from "./PrivateRoute";
-import SuperChat from "../pages/superChat/SuperChat";
+import React, { useState } from "react"
+import { Switch, Route, Redirect, BrowserRouter, useHistory } from "react-router-dom"
+import { LoginPage } from "../pages"
+import { Profile } from "../pages/profile-page/Profile"
+import { UserProvider } from '../firebase/UserProvider'
+import { NavBar } from "../components"
 
-export const Navigation = () => {
-  return (
-    <UserProvider>
-      <BrowserRouter>
-        <Switch>
-          <PrivateRoute exact path="/messages">
-            <div>
-              Navbar
-              <br />
-              messages
-            </div>
-          </PrivateRoute>
 
-          <PrivateRoute exact path="/signup" component={LoginPage} />
+export const Navigation = (props) => {
+    const history = useHistory()
 
-          <PrivateRoute exact path="/profile" component={Profile} />
+    return (
+        <UserProvider>
+            <BrowserRouter>
+                <NavBar />
+                <Switch>
+                    {/* {props.isLoggedIn ? <> */}
+                    <Route exact path="/">
+                        {props.isLoggedIn ? <Profile /> : <LoginPage />}
+                    </Route>
+                    <Route
+                        exact path="/messages">
+                        <div>
+                            messages
+                        </div>
+                    </Route>
 
-          <PrivateRoute exact path="/chat" component={SuperChat} />
+
+                    {/* Add your routes here */}
+                    
+
+                    <Route path="*"> Not found </Route>
+
+
+                    
 
           <Route exact path="/" component={LoginPage} />
         </Switch>

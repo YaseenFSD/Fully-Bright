@@ -1,6 +1,6 @@
 import React from 'react'
 import './style.css'
-import { signout } from '../signout/Signout'
+import { signout } from '../../pages/signout-page/Signout'
 import { useHistory, Route } from 'react-router-dom'
 import { useSession } from '../../firebase/UserProvider'
 import { auth } from '../../firebase'
@@ -16,42 +16,43 @@ import { SignedInLinks } from './SignedInLinks';
 
 import firebase from "firebase"
 import { useQueryCache } from 'react-query'
-import PrivateRoute from '../../navigation/PrivateRoute'
 
 
 const useStyles = makeStyles((theme) => ({
-    '@global': {
-        ul: {
-            margin: 0,
-            padding: 0,
-            listStyle: 'none',
-        },
+  '@global': {
+    ul: {
+      margin: 0,
+      padding: 0,
+      listStyle: 'none',
     },
-    appBar: {
-        borderBottom: `1px solid ${theme.palette.divider}`,
-    },
-    toolbar: {
-        flexWrap: 'wrap',
-    },
-    toolbarTitle: {
-        flexGrow: 1,
-    },
-    link: {
-        margin: theme.spacing(1, 1.5),
-    },
-
+  },
+  appBar: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+  },
+  toolbar: {
+    flexWrap: 'wrap',
+  },
+  toolbarTitle: {
+    flexGrow: 1,
+  },
+  link: {
+    margin: theme.spacing(1, 1.5),
+  },
+  
 
 }));
 
 
+// TODO Create nav bar component here
 export function NavBar() {
     const history = useHistory();
     // const user = useSession();
     const classes = useStyles();
     const cache = useQueryCache()
+    
     const user = auth.currentUser;
     if (!user) {
-      history.push('/')
+        history.push('/')
         return(
          <Route path="/" />
         ) 
@@ -59,31 +60,31 @@ export function NavBar() {
       }
       console.log(user)
 
-        const signout = async () => {
-            await auth.signOut();
-            window.localStorage.setItem("userDataLocalStorage", null)
-            cache.setQueryData("userData", null)
+    const signout = async () => {
+        await auth.signOut();
+        window.localStorage.setItem("userDataLocalStorage", null)
+        cache.setQueryData("userData", null)
+        
+        history.push('/');
+    };
 
-            history.push('/');
-        };
-
-        return (
-            <div>
-                <CssBaseline />
-                <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
-                    <Toolbar className={classes.toolbar}>
-                        <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-                            Fully Bright
-            </Typography>
-                        <SignedInLinks />
-                        {!!user &&
-                            <Button onClick={signout} color="primary" variant="outlined" className={classes.link}>
-                                LOGOUT
+    return (
+      <div>
+        <CssBaseline />
+        <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
+          <Toolbar className={classes.toolbar}>
+            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+              Fully Bright
+      </Typography>
+        <SignedInLinks />
+        {!!user &&
+            <Button onClick={signout} color="primary" variant="outlined" className={classes.link}>
+              LOGOUT
             </Button>}
-                    </Toolbar>
-                </AppBar>
+          </Toolbar>
+        </AppBar>
 
-            </div>
-        )
-
+      </div>
+);
+ 
 }

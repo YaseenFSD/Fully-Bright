@@ -1,7 +1,9 @@
 import React from 'react'
-import { signout } from "../signout"
-import { useHistory } from 'react-router-dom'
+import './style.css'
+import { signout } from '../../pages/signout-page/Signout'
+import { useHistory, Route } from 'react-router-dom'
 import { useSession } from '../../firebase/UserProvider'
+import { auth } from '../../firebase'
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +15,8 @@ import { LoginPage } from '../../pages';
 import { SignedInLinks } from './SignedInLinks';
 
 import firebase from "firebase"
+import { useQueryCache } from 'react-query'
+
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -42,49 +46,45 @@ const useStyles = makeStyles((theme) => ({
 // TODO Create nav bar component here
 export function NavBar() {
     const history = useHistory();
+    // const user = useSession();
     const classes = useStyles();
-    const user = firebase.auth().currentUser;
-    if (user != null) {
-      console.log(user)
+    const cache = useQueryCache()
+    
+    const user = auth.currentUser;
+    if (!user) {
+        history.push('/')
+        return(
+         <Route path="/" />
+        ) 
+        
+      }
+      // console.log(user)
 
-      const signoutUser = async () => {
-        await signout();
-        history.push('/login');
+    const signout = async () => {
+        await auth.signOut();
+        window.localStorage.setItem("userDataLocalStorage", null)
+        cache.setQueryData("userData", null)
+        
+        history.push('/');
     };
+
     return (
-    <div>
-         <CssBaseline />
-      <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-          <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-            Fully Bright
-          </Typography>
-     <SignedInLinks />
-      {!!user && 
-          <Button onClick={signout} color="primary" variant="outlined" className={classes.link}>
-            Logout
-          </Button>}
-        </Toolbar>
-      </AppBar>
-  
-    </div>
-  );
-    } else {
-      return(
-        <div>not signed in</div>
-       
-      )
-      
-    }
+      <div>
+        <CssBaseline />
+        <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
+          <Toolbar className={classes.toolbar}>
+            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+              Fully Bright
+      </Typography>
+        <SignedInLinks />
+        {!!user &&
+            <Button onClick={signout} color="primary" variant="outlined" className={classes.link}>
+              LOGOUT
+            </Button>}
+          </Toolbar>
+        </AppBar>
 
-
-    // return (
-    //     <div>
-    //         Nav bar here
-    //         {!!user && 
-    //         <button className="ui secondary button logout" onClick={signout}>
-    //             LOGOUT
-    //         </button>}
-    //     </div>
-    // )
+      </div>
+);
+ 
 }

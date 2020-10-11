@@ -1,9 +1,9 @@
 import React from 'react'
-import {userSession} from '../../firebase/UserProvider'
+import {useSession} from '../../firebase/UserProvider'
 
 const UserBio = () => {
 
-    const {user}=userSession()
+    const {user}=useSession()
 
     if(!user){
         return null

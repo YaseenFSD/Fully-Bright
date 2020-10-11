@@ -5,6 +5,7 @@ import { Profile } from "../pages/profile-page/Profile"
 import { UserProvider } from '../firebase/UserProvider'
 import { NavBar } from "../components"
 import SuperChat from "../pages/superChat/SuperChat"
+import UserBio from "../pages/user-bio/UserBio"
 
 
 export const Navigation = (props) => {
@@ -28,6 +29,11 @@ export const Navigation = (props) => {
                     <Route
                         exact path='/chat'
                        component = {SuperChat}>
+                    </Route>
+
+                    <Route
+                        exact path='/user-bio'
+                       component = {UserBio}>
                     </Route>
 
 

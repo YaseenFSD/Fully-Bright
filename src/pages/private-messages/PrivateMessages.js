@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { db } from "../../firebase"
-import { useQuery } from "react-query"
+import { v4 } from "uuid"
 
 export const PrivateMessages = () => {
     const [users, setUsers] = useState([])
@@ -17,20 +17,16 @@ export const PrivateMessages = () => {
                 return [...users, doc.data()]
             })
         })
-        // await users.set({
-            //     name: "test",
-            //     email: "testing@gmail.com"
-            // })
-        }
-        return (
-            <div className="privateMessages">
+    }
+    return (
+        <div className="privateMessages">
             <ul>
                 {users ? users.map((userDoc) => {
-                    return (<li >
+                    return (<li key={v4()} >
                         {userDoc.email}
-                        
-                        </li>)
-                    }): null}
+
+                    </li>)
+                }) : null}
             </ul>
         </div>
     )

@@ -6,6 +6,7 @@ import { UserProvider } from '../firebase/UserProvider'
 import { NavBar } from "../components"
 import SuperChat from "../pages/superChat/SuperChat"
 import { NameChange } from "../components/EditProfile/editName"
+import { GameRoute } from "./game-route"
 
 
 export const Navigation = (props) => {
@@ -17,6 +18,7 @@ export const Navigation = (props) => {
                 <NavBar />
                 <Switch>
                     {/* {props.isLoggedIn ? <> */}
+                    
                     <Route exact path="/">
                         {props.isLoggedIn ? <Profile /> : <LoginPage />}
                     </Route>
@@ -33,6 +35,8 @@ export const Navigation = (props) => {
                         exact path="/namechange">
                         <NameChange />
                         </Route>
+
+                        <GameRoute/>
 
 
                     {/* Add your routes here */}

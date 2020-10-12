@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { storage } from "../../firebase/config";
+import firebase, { auth } from 'firebase';
+import { useQueryCache } from 'react-query';
+
+
+
 
 export const FileUpload = () => {
     
     const [image, setImage] = useState(null);
     const [url, setUrl] = useState("");
     const [progress, setProgress] = useState(0);
-  
+    const [uid, setUid] = useState("")
+ 
+    const cache = useQueryCache()
+    
+
+    useEffect(( ) => {
+      const userData = cache.getQueryData("userData")
+      const uniqueId = userData.uid || userData.user.uid
+      setUid(uniqueId)
+      console.log(uniqueId)
+    })
+
+
+    
+
     const handleChange = e => {
       if (e.target.files[0]) {
         setImage(e.target.files[0]);
@@ -14,7 +33,7 @@ export const FileUpload = () => {
     };
   
     const handleUpload = () => {
-      const uploadTask = storage.ref(`images/${image.name}`).put(image);
+      const uploadTask = storage.ref('users/' + uid + '/profile.jpg').put(image)
       uploadTask.on(
         "state_changed",
         snapshot => {
@@ -26,19 +45,19 @@ export const FileUpload = () => {
         error => {
           console.log(error);
         },
-        () => {
+         () => {
           storage
-            .ref("images")
-            .child(image.name)
+            .ref('users/' + uid + '/profile.jpg')
             .getDownloadURL()
             .then(url => {
               setUrl(url);
-            });
-        }
+             });
+         }
       );
     };
-  
-    console.log("image: ", image);
+    
+   
+  //  console.log(auth)
   
     return (
       <div>
@@ -54,3 +73,6 @@ export const FileUpload = () => {
       </div>
     );
   };
+
+
+  // (`images/${image.name}`).put(image);

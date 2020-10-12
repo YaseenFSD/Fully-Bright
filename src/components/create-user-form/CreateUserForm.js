@@ -16,6 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router-dom'
 import Button from "@material-ui/core/Button";
+import { FileUpload } from '../Uploader/upload'
 
 
 

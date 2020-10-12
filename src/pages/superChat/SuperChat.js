@@ -7,6 +7,7 @@ import {auth} from '../../firebase'
 import {useAuthState} from 'react-firebase-hooks/auth'
 import {useCollectionData} from 'react-firebase-hooks/firestore'
 import { useSession } from '../../firebase/UserProvider'
+import {useQueryCache} from "react-query"
 
 
 
@@ -15,7 +16,7 @@ import { useSession } from '../../firebase/UserProvider'
 
 function SuperChat() {
     //get current user
-    const [user] = useAuthState(auth)
+    const { user } = useSession()
     console.log(user)
     //used for scroll effect
     const dummy = useRef();
@@ -64,17 +65,21 @@ function SuperChat() {
       </form>
     </>)
   }
-function ChatMessage(props){
+function ChatMessage(props){ 
     //response from the database
     const { text, uid, photoURL } = props.message;
+    const cache = useQueryCache()
+    const userData = cache.getQueryData("userData")
 //adds a class to weather the message was sent or received
-  const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
+  const messageClass = userData === auth.currentUser ? 'sent' : 'received';
+
+  const { user } = useSession()
 
   return (<>
     <div className={`message ${messageClass}`}>
         {/* either the users photo or a picture of a lightbulb */}
       <img src={photoURL || '/lightbulb.png'} /> 
-      <p>{auth.currentUser.email}</p>
+      <p>{user.email}</p>
       <p>{text}</p>
     </div>
   </>)

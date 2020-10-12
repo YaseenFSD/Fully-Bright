@@ -7,6 +7,8 @@ import { auth } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useQueryCache } from "react-query";
+import { v4 as uuid } from "uuid";
+
 
 function SuperChat() {
   const cache = useQueryCache();
@@ -38,6 +40,7 @@ function SuperChat() {
       uid,
       photoURL,
       messageUser: userData.displayName,
+      post_id:uuid()
     });
     //sets form to empty string after submit
     setFormValue("");

@@ -9,7 +9,6 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useQueryCache } from "react-query";
 import { v4 as uuid } from "uuid";
 
-
 function SuperChat() {
   const cache = useQueryCache();
   const userData = cache.getQueryData("userData");
@@ -40,7 +39,8 @@ function SuperChat() {
       uid,
       photoURL,
       messageUser: userData.displayName,
-      post_id:uuid()
+      post_id: uuid(),
+      count: 0,
     });
     //sets form to empty string after submit
     setFormValue("");
@@ -52,7 +52,17 @@ function SuperChat() {
       <h1>Bright Chat</h1>
       <main>
         {messages &&
-          messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+          messages.map((msg) => (
+            <>
+              <ChatMessage key={msg.id} message={msg} />
+              <LikeChat
+                post={msg.post_id}
+                user={msg.uid}
+                id={msg.id}
+                count={msg.count}
+              />
+            </>
+          ))}
 
         <span ref={dummy}></span>
       </main>
@@ -75,7 +85,7 @@ function ChatMessage(props) {
   const cache = useQueryCache();
   const userData = cache.getQueryData("userData");
   //response from the database
-  const { text, uid, photoURL, messageUser } = props.message;
+  const { text, uid, photoURL, messageUser,count } = props.message;
   //adds a class to weather the message was sent or received
   const messageClass = uid === userData.uid ? "sent" : "received";
   console.log(uid);
@@ -87,8 +97,25 @@ function ChatMessage(props) {
         <img src={photoURL || "/lightbulb.png"} />
         <p>{messageUser}</p>
         <p>{text}</p>
+        <p>Likes: {count}</p>
       </div>
     </>
+  );
+}
+function LikeChat(props) {
+  // const [liked, setLiked] = useState(false);
+const increment =firebase.firestore.FieldValue.increment(1)
+const messagesRef= db.collection('messages').doc(props.id)
+console.log(messagesRef)
+  const handleLike = () => {
+    
+    console.log(props.id)
+  }
+ 
+  return (
+    <div>
+      <button onClick={handleLike}>this is a like</button>
+    </div>
   );
 }
 

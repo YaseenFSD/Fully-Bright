@@ -41,6 +41,7 @@ function SuperChat() {
       messageUser: userData.displayName,
       post_id: uuid(),
       count: 0,
+      userLikes:[]
     });
     //sets form to empty string after submit
     setFormValue("");
@@ -60,6 +61,8 @@ function SuperChat() {
                 user={msg.uid}
                 id={msg.id}
                 count={msg.count}
+                likes={msg.userLikes}
+                
               />
             </>
           ))}
@@ -85,10 +88,10 @@ function ChatMessage(props) {
   const cache = useQueryCache();
   const userData = cache.getQueryData("userData");
   //response from the database
-  const { text, uid, photoURL, messageUser,count } = props.message;
+  const { text, uid, photoURL, messageUser,count,id } = props.message;
   //adds a class to weather the message was sent or received
   const messageClass = uid === userData.uid ? "sent" : "received";
-  console.log(uid);
+  
 
   return (
     <>
@@ -103,14 +106,21 @@ function ChatMessage(props) {
   );
 }
 function LikeChat(props) {
-  // const [liked, setLiked] = useState(false);
+
+  const cache = useQueryCache();
+  const userData = cache.getQueryData("userData");
 const increment =firebase.firestore.FieldValue.increment(1)
-const messagesRef= db.collection('messages').doc(props.id)
+const decrement =firebase.firestore.FieldValue.increment(-1)
+const messagesRef= db.collection('messages').doc(`${props.id}`)
 console.log(messagesRef)
-  const handleLike = () => {
+
+  const handleLike = (e) => {
+    messagesRef.update({count: increment,
+    userLikes:firebase.firestore.FieldValue.arrayUnion(userData.email)})
     
-    console.log(props.id)
-  }
+    
+    }
+  
  
   return (
     <div>

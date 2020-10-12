@@ -1,5 +1,6 @@
 import React from 'react'
-import { FileUpload } from '../../components/Uploader/upload'
+import { NameChange } from '../../components/EditProfile/editName'
+import { FileUpload } from '../../components/EditProfile/editPhoto'
 
 import {useSession} from '../../firebase/UserProvider'
 
@@ -14,8 +15,7 @@ export function Profile() {
     return (
         <div>
            <FileUpload />
-           <p>Name: {user.displayName}</p> 
-           <p>Email:{user.email}</p>
+         
          
         </div>
     )

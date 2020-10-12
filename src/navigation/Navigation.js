@@ -4,6 +4,7 @@ import { LoginPage } from "../pages"
 import { Profile } from "../pages/profile-page/Profile"
 import { UserProvider } from '../firebase/UserProvider'
 import { NavBar } from "../components"
+import { NameChange } from "../components/EditProfile/editName"
 
 
 export const Navigation = (props) => {
@@ -24,6 +25,10 @@ export const Navigation = (props) => {
                             messages
                         </div>
                     </Route>
+                    <Route 
+                        exact path="/namechange">
+                            <NameChange />
+                        </Route>
                    
 
 

@@ -12,7 +12,7 @@ export const FileUpload = () => {
     const [url, setUrl] = useState("");
     const [progress, setProgress] = useState(0);
     const [uid, setUid] = useState("")
- 
+    const user = firebase.auth().currentUser
     const cache = useQueryCache()
     
 
@@ -51,7 +51,11 @@ export const FileUpload = () => {
             .getDownloadURL()
             .then(url => {
               setUrl(url);
+              user.updateProfile({
+                photoURL: url
+              })
              });
+             
          }
       );
     };
@@ -69,7 +73,7 @@ export const FileUpload = () => {
         <br />
         {url}
         <br />
-        <img src={url || "http://via.placeholder.com/300"} alt="placeholder" />
+        <img src={user.photoURL || "http://via.placeholder.com/300"} alt="placeholder" />
       </div>
     );
   };

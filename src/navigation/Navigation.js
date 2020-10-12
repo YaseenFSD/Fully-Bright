@@ -25,11 +25,11 @@ export const Navigation = (props) => {
                             messages
                         </div>
                     </Route>
+                 
                     <Route 
                         exact path="/namechange">
-                            <NameChange />
+                        <NameChange />
                         </Route>
-                   
 
 
                     {/* Add your routes here */}

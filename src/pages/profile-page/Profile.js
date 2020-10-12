@@ -1,5 +1,5 @@
 import React from 'react'
-import { NameChange } from '../../components/EditProfile/editName'
+// import { NameChange } from '../../components/EditProfile/editName'
 import { FileUpload } from '../../components/EditProfile/editPhoto'
 
 import {useSession} from '../../firebase/UserProvider'

@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { NameChange } from "./editName"
 import  Modal  from "../Modal/Modal";
+import { PassChange } from "./editPassword"
 
 const useStyles = makeStyles({
   root: {
@@ -50,7 +51,8 @@ export const FileUpload = () => {
     }
   };
 
-  const handleUpload = () => {
+  const handleUpload = (event) => {
+    event.preventDefault()
     const uploadTask = storage.ref("users/" + uid + "/profile.jpg").put(image);
     uploadTask.on(
       "state_changed",
@@ -111,11 +113,16 @@ export const FileUpload = () => {
                   onClick={() => {
                     setOpenModal(true);
                   }}
-                >
-                  Change Display Name
+                > 
+                  Change Account Details
                 </Button>
+
                 <Modal openModal={openModal} setOpenModal={setOpenModal}>
           <NameChange />
+          <br />
+          <br />
+
+          <PassChange />
         </Modal>
       </Card>
       

@@ -29,7 +29,7 @@ export function SignedInLinks() {
    
     
           <nav>
-            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+            <Link variant="button" color="textPrimary" href="/games" className={classes.link}>
               Games
             </Link>
             <Link variant="button" color="textPrimary" href="#" className={classes.link}>

@@ -1,7 +1,10 @@
 import React from "react"
 import { Route } from "react-router-dom"
-import {CounterGame} from "../../pages"
+import {CounterGame, Games} from "../../pages"
 
 export const GameRoute = (props) => {
-    return <Route path="/game/:id" component={CounterGame}/>
+    return (<>
+    <Route path="/games" component ={Games}/>
+    <Route path="/game/:id" component={CounterGame}/>
+    </>)
 }

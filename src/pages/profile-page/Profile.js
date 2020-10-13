@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+// import { NameChange } from '../../components/EditProfile/editName'
+import { FileUpload } from '../../components/EditProfile/editPhoto'
 
 import { useSession } from '../../firebase/UserProvider'
 import { useQueryCache } from 'react-query'
@@ -31,6 +33,9 @@ export function Profile() {
             <p>Name: {displayName}</p>
             <p>Email:{user.email}</p>
 
+           <FileUpload />
+         
+         
         </div>
     )
 }

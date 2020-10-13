@@ -18,8 +18,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import Modal from "../create-user-form/Modal";
+import Modal from "../Modal/Modal";
 import { CreateUserForm } from "../create-user-form/CreateUserForm";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -176,8 +177,7 @@ export function LoginForm(props) {
             <Box mt={5}></Box>
           </form>
         </div>
-        <h1>{message}</h1>
-
+               
         <Modal openModal={openModal} setOpenModal={setOpenModal}>
           <CreateUserForm />
         </Modal>

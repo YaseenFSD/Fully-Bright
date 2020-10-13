@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import firebase from "firebase/app";
 import "firebase/firestore";
@@ -120,9 +119,7 @@ function LikeChat(props) {
     });
   });
 
-  console.log(userLike);
   const handleLike = (e, id) => {
-    console.log(id);
     const alreadyLiked = userLike.includes(id);
 
     console.log(alreadyLiked);

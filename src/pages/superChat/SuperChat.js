@@ -110,19 +110,22 @@ function LikeChat(props) {
   const decrement = firebase.firestore.FieldValue.increment(-1);
   const ref2 = db.collection("messages");
   const messagesRef = db.collection("messages").doc(`${props.id}`);
- 
-
+let userLike=[]
   const query = ref2.where("userLikes", "array-contains", `${userData.email}`);
 
   query.get().then((snapshot) => {
-    snapshot.docs.forEach(doc => {
-    console.log(doc.id, doc.data().userLikes)
+    snapshot.docs.map(doc => {
+    userLike.push(doc.id)
     });
   });
-  const  alreadyLiked = false
-
   
-  const handleLike = (e) => {
+
+  console.log(userLike)
+  const handleLike = (e,id) => {
+    console.log(id)
+   const alreadyLiked = userLike.includes(id)
+
+    
     console.log(alreadyLiked)
     if ((alreadyLiked == false)) {
       messagesRef.update({
@@ -140,7 +143,7 @@ function LikeChat(props) {
 
   return (
     <div>
-      <button onClick={handleLike}>this is a like</button>
+      <button onClick={(e)=>handleLike(e,props.id)}>this is a like</button>
     </div>
   );
 }

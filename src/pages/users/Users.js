@@ -1,36 +1,29 @@
 import React from 'react'
-import firebase from 'firebase/app'
+import firebase, { database } from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
 import {auth, db} from '../../firebase'
+import { Collections } from '@material-ui/icons'
 
 
-function listAllUsers(nextPageToken) {
-  //   // List batch of users, 1000 at a time.
-  //   auth.listUsers(1000, nextPageToken)
-  //     .then(function(listUsersResult) {
-  //       listUsersResult.users.forEach(function(userRecord) {
-  //         console.log('user', userRecord.toJSON());
-  //       });
-  //       if (listUsersResult.pageToken) {
-  //         // List next batch of users.
-  //         listAllUsers(listUsersResult.pageToken);
-  //       }
-  //     })
-  //     .catch(function(error) {
-  //       console.log('Error listing users:', error);
-  //     });
-  // }
-  // // Start listing users from the beginning, 1000 at a time.
-  // listAllUsers();
-
+function listAllUsers() {
   db.collection('users').get()
-  .then((data) =>   {
+  .then((data) => {
     data.forEach((doc) => {
       console.log(doc.data())
     })
   })
-  return null
+  return (<>
+    <div className="user-listAllUsers">
+      <h1>Users</h1>
+      <ScrollView>
+      <p>{listAllUsers}</p>
+      </ScrollView>
+    </div>
+  </>)
 }
 
   export default listAllUsers
+
+
+  

@@ -6,6 +6,7 @@ import { UserProvider } from '../firebase/UserProvider'
 import { NavBar } from "../components"
 import SuperChat from "../pages/superChat/SuperChat"
 import Users from "../pages/users/Users"
+import { NameChange } from "../components/EditProfile/editName"
 
 
 export const Navigation = (props) => {
@@ -28,6 +29,11 @@ export const Navigation = (props) => {
                         exact path='/chat'
                        component = {SuperChat}>
                     </Route>
+                 
+                    <Route 
+                        exact path="/namechange">
+                        <NameChange />
+                        </Route>
 
                     <Route
                         exact path='/users'
@@ -36,6 +42,7 @@ export const Navigation = (props) => {
 
 
                     {/* Add your routes here */}
+              
                     
 
                     <Route path="*"> Not found </Route>

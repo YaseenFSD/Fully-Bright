@@ -49,14 +49,15 @@ export const UserBio = () => {
 
     <form onSubmit={handleSubmit}>
       <label>
-        Name:
+        Bio:
         <input
           type="text"
           value={bio}
           onChange={e => setBio(e.target.value)}
         />
       </label>
-      <input type="submit" value="Submit" />
+      <input 
+      type="submit"value="Submit" />
     </form>
         </div>
             

@@ -1,0 +1,22 @@
+.ticGame {
+    display: flex;
+    width: 350px;
+    flex-wrap: wrap;
+    /* flex-grow: 1; */
+    /* flex-direction: column; */
+}
+
+.ticBox {
+    background-color: blue;
+    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+}
+
+div.currentPlayer {
+    background-color: yellow;
+}
+
+div.otherPlayer {
+    background-color: red;
+}

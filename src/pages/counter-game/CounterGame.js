@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { auth, db } from '../../firebase'
+import { TicGame } from "../../components"
 
 export const CounterGame = (props) => {
     const [isLoading, setLoading] = useState(true)
@@ -41,12 +42,13 @@ export const CounterGame = (props) => {
     if (isAPlayer && !isLoading) {
         return (<div className="counterGame">
             You are a player and url is found
+            <TicGame currentEmail={email} gameId={params.id}/>
+            {/* //TODO render a tic tac toe game here and pass email as a prop and params.id */}
         </div>)
     }
 
 
     return (<div>
-
         {message}
     </div>)
 }

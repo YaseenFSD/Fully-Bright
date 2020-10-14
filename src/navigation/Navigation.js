@@ -5,7 +5,6 @@ import { Profile } from "../pages/profile-page/Profile"
 import { UserProvider } from '../firebase/UserProvider'
 import { NavBar } from "../components"
 import SuperChat from "../pages/superChat/SuperChat"
-import UserBio from "../components/user-bio/UserBio"
 import { NameChange } from "../components/EditProfile/editName"
 
 
@@ -35,10 +34,7 @@ export const Navigation = (props) => {
                         <NameChange />
                         </Route>
 
-                    <Route
-                        exact path='/user-bio'
-                       component = {UserBio}>
-                    </Route>
+                    
 
 
                     {/* Add your routes here */}

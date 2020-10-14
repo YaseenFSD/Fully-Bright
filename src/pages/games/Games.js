@@ -1,17 +1,19 @@
 import React, { useRef, useEffect, useState } from "react"
-import { useQueryCache } from "react-query"
 import randomstring from "randomstring"
 import { auth, db } from "../../firebase"
+import { useHistory } from "react-router-dom"
 
 const randomFiveChars = () => randomstring.generate(5)
 
 // TODO let the current user choose a game and invite the email they want to play with
 export const Games = () => {
     const [email, setEmail] = useState("")
+    const [url, setUrl] = useState("")
     const [isLoading, setLoading] = useState(true)
     const [invitee, setInvitee] = useState("")
     const [message, setMessage] = useState("")
     const [randomCharacters, setRandomCharacters] = useState(randomFiveChars())
+    const history = useHistory()
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -59,9 +61,10 @@ export const Games = () => {
             setMessage("Email is not found")
             return
         }
-        console.log(window.location.host)
+        // console.log(window.location.host)
         createGameDoc(email, invitee)
-        setMessage(`Game has been created at ${window.location.host}/game/${randomCharacters}`)
+        setMessage(`Game has been created`)
+        setUrl(`/game/${randomCharacters}`)
         // console.log(inviteeDoc.data())
     }
     return (<div className="gamesPage">
@@ -74,6 +77,7 @@ export const Games = () => {
                 <button type="submit">Invite!</button>
             </form>
         </div>
-        {message}
+        {message} <br />
+        {url ? <a style={{color:"blue", cursor:"pointer"}} onClick={() => { history.push(url) }} >{window.location.host + url}</a> : null}
     </div>)
 }

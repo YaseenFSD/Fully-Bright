@@ -6,10 +6,17 @@ export const NameChange = () => {
   const [name, setName] = useState("");
   const user = firebase.auth().currentUser;
 
-  const handleName = () => {
+  const handleName = (event, error) => {
+    event.preventDefault()
     user.updateProfile({
       displayName: name,
-    });
+    }).then(function () {
+      alert("Display name successfully changed!");
+    })
+    .catch(function (error) {});
+    
+
+
   };
   return (
     <div>
@@ -26,10 +33,10 @@ export const NameChange = () => {
           onChange={(event) => setName(event.target.value)}
         />
 
-        <Button type="submit" fullWidth variant="contained" color="primary">
-          submit
+        <Button  type="submit" variant="outlined" fullWidth color="secondary">CHANGE DISPLAY NAME
         </Button>
       </form>
     </div>
   );
 };
+

@@ -71,6 +71,11 @@ export function CreateUserForm(props) {
     setMessage("")
     try {
       newUser = await auth.createUserWithEmailAndPassword(email, password)
+      db.collection("users").doc().set({
+        email,
+        name: typedDisplayName,
+        score: 0
+      })
       // await auth.signInWithEmailAndPassword(email, password)
       cache.setQueryData("displayName", typedDisplayName)
       auth.currentUser.updateProfile({ displayName: `${typedDisplayName}` })

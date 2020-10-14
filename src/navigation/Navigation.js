@@ -1,11 +1,12 @@
 import React, { useState } from "react"
 import { Switch, Route, Redirect, BrowserRouter, useHistory } from "react-router-dom"
-import { LoginPage } from "../pages"
+import { LoginPage, PrivateMessages } from "../pages"
 import { Profile } from "../pages/profile-page/Profile"
 import { UserProvider } from '../firebase/UserProvider'
 import { NavBar } from "../components"
 import SuperChat from "../pages/superChat/SuperChat"
 import UserBio from "../pages/user-bio/UserBio"
+import { NameChange } from "../components/EditProfile/editName"
 
 
 export const Navigation = (props) => {
@@ -21,15 +22,18 @@ export const Navigation = (props) => {
                         {props.isLoggedIn ? <Profile /> : <LoginPage />}
                     </Route>
                     <Route
-                        exact path="/messages">
-                        <div>
-                            messages
-                        </div>
-                    </Route>
+                        exact path="/messages" 
+                        component = {PrivateMessages}/>
+                        
                     <Route
                         exact path='/chat'
                        component = {SuperChat}>
                     </Route>
+                 
+                    <Route 
+                        exact path="/namechange">
+                        <NameChange />
+                        </Route>
 
                     <Route
                         exact path='/user-bio'
@@ -38,6 +42,7 @@ export const Navigation = (props) => {
 
 
                     {/* Add your routes here */}
+              
                     
 
                     <Route path="*"> Not found </Route>

@@ -30,9 +30,9 @@ export const Users = () => {
         {userArray.length > 0 ? userArray.map((user) => {
           console.log(user)
           return (<>
-          <p>{user.name}</p>
-          <p>{user.email}</p>
-          <p>{user.score}</p>
+          <p>Name: {user.name}</p> // Don't need prefixes; just put there so that you could see what info goes with each set.
+          <p>Email: {user.email}</p>
+          <p>Score: {user.score}</p>
           </>)
         }): null }
     </div>

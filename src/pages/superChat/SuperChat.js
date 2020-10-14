@@ -8,11 +8,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useQueryCache } from "react-query";
 import { v4 as uuid } from "uuid";
-
 function SuperChat() {
   const cache = useQueryCache();
   const userData = cache.getQueryData("userData");
-
   //get current user
   const [user] = useAuthState(auth);
   console.log(user);
@@ -26,10 +24,8 @@ function SuperChat() {
   const [messages] = useCollectionData(query, { idField: "id" });
   //used for the form to add message
   const [formValue, setFormValue] = useState("");
-
   const sendMessage = async (e) => {
     e.preventDefault();
-
     //gets the id and photo from the current user
     const { uid, photoURL } = auth.currentUser;
     //add  text, timestamp,id,and user photo to databass
@@ -47,7 +43,6 @@ function SuperChat() {
     setFormValue("");
     dummy.current.scrollIntoView({ behavior: "smooth" });
   };
-
   return (
     <>
       <h1>Bright Chat</h1>
@@ -65,17 +60,14 @@ function SuperChat() {
               />
             </>
           ))}
-
         <span ref={dummy}></span>
       </main>
-
       <form onSubmit={sendMessage}>
         <input
           value={formValue}
           onChange={(e) => setFormValue(e.target.value)}
           placeholder="Brighten Someones Day"
         />
-
         <button type="submit" disabled={!formValue}>
           💡
         </button>
@@ -90,7 +82,6 @@ function ChatMessage(props) {
   const { text, uid, photoURL, messageUser, count, id } = props.message;
   //adds a class to weather the message was sent or received
   const messageClass = uid === userData.uid ? "sent" : "received";
-
   return (
     <>
       <div className={`message ${messageClass}`}>
@@ -112,16 +103,13 @@ function LikeChat(props) {
   const messagesRef = db.collection("messages").doc(`${props.id}`);
   let userLike = [];
   const query = ref2.where("userLikes", "array-contains", `${userData.email}`);
-
   query.get().then((snapshot) => {
     snapshot.docs.map((doc) => {
       userLike.push(doc.id);
     });
   });
-
   const handleLike = (e, id) => {
     const alreadyLiked = userLike.includes(id);
-
     console.log(alreadyLiked);
     if (alreadyLiked == false) {
       messagesRef.update({
@@ -135,12 +123,10 @@ function LikeChat(props) {
       });
     }
   };
-
   return (
     <div>
       <button onClick={(e) => handleLike(e, props.id)}>♥️</button>
     </div>
   );
 }
-
 export default SuperChat;

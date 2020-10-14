@@ -27,7 +27,7 @@ export const NameChange = () => {
         />
 
         <Button type="submit" fullWidth variant="contained" color="primary">
-          submit
+          CHANGE DISPLAY NAME
         </Button>
       </form>
     </div>

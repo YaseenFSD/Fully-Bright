@@ -11,12 +11,14 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { NameChange } from "./editName"
-import  Modal  from "../Modal/Modal";
+import { NameChange } from "./editName";
+import Modal from "../Modal/Modal";
+import { DeleteUser } from "./deleteUser";
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    marginLeft: 50,
   },
   media: {
     height: 250,
@@ -29,11 +31,11 @@ const useStyles = makeStyles({
 export const FileUpload = () => {
   const classes = useStyles();
   const [image, setImage] = useState(null);
-  const [message, setMessage] = useState("")
+  const [message, setMessage] = useState("");
   const [url, setUrl] = useState("");
   const [progress, setProgress] = useState(0);
   const [uid, setUid] = useState("");
-  const [openModal, setOpenModal] = useState(false)
+  const [openModal, setOpenModal] = useState(false);
   const user = firebase.auth().currentUser;
   const cache = useQueryCache();
 
@@ -102,25 +104,24 @@ export const FileUpload = () => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <input type="file" onChange={handleChange} />
+          <input type="file" accept="image/*" onChange={handleChange} />
           <Button onClick={handleUpload}>Change Profile Picture</Button>
         </CardActions>
         <Button
-                  variant="contatined"
-                  color="secondary"
-                  onClick={() => {
-                    setOpenModal(true);
-                  }}
-                >
-                  Change Display Name
-                </Button>
-                <Modal openModal={openModal} setOpenModal={setOpenModal}>
+          variant="contatined"
+          color="secondary"
+          onClick={() => {
+            setOpenModal(true);
+          }}
+        >
+          Change Display Name
+        </Button>
+        <Modal openModal={openModal} setOpenModal={setOpenModal}>
           <NameChange />
         </Modal>
+        <DeleteUser />
       </Card>
-      
     </div>
-    
   );
 };
 

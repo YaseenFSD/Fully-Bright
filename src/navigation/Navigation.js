@@ -5,7 +5,7 @@ import { Profile } from "../pages/profile-page/Profile"
 import { UserProvider } from '../firebase/UserProvider'
 import { NavBar } from "../components"
 import SuperChat from "../pages/superChat/SuperChat"
-import UserBio from "../pages/user-bio/UserBio"
+import UserBio from "../components/user-bio/UserBio"
 import { NameChange } from "../components/EditProfile/editName"
 
 

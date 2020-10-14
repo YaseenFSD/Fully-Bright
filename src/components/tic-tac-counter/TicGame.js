@@ -1,32 +1,37 @@
 import React, { useEffect, useState } from "react"
 import { db } from "../../firebase"
+import ReactHtmlParser from 'react-html-parser';
 import "./TicGame.css"
 
 export const TicGame = (props) => {
-    const [game, setGame] = useState(null)
+    // const [game, setGame] = useState(null)
+    const [string, setString] = useState("")
+    const [isLoading, setLoading] = useState(true)
     useEffect(() => {
+        renderBox()
         // testingUpdateGame()
-        getRealTimeData()
+        // getRealTimeData()
     }, [])
     const gameRef = db.collection("counterGame").doc(props.gameId)
-    // const game = {
-    //     "1": null,
-    //     "2": null,
-    //     "3": null,
-    //     "4": null,
-    //     "5": null,
-    //     "6": null,
-    //     "7": null,
-    //     "8": null,
-    //     "9": null,
-    // }
-
-    const getRealTimeData = () => {
-        gameRef.onSnapshot((snapshot) => {
-            setGame(snapshot.data().game)
-            console.log(snapshot.data().game)
-        })
+    const game = {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": null,
+        "7": null,
+        "8": null,
+        "9": null,
     }
+
+
+    // const getRealTimeData = () => {
+    //     gameRef.onSnapshot((snapshot) => {
+    //         setGame(snapshot.data().game)
+    //         console.log(snapshot.data().game)
+    //     })
+    // }
     // const testingUpdateGame = async () => {
     //     try {
     //         await db.runTransaction(async (t) => {
@@ -44,24 +49,45 @@ export const TicGame = (props) => {
     //     }
     // }
     // console.log(Object.values(game))
-    const handleCheckBox = (event) => {
+    const handleCheckBox = async (event) => {
         event.persist()
-        console.log(event)
-        event.currentTarget.classList.add("currentPlayer")
+        console.log(event.currentTarget.dataset.key)
+        try {
+            // for (let key in game){
+            //     if 
+            // }
+            event.currentTarget.classList.add("currentPlayer")
+        } catch (error) {
+
+        }
     }
     // let currentKeyIndex = gameKeys[0]
-    const renderBox = (value) => {
+    const renderBox = () => {
 
-        if (!value) {
-            return (<div className="ticBox" onClick={(event) => handleCheckBox(event)}></div>)
-        } else if (value === props.currentEmail) {
-            return (<div className="currentPlayer ticBox"></div>)
-        } else {
-            return (<div className="otherPlayer ticBox"></div>)
+        for (let [key, value] of Object.entries(game)) {
+            console.log(value)
+            if (!value) {
+                setString((prev) => {
+                    return prev + "<div className='ticBox' data-key='" + key +  "' onClick={(event) => handleCheckBox(event)}></div>"
+                })
+                // (<div className="ticBox" data-key="nasdf" onClick={(event) => handleCheckBox(event)}></div>)
+            } else if (value === props.currentEmail) {
+                setString((prev) => {
+                    return prev + `<div className='currentPlayer ticBox' data-key=${key}></div>`
+                })
+                // return (<div className="currentPlayer ticBox"></div>)
+            } else {
+                setString((prev) => {
+                    return prev + `<div className='otherPlayer ticBox' data-key=${key}></div>`
+                })
+                // return (<div className="otherPlayer ticBox"></div>)
+            }
         }
+        setLoading(false)
     }
     console.log(props)
     return (<div className="ticGame">
-        {game ? <>{Object.values(game).map(renderBox)}</>: null}
+        {!isLoading ? string : null}
     </div>)
 }
+{/* {game ? <>{Object.values(game).map(renderBox)}</>: null} */}

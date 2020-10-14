@@ -33,7 +33,8 @@ export const NameChange = () => {
           onChange={(event) => setName(event.target.value)}
         />
 
-        <Button  type="submit" variant="outlined" fullWidth color="secondary">CHANGE DISPLAY NAME
+        <Button type="submit" fullWidth variant="contained" color="primary">
+          CHANGE DISPLAY NAME
         </Button>
       </form>
     </div>

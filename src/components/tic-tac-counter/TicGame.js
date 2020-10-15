@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { db } from "../../firebase"
+import { RestartTic } from "./RestartTic"
 import "./TicGame.css"
 
 // console.log(otherPlayer)
@@ -30,12 +31,19 @@ export const TicGame = (props) => {
     }, [])
     useEffect(() => {
         if (game != null && checkWin(game, props.currentEmail)) {
-            setMessage("you win")
+            setMessage("You Win!")
+            setGameIsFinsihed(true)
+        } else if (game != null && checkLost(game)) {
+            setMessage("You Lose")
+            setGameIsFinsihed(true)
+        } else if (game != null && checkFinish(game)) {
+            setMessage("Game has unfortunately ended in a tie, better luck next time buddy")
             setGameIsFinsihed(true)
         }
+
         renderBox()
         return () => setJsxString(null)
-    }, [game, currentTurn, opponentEmail])
+    }, [game, currentTurn, opponentEmail, gameIsFinished])
     // useEffect(() => {
     //     //     console.log(currentTurn)
     // })
@@ -114,11 +122,16 @@ export const TicGame = (props) => {
 
     }
 
+    const checkFinish = (game) => {
+        let values = Object.values(game)
+        return !values.includes(null)
+    }
+
     const handleCheckBox = async (event) => {
         // event.persist()
         // console.log(event.currentTarget.dataset.key)
         // setTurn()
-        if (gameIsFinished){
+        if (gameIsFinished) {
             return
         }
         if (currentTurn !== props.currentEmail) {
@@ -137,16 +150,23 @@ export const TicGame = (props) => {
             console.log(opponentEmail)
             gameRef.update({ currentPlayer: opponentEmail })
             event.currentTarget.classList.add("currentPlayer")
-            //TODO check winning condition
             console.log(game)
-            console.log(checkWin(game, props.currentEmail))
+            // console.log(checkWin(game, props.currentEmail))
             // if (checkWin(game, props.currentEmail)) {
+            if (!gameIsFinished) {
                 setMessage("")
+            }
             // }
-            //TODO check tie condition
         } catch (error) {
-
+            setMessage("An error has occured, try again")
         }
+    }
+
+    const checkLost = (game) => {
+        if (checkWin(game, opponentEmail)) {
+            return true
+        }
+        return false
     }
 
     // let currentKeyIndex = gameKeys[0]
@@ -184,7 +204,8 @@ export const TicGame = (props) => {
         <br />
         You are X
         <br />
-        {currentTurn}'s turn
+        {/* TODO instead of null, have it display a play again button */}
+        {gameIsFinished ? <RestartTic gameRef={gameRef} setMessage={setMessage} setGame={setGameIsFinsihed} /> : <>{currentTurn}'s turn</>}
     </div>)
 }
 {/* {game ? <>{Object.values(game).map(renderBox)}</>: null} */ }

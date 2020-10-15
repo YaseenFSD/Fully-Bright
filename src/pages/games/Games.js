@@ -42,7 +42,21 @@ export const Games = () => {
             setRandomCharacters(randomFiveChars())
             result = await db.collection("counterGame").doc(randomCharacters).get()
         }
+        let playersArray = [inviteeEmail, loggedInUserEmail]
+        const randomFirstPlayer = playersArray[Math.floor(Math.random() * 1)]
         db.collection("counterGame").doc(randomCharacters).set({
+            currentPlayer: randomFirstPlayer,
+            game: {
+                "1": null,
+                "2": null,
+                "3": null,
+                "4": null,
+                "5": null,
+                "6": null,
+                "7": null,
+                "8": null,
+                "9": null,
+            },
             players: [inviteeEmail, loggedInUserEmail]
         })
         console.log(randomCharacters)

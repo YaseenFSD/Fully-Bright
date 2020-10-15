@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { storage } from "../../firebase/config";
-import firebase, { auth } from "firebase";
+import { auth } from "../../firebase/config";
 import { useQueryCache } from "react-query";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import { NameChange } from "./editName";
 import Modal from "../Modal/Modal";
 import { DeleteUser } from "./deleteUser";
-import { UserBio } from "./userBio"
+import { UpdateBio } from '../../components/EditProfile/UpdateBio'
 
 const useStyles = makeStyles({
   root: {
@@ -37,14 +37,24 @@ export const FileUpload = () => {
   const [progress, setProgress] = useState(0);
   const [uid, setUid] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  const user = firebase.auth().currentUser;
+  // const user = firebase.auth().currentUser;
+  const [user, setUser] = useState(null)
   const cache = useQueryCache();
 
+  const [isLoading, setLoading] = useState(true)
+
   useEffect(() => {
-    const userData = cache.getQueryData("userData");
-    const uniqueId = userData.uid || userData.user.uid;
-    setUid(uniqueId);
-    console.log(uniqueId);
+    // const userData = cache.getQueryData("userData");
+    // const uniqueId = userData.uid || userData.user.uid;
+    const unsubscribe = auth.onAuthStateChanged( (user) => {
+      if (user) {
+      setUid(user.uid);
+      setUser(user)
+      setLoading(false)
+      console.log(user)
+      }
+    })
+    return () => unsubscribe()
   });
 
   const handleChange = (e) => {
@@ -82,11 +92,13 @@ export const FileUpload = () => {
 
   //  console.log(auth)
 
+  if (isLoading) {return null}
   return (
     <div>
       <LinearProgress variant="determinate" value={progress} />
       <br />
       <br />
+
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
@@ -121,10 +133,11 @@ export const FileUpload = () => {
           <NameChange />
         </Modal>
         <DeleteUser />
-        <UserBio />
+        <UpdateBio />
       </Card>
     </div>
   );
 };
 
 // (`images/${image.name}`).put(image);
+

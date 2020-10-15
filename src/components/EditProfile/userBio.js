@@ -2,39 +2,38 @@ import React, { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
 import firebase from "firebase";
 
-export const userBio = () => {
-  const [name, setName] = useState("");
+export const UserBio = () => {
+  const [bio, setBio] = useState("");
   const user = firebase.auth().currentUser;
 
-  const handleName = (event, error) => {
+  const handleUpdate= (event, error) => {
     event.preventDefault()
     user.updateProfile({
-      name: name,
+      name: bio,
     }).then(function () {
-      alert("Your Bio is now updated!");
+      alert("Your Bio has been updated!");
     })
     .catch(function (error) {});
     
 
-
   };
   return (
     <div>
-      <form noValidate onSubmit={handleName}>
+      <form noValidate onSubmit={handleUpdate}>
         <TextField
           variant="outlined"
           margin="normal"
           required
           fullWidth
           id="bio"
-          label="Your New Bio Info"
+          label="New Bio"
           name="bio"
           autoFocus
-          onChange={(event) => setName(event.target.value)}
+          onChange={(event) => setBio(event.target.value)}
         />
 
         <Button type="submit" fullWidth variant="contained" color="primary">
-          UPDATE USER BIO
+          UPDATE BIO
         </Button>
       </form>
     </div>

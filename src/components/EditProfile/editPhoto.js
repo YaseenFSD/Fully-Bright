@@ -14,6 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import { NameChange } from "./editName";
 import Modal from "../Modal/Modal";
 import { DeleteUser } from "./deleteUser";
+import { UserBio } from "./userBio"
 
 const useStyles = makeStyles({
   root: {
@@ -120,6 +121,7 @@ export const FileUpload = () => {
           <NameChange />
         </Modal>
         <DeleteUser />
+        <UserBio />
       </Card>
     </div>
   );

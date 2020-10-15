@@ -44,13 +44,8 @@ export function SignedInLinks() {
             <Link variant="button" color="textPrimary" href="/" className={classes.link}>
               Profile
             </Link>
-<<<<<<< HEAD
-            <Link variant="button" color="textPrimary" href="/user-bio" className={classes.link}>
-              User-Bio
-=======
             <Link variant="button" color="textPrimary" href="/users" className={classes.link}>
               Users
->>>>>>> f372135c4ebed7c19812d036ccb5a1c3a43d1dd5
             </Link>
           </nav>
 

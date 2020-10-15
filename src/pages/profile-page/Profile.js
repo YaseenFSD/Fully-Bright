@@ -8,6 +8,7 @@ import { useQueryCache } from 'react-query'
 export function Profile() {
     const [displayName, setDisplayName] = useState("")
     const cache = useQueryCache()
+    // const [bio, setBio] = useState("")
     useEffect(() => {
         // let cacheDisplayName = cache.getQueryData("displayName")
         let userDisplayName = () => {
@@ -27,13 +28,36 @@ export function Profile() {
         return null
     }
 
+
+
+
+    // const handleSubmit = (evt) => {
+    //     evt.preventDefault()
+
+    // }
+
+    
     return (
         <div>
             <p>Name: {user.displayName}</p>
             <p>Email:{user.email}</p>
-            <p>Bio{user.bio}</p>
+            <div>
 
-        <UserBio />
+    {/* <form onSubmit={handleSubmit}>
+      <label>
+        Bio:
+        <input
+          type="text"
+          value={bio}
+          onChange={e => setBio(e.target.value)}
+        />
+      </label>
+      <input 
+      type="submit"value="Submit" />
+    </form> */}
+        </div>
+
+        <userBio />
            <FileUpload />
          
          

@@ -35,33 +35,36 @@ export const UserBio = () => {
         console.log(id)
         return id
     }
+
+    return (<div></div>)
     
     // use a local state to keep track of what the useBio will be
-    const [bio, setBio] = useState("")
+    // const [bio, setBio] = useState("")
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault()
+    // const handleSubmit = (evt) => {
+    //     evt.preventDefault()
 
-    }
+    // }
 
-    return (
-        <div>
+    // return (
+    //     <div>
 
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input
-          type="text"
-          value={bio}
-          onChange={e => setBio(e.target.value)}
-        />
-      </label>
-      <input type="submit" value="Submit" />
-    </form>
-        </div>
+    // <form onSubmit={handleSubmit}>
+    //   <label>
+    //     Bio:
+    //     <input
+    //       type="text"
+    //       value={bio}
+    //       onChange={e => setBio(e.target.value)}
+    //     />
+    //   </label>
+    //   <input 
+    //   type="submit"value="Submit" />
+    // </form>
+    //     </div>
             
             
-    )
+    // )
 }
 
     

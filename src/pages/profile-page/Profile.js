@@ -31,6 +31,7 @@ export function Profile() {
         <div>
             <p>Name: {user.displayName}</p>
             <p>Email:{user.email}</p>
+            <p>Bio{user.bio}</p>
 
         <UserBio />
            <FileUpload />

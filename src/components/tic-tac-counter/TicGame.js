@@ -2,6 +2,19 @@ import React, { useEffect, useState } from "react"
 import { db } from "../../firebase"
 import "./TicGame.css"
 
+// console.log(otherPlayer)
+// const game = {
+//     "1": true,
+//     "2": null,
+//     "3": "asdf@gmail.com",
+//     "4": null,
+//     "5": null,
+//     "6": null,
+//     "7": null,
+//     "8": null,
+//     "9": null,
+// }
+
 export const TicGame = (props) => {
     const [game, setGame] = useState(null)
     const [JSXstring, setJsxString] = useState(null)
@@ -9,46 +22,39 @@ export const TicGame = (props) => {
     const [message, setMessage] = useState("")
     const [opponentEmail, setOpponentEmail] = useState("")
     const [currentTurn, setTurn] = useState("")
+    const [gameIsFinished, setGameIsFinsihed] = useState(false)
     useEffect(() => {
         getRealTimeData()
         getOppenentEmail()
         // testingUpdateGame()
     }, [])
     useEffect(() => {
+        if (game != null && checkWin(game, props.currentEmail)) {
+            setMessage("you win")
+            setGameIsFinsihed(true)
+        }
         renderBox()
         return () => setJsxString(null)
-    }, [game, currentTurn])
+    }, [game, currentTurn, opponentEmail])
     // useEffect(() => {
-    //     console.log(currentTurn)
-    // }, [currentTurn])
+    //     //     console.log(currentTurn)
+    // })
     const gameRef = db.collection("counterGame").doc(props.gameId)
 
-    const getOppenentEmail = () => {
-        gameRef.get().then((doc) => {
+    const getOppenentEmail = async () => {
+        gameRef.get().then(async (doc) => {
             let values = doc.data()
-            let result = values.players.find((element) => element !== props.currentEmail)
+            let result = await values.players.find((element) => element !== props.currentEmail)
             // console.log(result)
             setOpponentEmail(result)
         })
     }
-    // console.log(otherPlayer)
-    // const game = {
-    //     "1": true,
-    //     "2": null,
-    //     "3": "asdf@gmail.com",
-    //     "4": null,
-    //     "5": null,
-    //     "6": null,
-    //     "7": null,
-    //     "8": null,
-    //     "9": null,
-    // }
 
 
     const getRealTimeData = () => {
-        gameRef.onSnapshot((snapshot) => {
+        gameRef.onSnapshot(async (snapshot) => {
             setGame(snapshot.data().game)
-            let turnEmail = snapshot.data().currentPlayer
+            let turnEmail = await snapshot.data().currentPlayer
             setTurn(turnEmail)
             // setMessage("")
             // console.log(turnEmail)
@@ -67,16 +73,54 @@ export const TicGame = (props) => {
                 newObj.game[dataKey] = props.currentEmail
                 t.update(gameRef, newObj)
             })
-            setMessage("")
         } catch (error) {
             setMessage("An error has occured")
         }
     }
     // console.log(Object.values(game))
+    const checkWin = (game, email) => {
+
+        // HORIZONTAL WINS
+        if (game["1"] === email && game["2"] === email && game["3"] === email) {
+            return true
+        }
+        if (game["4"] === email && game["5"] === email && game["6"] === email) {
+            return true
+        }
+        if (game["7"] === email && game["8"] === email && game["9"] === email) {
+            return true
+        }
+
+        // VERTICAL WINS
+        if (game["1"] === email && game["4"] === email && game["7"] === email) {
+            return true
+        } if (game["2"] === email && game["5"] === email && game["8"] === email) {
+            return true
+        } if (game["3"] === email && game["6"] === email && game["9"] === email) {
+            return true
+        }
+
+        //DIAGNOL WINS
+
+        if (game["1"] === email && game["5"] === email && game["9"] === email) {
+            return true
+        } if (game["3"] === email && game["5"] === email && game["7"] === email) {
+            return true
+        }
+
+        return false
+
+
+
+    }
+
     const handleCheckBox = async (event) => {
         // event.persist()
         // console.log(event.currentTarget.dataset.key)
         // setTurn()
+        if (gameIsFinished){
+            return
+        }
         if (currentTurn !== props.currentEmail) {
             setMessage(`It's not your turn, please wait or blow up ${currentTurn}'s phone`)
             return
@@ -90,11 +134,15 @@ export const TicGame = (props) => {
         }
         try {
             updateGame(dataKey)
-            //TODO swap turns
             console.log(opponentEmail)
-            gameRef.update({currentPlayer: opponentEmail})
+            gameRef.update({ currentPlayer: opponentEmail })
             event.currentTarget.classList.add("currentPlayer")
             //TODO check winning condition
+            console.log(game)
+            console.log(checkWin(game, props.currentEmail))
+            // if (checkWin(game, props.currentEmail)) {
+                setMessage("")
+            // }
             //TODO check tie condition
         } catch (error) {
 
@@ -134,8 +182,8 @@ export const TicGame = (props) => {
         <br />
         {message}
         <br />
-        You are X 
-        <br/>
+        You are X
+        <br />
         {currentTurn}'s turn
     </div>)
 }

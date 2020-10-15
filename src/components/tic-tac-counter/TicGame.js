@@ -7,15 +7,31 @@ export const TicGame = (props) => {
     const [JSXstring, setJsxString] = useState(null)
     const [isLoading, setLoading] = useState(true)
     const [message, setMessage] = useState("")
+    const [opponentEmail, setOpponentEmail] = useState("")
+    const [currentTurn, setTurn] = useState("")
     useEffect(() => {
         getRealTimeData()
+        getOppenentEmail()
         // testingUpdateGame()
     }, [])
     useEffect(() => {
         renderBox()
         return () => setJsxString(null)
-    })
+    }, [game, currentTurn])
+    // useEffect(() => {
+    //     console.log(currentTurn)
+    // }, [currentTurn])
     const gameRef = db.collection("counterGame").doc(props.gameId)
+
+    const getOppenentEmail = () => {
+        gameRef.get().then((doc) => {
+            let values = doc.data()
+            let result = values.players.find((element) => element !== props.currentEmail)
+            // console.log(result)
+            setOpponentEmail(result)
+        })
+    }
+    // console.log(otherPlayer)
     // const game = {
     //     "1": true,
     //     "2": null,
@@ -32,7 +48,12 @@ export const TicGame = (props) => {
     const getRealTimeData = () => {
         gameRef.onSnapshot((snapshot) => {
             setGame(snapshot.data().game)
-            console.log(snapshot.data().game)
+            let turnEmail = snapshot.data().currentPlayer
+            setTurn(turnEmail)
+            // setMessage("")
+            // console.log(turnEmail)
+            // console.log(currentTurn)
+            console.log(snapshot.data().currentPlayer)
         })
     }
     const updateGame = async (dataKey) => {
@@ -53,10 +74,15 @@ export const TicGame = (props) => {
     }
     // console.log(Object.values(game))
     const handleCheckBox = async (event) => {
-        event.persist()
+        // event.persist()
         // console.log(event.currentTarget.dataset.key)
+        // setTurn()
+        if (currentTurn !== props.currentEmail) {
+            setMessage(`It's not your turn, please wait or blow up ${currentTurn}'s phone`)
+            return
+        }
         let dataKey = event.currentTarget.dataset.key
-        console.log(game[dataKey])
+        // console.log(game[dataKey])
 
         if (game[dataKey] !== null) {
             setMessage("That spot is not empty")
@@ -64,10 +90,12 @@ export const TicGame = (props) => {
         }
         try {
             updateGame(dataKey)
-            // for (let key in game){
-            //     if 
-            // }
+            //TODO swap turns
+            console.log(opponentEmail)
+            gameRef.update({currentPlayer: opponentEmail})
             event.currentTarget.classList.add("currentPlayer")
+            //TODO check winning condition
+            //TODO check tie condition
         } catch (error) {
 
         }
@@ -75,7 +103,7 @@ export const TicGame = (props) => {
 
     // let currentKeyIndex = gameKeys[0]
     const renderBox = () => {
-        console.log(game)
+        // console.log(game)
         if (!game) {
             return null
         }
@@ -88,12 +116,12 @@ export const TicGame = (props) => {
                 // (<div className="ticBox" data-key="nasdf" onClick={(event) => handleCheckBox(event)}></div>)
             } else if (value === props.currentEmail) {
                 setJsxString((prev) => {
-                    return <>{prev}<div className='currentPlayer ticBox' data-key={key} onClick={(event) => handleCheckBox(event)}></div></>
+                    return <>{prev}<div className='currentPlayer ticBox' data-key={key} onClick={(event) => handleCheckBox(event)}> X</div></>
                 })
                 // return (<div className="currentPlayer ticBox"></div>)
             } else {
                 setJsxString((prev) => {
-                    return <>{prev}<div className='otherPlayer ticBox' data-key={key} onClick={(event) => handleCheckBox(event)}></div></>
+                    return <>{prev}<div className='otherPlayer ticBox' data-key={key} onClick={(event) => handleCheckBox(event)}> O</div></>
                 })
                 // return (<div className="otherPlayer ticBox"></div>)
             }
@@ -103,7 +131,12 @@ export const TicGame = (props) => {
     // console.log(props)
     return (<div className="ticGame">
         {!isLoading ? JSXstring : null}
+        <br />
         {message}
+        <br />
+        You are X 
+        <br/>
+        {currentTurn}'s turn
     </div>)
 }
 {/* {game ? <>{Object.values(game).map(renderBox)}</>: null} */ }

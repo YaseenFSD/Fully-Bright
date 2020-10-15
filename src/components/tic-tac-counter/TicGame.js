@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
-import { db } from "../../firebase"
+import { db, incrementOnce } from "../../firebase"
 import { RestartTic } from "./RestartTic"
 import "./TicGame.css"
+// import "firebase/app"
 
 // console.log(otherPlayer)
 // const game = {
@@ -24,6 +25,7 @@ export const TicGame = (props) => {
     const [opponentEmail, setOpponentEmail] = useState("")
     const [currentTurn, setTurn] = useState("")
     const [gameIsFinished, setGameIsFinsihed] = useState(false)
+    // const [currentUserWin, setCurrentUserWin] = useState()
     useEffect(() => {
         getRealTimeData()
         getOppenentEmail()
@@ -44,6 +46,12 @@ export const TicGame = (props) => {
         renderBox()
         return () => setJsxString(null)
     }, [game, currentTurn, opponentEmail, gameIsFinished])
+    useEffect(() => {
+        if (game != null && checkWin(game, props.currentEmail) && gameIsFinished) {
+            updateWinnerScore()
+        }
+
+    }, [gameIsFinished])
     // useEffect(() => {
     //     //     console.log(currentTurn)
     // })
@@ -86,6 +94,29 @@ export const TicGame = (props) => {
         }
     }
     // console.log(Object.values(game))
+    const getUserDocId = async (email) => {
+        email = email.trim()
+        let docId = false
+        // console.log(email)
+        const usersCollection = await db.collection("users").get()
+        usersCollection.forEach((userData) => {
+            // console.log("email",email)
+            // console.log(userData.id)
+            let foundEmail = userData.data().email
+            if (foundEmail.toLowerCase() === email) {
+                docId = userData.id
+            }
+        })
+        return docId
+    }
+    const updateWinnerScore = async () => {
+        // if(checkWin(game, props.email) && )
+        const userId = await getUserDocId(props.currentEmail)
+        console.log(userId)
+        const userRef = db.collection("users").doc(userId)
+        userRef.update({ score: incrementOnce })
+    }
+
     const checkWin = (game, email) => {
 
         // HORIZONTAL WINS

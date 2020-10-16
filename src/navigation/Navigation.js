@@ -5,6 +5,7 @@ import { Profile } from "../pages/profile-page/Profile"
 import { UserProvider } from '../firebase/UserProvider'
 import { NavBar } from "../components"
 import SuperChat from "../pages/superChat/SuperChat"
+import { Users } from "../pages/users/Users"
 import { NameChange } from "../components/EditProfile/editName"
 import { GameRoute } from "./game-route"
 
@@ -37,6 +38,10 @@ export const Navigation = (props) => {
                         </Route>
 
                         <GameRoute/>
+                    <Route
+                        exact path='/users'
+                       component = {Users}>
+                    </Route>
 
 
                     {/* Add your routes here */}

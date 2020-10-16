@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { storage } from "../../firebase/config";
-import { auth } from "../../firebase/config";
+import firebase, { auth } from "firebase";
 import { useQueryCache } from "react-query";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,12 +11,9 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { NameChange } from "./editName"
-import  Modal  from "../Modal/Modal";
-import { PassChange } from "./editPassword"
-import { DeleteUser } from "./deleteUser"
-import { UpdateBio } from '../../components/EditProfile/UpdateBio'
-
+import { NameChange } from "./editName";
+import Modal from "../Modal/Modal";
+import { DeleteUser } from "./deleteUser";
 
 const useStyles = makeStyles({
   root: {
@@ -39,24 +36,14 @@ export const FileUpload = () => {
   const [progress, setProgress] = useState(0);
   const [uid, setUid] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  // const user = firebase.auth().currentUser;
-  const [user, setUser] = useState(null)
+  const user = firebase.auth().currentUser;
   const cache = useQueryCache();
 
-  const [isLoading, setLoading] = useState(true)
-
   useEffect(() => {
-    // const userData = cache.getQueryData("userData");
-    // const uniqueId = userData.uid || userData.user.uid;
-    const unsubscribe = auth.onAuthStateChanged( (user) => {
-      if (user) {
-      setUid(user.uid);
-      setUser(user)
-      setLoading(false)
-      console.log(user)
-      }
-    })
-    return () => unsubscribe()
+    const userData = cache.getQueryData("userData");
+    const uniqueId = userData.uid || userData.user.uid;
+    setUid(uniqueId);
+    console.log(uniqueId);
   });
 
   const handleChange = (e) => {
@@ -65,8 +52,7 @@ export const FileUpload = () => {
     }
   };
 
-  const handleUpload = (event) => {
-    event.preventDefault()
+  const handleUpload = () => {
     const uploadTask = storage.ref("users/" + uid + "/profile.jpg").put(image);
     uploadTask.on(
       "state_changed",
@@ -95,13 +81,11 @@ export const FileUpload = () => {
 
   //  console.log(auth)
 
-  if (isLoading) {return null}
   return (
     <div>
       <LinearProgress variant="determinate" value={progress} />
       <br />
       <br />
-
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
@@ -124,28 +108,21 @@ export const FileUpload = () => {
           <Button onClick={handleUpload}>Change Profile Picture</Button>
         </CardActions>
         <Button
-                  variant="contatined"
-                  color="secondary"
-                  onClick={() => {
-                    setOpenModal(true);
-                  }}
-                > 
-                  Change Account Details
-                </Button>
-
-                <Modal openModal={openModal} setOpenModal={setOpenModal}>
+          variant="contatined"
+          color="secondary"
+          onClick={() => {
+            setOpenModal(true);
+          }}
+        >
+          Change Display Name
+        </Button>
+        <Modal openModal={openModal} setOpenModal={setOpenModal}>
           <NameChange />
-          <br />
-          <br />
-
-          <PassChange />
         </Modal>
         <DeleteUser />
-        <UpdateBio />
       </Card>
     </div>
   );
 };
 
 // (`images/${image.name}`).put(image);
-

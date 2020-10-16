@@ -11,10 +11,9 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { NameChange } from "./editName"
-import  Modal  from "../Modal/Modal";
-import { PassChange } from "./editPassword"
-import { DeleteUser } from "./deleteUser"
+import { NameChange } from "./editName";
+import Modal from "../Modal/Modal";
+import { DeleteUser } from "./deleteUser";
 
 const useStyles = makeStyles({
   root: {
@@ -53,8 +52,7 @@ export const FileUpload = () => {
     }
   };
 
-  const handleUpload = (event) => {
-    event.preventDefault()
+  const handleUpload = () => {
     const uploadTask = storage.ref("users/" + uid + "/profile.jpg").put(image);
     uploadTask.on(
       "state_changed",
@@ -110,21 +108,16 @@ export const FileUpload = () => {
           <Button onClick={handleUpload}>Change Profile Picture</Button>
         </CardActions>
         <Button
-                  variant="contatined"
-                  color="secondary"
-                  onClick={() => {
-                    setOpenModal(true);
-                  }}
-                > 
-                  Change Account Details
-                </Button>
-
-                <Modal openModal={openModal} setOpenModal={setOpenModal}>
+          variant="contatined"
+          color="secondary"
+          onClick={() => {
+            setOpenModal(true);
+          }}
+        >
+          Change Display Name
+        </Button>
+        <Modal openModal={openModal} setOpenModal={setOpenModal}>
           <NameChange />
-          <br />
-          <br />
-
-          <PassChange />
         </Modal>
         <DeleteUser />
       </Card>

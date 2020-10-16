@@ -1,107 +1,200 @@
-import React, { useEffect, useState, useRef } from "react"
-import { useQueryCache } from "react-query"
-import { db } from "../../firebase"
-import { v4 } from "uuid"
+import React, { useEffect, useState, useRef } from "react";
+import { useQueryCache } from "react-query";
+import { db } from "../../firebase";
+import { v4 } from "uuid";
+import {
+  Button,
+  makeStyles,
+  Grid,
+  TextField,
+  Container,
+  Icon,
+  Paper,
+  Typography,
+} from "@material-ui/core";
+import { Alert, AlertTitle } from "@material-ui/lab";
+import SendIcon from "@material-ui/icons/Send";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginLeft: 50,
+    marginTop: 15,
+  },
+  paper: {
+    padding: theme.spacing(0.5),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+  input: {
+    marginLeft: theme.spacing(60),
+    marginBottom: theme.spacing(0.5),
+  },
+  alert: {
+    width: "100%",
+    "& > * + *": {},
+  },
+  incoming: {
+    padding: theme.spacing(6),
+  },
+}));
 
 export const PrivateMessages = () => {
-    const [users, setUsers] = useState([])
-    const [messages, setMessages] = useState([])
-    const [pickedUser, setPickedUser] = useState("")
-    const [sendingText, setSendingText] = useState("")
-    const [responseMessage, setResponseMessage] = useState("")
-    const [email, setEmail] = useState("")
-    const inputEl = useRef(null)
-    const cache = useQueryCache()
-    useEffect(() => {
-        const currentUser = cache.getQueryData("userData")
-        console.log(currentUser)
-        if (currentUser) {
-            setEmail(currentUser.email)
-        }
-    })
-    useEffect(() => {
-        const getData = async () => {
-            getMessages()
-        }
-        getData()
-    }, [email])
-
-    useEffect(() => {
-        getUsers()
-    }, [])
-
-    const getUsers = async () => {
-        const users = await db.collection("users").get()
-        users.forEach((doc) => {
-            setUsers((users) => {
-                return [...users, doc.data()]
-            })
-        })
+  const classes = useStyles();
+  const [users, setUsers] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [pickedUser, setPickedUser] = useState("");
+  const [sendingText, setSendingText] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
+  const [email, setEmail] = useState("");
+  const inputEl = useRef();
+  const cache = useQueryCache();
+  useEffect(() => {
+    const currentUser = cache.getQueryData("userData");
+    console.log(currentUser);
+    if (currentUser) {
+      setEmail(currentUser.email);
     }
+  });
+  useEffect(() => {
+    const getData = async () => {
+      getMessages();
+    };
+    getData();
+  }, [email]);
 
-    const pickUser = (event) => {
-        setPickedUser(event.target.innerText)
+  useEffect(() => {
+    getUsers();
+  }, []);
 
+  useEffect(() => {
+    if (inputEl.current) {
+      inputEl.current.scrollIntoView();
     }
-    const handleSubmitMessage = async (event) => {
-        event.preventDefault()
-        if (sendingText === "") {
-            setResponseMessage("Please enter a value")
-            return
-        }
-        db.collection("privateMessages").doc(pickedUser).collection("inbox").doc().set({
-            from: email,
-            createdAt: new Date(),
-            text: sendingText
-        })
-        setSendingText("")
-        inputEl.current.value = ""
-        setResponseMessage("Message Sent")
-    }
+  }, [pickedUser]);
 
-    const getMessages = async () => {
-        console.log(email)
-        if (email) {
-            const messagesData = await db.collection("privateMessages").doc(email).collection("inbox").get()
-            messagesData.forEach((doc) => {
-                console.log(doc.data())
-                setMessages((msgs) => {
-                    return [...msgs, doc.data()]
+  const getUsers = async () => {
+    const users = await db.collection("users").get();
+    users.forEach((doc) => {
+      setUsers((users) => {
+        return [...users, doc.data()];
+      });
+    });
+  };
+
+  const pickUser = (event) => {
+    setPickedUser(event.target.innerText.toLowerCase());
+  };
+  const handleSubmitMessage = async (event) => {
+    event.preventDefault();
+    if (sendingText === "") {
+      setResponseMessage(
+        <Alert className={alert.classes} severity="error">
+          Please enter a message!
+        </Alert>
+      );
+      return;
+    }
+    db.collection("privateMessages")
+      .doc(pickedUser)
+      .collection("inbox")
+      .doc()
+      .set({
+        from: email,
+        createdAt: new Date(),
+        text: sendingText,
+      });
+    setSendingText("");
+    inputEl.current.value = "";
+    setResponseMessage(
+      <Alert className={alert.classes} severity="success">
+        Message sent!
+      </Alert>
+    );
+  };
+
+  const getMessages = async () => {
+    console.log(email);
+    if (email) {
+      const messagesData = await db
+        .collection("privateMessages")
+        .doc(email)
+        .collection("inbox")
+        .get();
+      messagesData.forEach((doc) => {
+        console.log(doc.data());
+        setMessages((msgs) => {
+          return [...msgs, doc.data()];
+        });
+      });
+    }
+  };
+
+  return (
+    <div>
+      {responseMessage}
+      <Grid className={classes.root} container spacing={3}>
+        <ul>
+          {users
+            ? users.map((userDoc) => {
+                return (
+                  <Paper className={classes.paper} key={v4()}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      endIcon={<SendIcon />}
+                      onClick={pickUser}
+                    >
+                      {userDoc.email}
+                    </Button>
+                  </Paper>
+                );
+              })
+            : null}
+        </ul>
+
+        <Grid item xs={6}>
+          <ul>
+            {messages
+              ? messages.map((msgDoc) => {
+                  return (
+                    <div>
+                      <Paper className={classes.paper} key={v4()}>
+                        <Typography variant="overline"> From: </Typography>{" "}
+                        <Typography variant="body1">{msgDoc.from}</Typography>
+                        <br />
+                        <Typography variant="body2">{msgDoc.text} </Typography>
+                      </Paper>
+                      <br />
+                    </div>
+                  );
                 })
-            })
-        }
+              : null}
+          </ul>
+        </Grid>
 
-
-    }
-
-    return (
-        <div className="privateMessages">
-            <ul>
-                {users ? users.map((userDoc) => {
-                    return (<li key={v4()} onClick={pickUser}>
-                        {userDoc.email}
-
-                    </li>)
-                }) : null}
-
-            </ul>
-            {pickedUser ? <form onSubmit={handleSubmitMessage}>
-                <input ref={inputEl} onChange={(e) => { setSendingText(e.target.value) }} type="text" placeholder={`send to ${pickedUser}`} />
-                <button type="submit">Send message</button>
-            </form> : null
-            }
-            {responseMessage}
-            <ul>
-
-                {messages ? messages.map((msgDoc) => {
-                    return <li key={v4()}>
-                        From: {msgDoc.from}
-                        <br />
-                        message: {msgDoc.text}
-                        <br />
-                    </li>
-                }) : null}
-            </ul>
-        </div>
-    )
-}
+        <Grid className={classes.input} item xs={4}>
+          {pickedUser ? (
+            <form onSubmit={handleSubmitMessage}>
+              <TextField
+                fullWidth
+                ref={inputEl}
+                onChange={(e) => {
+                  setSendingText(e.target.value);
+                }}
+                type="text"
+                placeholder={`send to ${pickedUser}`}
+              />
+              <br />
+              <br />
+              <Button variant="outlined" color="primary" type="submit">
+                Send message
+              </Button>
+            </form>
+          ) : null}
+        </Grid>
+      </Grid>
+    </div>
+  );
+};

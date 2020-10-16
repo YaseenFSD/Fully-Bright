@@ -5,9 +5,10 @@ import { Profile } from "../pages/profile-page/Profile"
 import { UserProvider } from '../firebase/UserProvider'
 import { NavBar } from "../components"
 import SuperChat from "../pages/superChat/SuperChat"
-import { Leaderboard, Users } from "../pages/leaderboard/Leaderboard"
+
 import { NameChange } from "../components/EditProfile/editName"
 import { GameRoute } from "./game-route"
+import { LeaderBoard } from "../pages/leaderboard/Leaderboard"
 
 
 export const Navigation = (props) => {
@@ -40,7 +41,7 @@ export const Navigation = (props) => {
                         <GameRoute/>
                     <Route
                         exact path='/leaderboard'
-                       component = {Leaderboard}>
+                       component = {LeaderBoard}>
                     </Route>
 
 

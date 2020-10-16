@@ -11,7 +11,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 
-export const Users = () => {
+export const LeaderBoard = () => {
   // const [userArray, setUserArray] = useState([]);
   // useEffect(() => {
   //   getUsers();

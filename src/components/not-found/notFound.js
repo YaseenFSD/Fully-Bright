@@ -12,7 +12,7 @@ export const NotFound = () => {
 
             </div>
 
-            <li><Link to="/leaderboard">Leaderboard</Link></li>
+            {/* <li><Link to="/leaderboard">Leaderboard</Link></li> */}
 
 
     </>

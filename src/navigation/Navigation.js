@@ -45,7 +45,7 @@ export const Navigation = (props) => {
                     </Route>
 
                     <Route
-                        exact path='*'
+                        exact path='/'
                         /* <NotFound /> */
                         component = {NotFound}>
                     </Route>

@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 export const NotFound = () => {
     return (
         <>
-            jkjkjnbj
+          <div>fdsafd</div> 
 
-            <li><Link to="/leaderboard">Leaderboard</Link></li>
+            {/* <li><Link to="/leaderboard">Leaderboard</Link></li> */}
 
 
     </>

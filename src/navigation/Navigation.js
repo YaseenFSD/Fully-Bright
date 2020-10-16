@@ -9,6 +9,7 @@ import SuperChat from "../pages/superChat/SuperChat"
 import { NameChange } from "../components/EditProfile/editName"
 import { GameRoute } from "./game-route"
 import { LeaderBoard } from "../pages/leaderboard/Leaderboard"
+import { NotFound } from "../pages/not-found-page/NotFound"
 
 
 export const Navigation = (props) => {
@@ -42,14 +43,23 @@ export const Navigation = (props) => {
                         exact path='/leaderboard'
                         component = {LeaderBoard}>
                     </Route>
-{/* 
-                    <Route
-                       exact path="*"
-                       component = {NotFound}>
-                       </Route> */}
-                            
-                    <Route path="/"> Not found </Route>
 
+                    <Route
+                        exact path='*'
+                        /* <NotFound /> */
+                        component = {NotFound}>
+                    </Route>
+                        
+
+
+                    
+
+                    
+                       
+                            
+                    {/* <Route path="/"> Not found </Route> */}
+
+          <Route exact path="/" component={LoginPage} />
                         <GameRoute/>
 
 
@@ -61,7 +71,6 @@ export const Navigation = (props) => {
 
                     
 
-          <Route exact path="/" component={LoginPage} />
         </Switch>
       </BrowserRouter>
     </UserProvider>

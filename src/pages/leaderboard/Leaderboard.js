@@ -6,7 +6,7 @@ import {auth, db} from '../../firebase'
 import { Collections, Email, Score } from '@material-ui/icons'
 
 
-export const Users = () => {
+export const Leaderboard = () => {
   const [userArray, setUserArray] = useState([])
   useEffect(() => {
     getUsers() 

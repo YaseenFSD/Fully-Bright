@@ -35,7 +35,7 @@ export function SignedInLinks() {
             <Link variant="button" color="textPrimary" href="/games" className={classes.link}>
               Games
             </Link>
-            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+            <Link variant="button" color="textPrimary" href="/leaderboard" className={classes.link}>
               Leaderboard
             </Link>
             <Button 
@@ -53,9 +53,7 @@ export function SignedInLinks() {
             <Link variant="button" color="textPrimary" href="/" className={classes.link}>
               Profile
             </Link>
-            <Link variant="button" color="textPrimary" href="/users" className={classes.link}>
-              Users
-            </Link>
+            
           </nav>
 
   );

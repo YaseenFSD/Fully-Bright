@@ -38,11 +38,12 @@ export const Navigation = (props) => {
                         <NameChange />
                         </Route>
 
-                        <GameRoute/>
                     <Route
                         exact path='/leaderboard'
-                       component = {LeaderBoard}>
+                        component = {LeaderBoard}>
                     </Route>
+
+                        <GameRoute/>
 
 
                     {/* Add your routes here */}

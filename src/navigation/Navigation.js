@@ -9,7 +9,7 @@ import SuperChat from "../pages/superChat/SuperChat"
 import { NameChange } from "../components/EditProfile/editName"
 import { GameRoute } from "./game-route"
 import { LeaderBoard } from "../pages/leaderboard/Leaderboard"
-import { NotFound } from "../pages/not-found-page/NotFound"
+import { NotFoundPage } from "../pages/not-found-page/NotFoundPage"
 
 
 export const Navigation = (props) => {
@@ -45,9 +45,9 @@ export const Navigation = (props) => {
                     </Route>
 
                     <Route
-                        exact path='/'
-                        /* <NotFound /> */
-                        component = {NotFound}>
+                        exact path='/*'>
+                        <NotFoundPage />
+                        
                     </Route>
                         
 

@@ -42,6 +42,13 @@ export const Navigation = (props) => {
                         exact path='/leaderboard'
                         component = {LeaderBoard}>
                     </Route>
+{/* 
+                    <Route
+                       exact path="*"
+                       component = {NotFound}>
+                       </Route> */}
+                            
+                    <Route path="/"> Not found </Route>
 
                         <GameRoute/>
 
@@ -50,7 +57,6 @@ export const Navigation = (props) => {
               
                     
 
-                    <Route path="*"> Not found </Route>
 
 
                     

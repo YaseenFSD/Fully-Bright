@@ -7,6 +7,7 @@ import { NavBar } from "../components"
 import SuperChat from "../pages/superChat/SuperChat"
 import { Users } from "../pages/users/Users"
 import { NameChange } from "../components/EditProfile/editName"
+import { GameRoute } from "./game-route"
 
 
 export const Navigation = (props) => {
@@ -18,6 +19,7 @@ export const Navigation = (props) => {
                 <NavBar />
                 <Switch>
                     {/* {props.isLoggedIn ? <> */}
+                    
                     <Route exact path="/">
                         {props.isLoggedIn ? <Profile /> : <LoginPage />}
                     </Route>
@@ -35,6 +37,7 @@ export const Navigation = (props) => {
                         <NameChange />
                         </Route>
 
+                        <GameRoute/>
                     <Route
                         exact path='/users'
                        component = {Users}>

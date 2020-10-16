@@ -11,6 +11,7 @@ import {
   Icon,
   Paper,
   Typography,
+  InputBase,
 } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import SendIcon from "@material-ui/icons/Send";
@@ -27,16 +28,22 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
   input: {
-    marginLeft: theme.spacing(60),
+    marginLeft: theme.spacing(65),
     marginBottom: theme.spacing(0.5),
+    marginTop: theme.spacing(1)
+    
   },
   alert: {
     width: "100%",
-    "& > * + *": {},
+   position: "fixed",
+    bottom: 0,
   },
   incoming: {
     padding: theme.spacing(6),
   },
+  alertDiv: {
+    position: "relative"
+  }
 }));
 
 export const PrivateMessages = () => {
@@ -89,7 +96,7 @@ export const PrivateMessages = () => {
     event.preventDefault();
     if (sendingText === "") {
       setResponseMessage(
-        <Alert className={alert.classes} severity="error">
+        <Alert fullWidth severity="error">
           Please enter a message!
         </Alert>
       );
@@ -132,7 +139,33 @@ export const PrivateMessages = () => {
 
   return (
     <div>
-      {responseMessage}
+  
+<Grid className={classes.input} item xs={4}>
+
+      <br/>
+          {pickedUser ? (
+            <form noValidate onSubmit={handleSubmitMessage}>
+              <TextField
+               variant="outlined"
+                fullWidth
+                label="Enter message here!"
+                inputRef={inputEl}
+                onChange={(e) => {
+                  setSendingText(e.target.value);
+                }}
+                type="text"
+                placeholder={`send to ${pickedUser}`}
+              />
+              <br />
+              <br />
+              <Button variant="outlined" color="primary" type="submit">
+                Send message
+              </Button>
+            </form>
+          ) : null}
+        </Grid>
+   
+      
       <Grid className={classes.root} container spacing={3}>
         <ul>
           {users
@@ -156,6 +189,10 @@ export const PrivateMessages = () => {
 
         <Grid item xs={6}>
           <ul>
+          <div className={classes.alertDiv}>
+      {responseMessage}
+      </div>
+      <br/>
             {messages
               ? messages.map((msgDoc) => {
                   return (
@@ -173,27 +210,8 @@ export const PrivateMessages = () => {
               : null}
           </ul>
         </Grid>
-
-        <Grid className={classes.input} item xs={4}>
-          {pickedUser ? (
-            <form onSubmit={handleSubmitMessage}>
-              <TextField
-                fullWidth
-                ref={inputEl}
-                onChange={(e) => {
-                  setSendingText(e.target.value);
-                }}
-                type="text"
-                placeholder={`send to ${pickedUser}`}
-              />
-              <br />
-              <br />
-              <Button variant="outlined" color="primary" type="submit">
-                Send message
-              </Button>
-            </form>
-          ) : null}
-        </Grid>
+    
+  
       </Grid>
     </div>
   );

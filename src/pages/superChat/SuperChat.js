@@ -47,8 +47,11 @@ function SuperChat() {
   const dummy = useRef();
   //get messages from db
   const messagesRef = db.collection("messages");
+
+
   //query a list of messages order it by time created and limit the list to 25
-  const query = messagesRef.orderBy("createdAt").limit(25);
+  const query = messagesRef.orderBy("createdAt").limitToLast(25);
+ 
   //gives acess to use collection data
   const [messages] = useCollectionData(query, { idField: "id" });
   //used for the form to add message
@@ -186,3 +189,7 @@ function LikeChat(props) {
   );
 }
 export default SuperChat;
+
+
+
+

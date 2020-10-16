@@ -15,6 +15,8 @@ import { NameChange } from "./editName"
 import  Modal  from "../Modal/Modal";
 import { PassChange } from "./editPassword"
 import { DeleteUser } from "./deleteUser"
+import { UpdateBio } from '../../components/EditProfile/UpdateBio'
+
 
 const useStyles = makeStyles({
   root: {

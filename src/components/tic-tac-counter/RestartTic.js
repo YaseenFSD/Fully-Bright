@@ -21,9 +21,12 @@ export const RestartTic = (props) => {
             })
             props.setGame(false)
             props.setMessage("")
+            props.setScoreIsIncremented(false)
+            localStorage.setItem("isScoreIncremented", "false")
         } catch (error) {
             setRestartMessage(error)
         }
+
 
     }
 

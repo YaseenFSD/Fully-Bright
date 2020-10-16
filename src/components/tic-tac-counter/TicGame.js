@@ -2,20 +2,7 @@ import React, { useEffect, useState } from "react"
 import { db, incrementOnce } from "../../firebase"
 import { RestartTic } from "./RestartTic"
 import "./TicGame.css"
-// import "firebase/app"
 
-// console.log(otherPlayer)
-// const game = {
-//     "1": true,
-//     "2": null,
-//     "3": "asdf@gmail.com",
-//     "4": null,
-//     "5": null,
-//     "6": null,
-//     "7": null,
-//     "8": null,
-//     "9": null,
-// }
 
 export const TicGame = (props) => {
     const [game, setGame] = useState(null)
@@ -25,6 +12,7 @@ export const TicGame = (props) => {
     const [opponentEmail, setOpponentEmail] = useState("")
     const [currentTurn, setTurn] = useState("")
     const [gameIsFinished, setGameIsFinsihed] = useState(false)
+    const [isScoreIncremented, setScoreIsIncremented] = useState(JSON.parse(localStorage.getItem("isScoreIncremented")) || false)
     // const [currentUserWin, setCurrentUserWin] = useState()
     useEffect(() => {
         getRealTimeData()
@@ -111,10 +99,17 @@ export const TicGame = (props) => {
     }
     const updateWinnerScore = async () => {
         // if(checkWin(game, props.email) && )
+        console.log(isScoreIncremented)
+        if (isScoreIncremented) {
+            return
+        }
         const userId = await getUserDocId(props.currentEmail)
         console.log(userId)
         const userRef = db.collection("users").doc(userId)
         userRef.update({ score: incrementOnce })
+
+        setScoreIsIncremented(true)
+        localStorage.setItem("isScoreIncremented","true")
     }
 
     const checkWin = (game, email) => {
@@ -236,7 +231,7 @@ export const TicGame = (props) => {
         You are X
         <br />
         {/* TODO instead of null, have it display a play again button */}
-        {gameIsFinished ? <RestartTic gameRef={gameRef} setMessage={setMessage} setGame={setGameIsFinsihed} /> : <>{currentTurn}'s turn</>}
+        {gameIsFinished ? <RestartTic setScoreIsIncremented={setScoreIsIncremented} gameRef={gameRef} setMessage={setMessage} setGame={setGameIsFinsihed} /> : <>{currentTurn}'s turn</>}
     </div>)
 }
 {/* {game ? <>{Object.values(game).map(renderBox)}</>: null} */ }

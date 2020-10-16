@@ -8,7 +8,36 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useQueryCache } from "react-query";
 import { v4 as uuid } from "uuid";
+import {
+  Typography,
+  Table,
+  TableHead,
+  TableCell,
+  TableRow,
+  TableBody,
+  Avatar,
+  Button,
+  IconButton,
+  makeStyles,
+  Container,
+  SnackbarContent,
+  TextField,
+  Grid,
+} from "@material-ui/core";
+import { ThumbUp, EmojiObjects } from "@material-ui/icons/";
+
+const useStyles = makeStyles((theme) => ({
+  alignClass: {
+    textAlign: "center",
+    justifyContent: "center",
+  },
+  labelLike: {
+    float: "right",
+  },
+}));
+
 function SuperChat() {
+  const classes = useStyles();
   const cache = useQueryCache();
   const userData = cache.getQueryData("userData");
   //get current user
@@ -44,9 +73,11 @@ function SuperChat() {
     dummy.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <>
-      <h1>Bright Chat</h1>
-      <main>
+    <Container size="xs" className={classes.alignClass}>
+      <Typography variant="h3">Bright Chat</Typography>
+      <br />
+
+      <Table justifyContent="center" size="xs">
         {messages &&
           messages.map((msg) => (
             <>
@@ -60,22 +91,29 @@ function SuperChat() {
               />
             </>
           ))}
-        <span ref={dummy}></span>
-      </main>
+      </Table>
+      <span ref={dummy}></span>
+      <br />
+
       <form onSubmit={sendMessage}>
-        <input
+        <TextField
+         large
+          variant="outlined"
+          label="Enter message"
           value={formValue}
           onChange={(e) => setFormValue(e.target.value)}
-          placeholder="Brighten Someones Day"
+          placeholder="Brighten Someone's Day!"
         />
-        <button type="submit" disabled={!formValue}>
-          💡
-        </button>
+        
+        <Button type="submit" disabled={!formValue}>
+          <EmojiObjects align="right" float="right" fontSize="large" />
+        </Button>
       </form>
-    </>
+    </Container>
   );
 }
 function ChatMessage(props) {
+  const classes = useStyles;
   const cache = useQueryCache();
   const userData = cache.getQueryData("userData");
   //response from the database
@@ -83,18 +121,30 @@ function ChatMessage(props) {
   //adds a class to weather the message was sent or received
   const messageClass = uid === userData.uid ? "sent" : "received";
   return (
-    <>
-      <div className={`message ${messageClass}`}>
-        {/* either the users photo or a picture of a lightbulb */}
-        <img src={photoURL || "/lightbulb.png"} />
-        <p>{messageUser}</p>
-        <p>{text}</p>
-        <p>Likes: {count}</p>
-      </div>
-    </>
+    <div>
+      <Grid justify="center" container spacing={5}>
+        <TableBody className={`message ${messageClass}`}>
+          {/* either the users photo or a picture of a lightbulb */}
+          <TableCell>
+            <Avatar src={photoURL || "/lightbulb.png"} />
+          </TableCell>
+          <TableCell textAlign="center" float="left">
+            <Typography variant="button">{messageUser}</Typography>
+          </TableCell>
+          <TableCell textAlign="center" align="center">
+            <strong>{text}</strong>
+          </TableCell>
+          <TableCell align="right">
+            <Typography variant="caption">Likes: {count}</Typography>
+          </TableCell>
+        </TableBody>
+      </Grid>
+    </div>
   );
 }
 function LikeChat(props) {
+  const classes = useStyles();
+
   const cache = useQueryCache();
   const userData = cache.getQueryData("userData");
   const increment = firebase.firestore.FieldValue.increment(1);
@@ -125,7 +175,13 @@ function LikeChat(props) {
   };
   return (
     <div>
-      <button onClick={(e) => handleLike(e, props.id)}>♥️</button>
+      <IconButton
+        className={classes.likeButton}
+        aria-label="like"
+        onClick={(e) => handleLike(e, props.id)}
+      >
+        <ThumbUp fontSize="small" />
+      </IconButton>
     </div>
   );
 }

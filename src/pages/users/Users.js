@@ -19,7 +19,7 @@ export const Users = () => {
   // const userArray = []
 
   const userRef = db.collection("users");
-  const query = userRef.orderBy("score", "desc");
+  const query = userRef.orderBy("score", "desc").limit(10);
   const [users] = useCollectionData(query, { idField: "id" });
   
   return (

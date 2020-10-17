@@ -5,12 +5,12 @@ export const NotFound = () => {
     return (
         <>
             <div>
-
             <h1>404</h1>
-            <br />
-            <p>Page Not Found</p>
-
             </div>
+            <br />
+            
+            <p>Sorry you have reached an invalid address</p>
+
 
             {/* <li><Link to="/leaderboard">Leaderboard</Link></li> */}
 

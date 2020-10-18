@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { storage } from "../../firebase/config";
-import { auth } from "../../firebase/config";
+import { storage, auth } from "../../firebase/config";
 import { useQueryCache } from "react-query";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { makeStyles } from "@material-ui/core/styles";
@@ -39,15 +38,12 @@ export const FileUpload = () => {
   const [progress, setProgress] = useState(0);
   const [uid, setUid] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  // const user = firebase.auth().currentUser;
   const [user, setUser] = useState(null)
   const cache = useQueryCache();
 
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
-    // const userData = cache.getQueryData("userData");
-    // const uniqueId = userData.uid || userData.user.uid;
     const unsubscribe = auth.onAuthStateChanged( (user) => {
       if (user) {
       setUid(user.uid);
@@ -93,7 +89,6 @@ export const FileUpload = () => {
     );
   };
 
-  //  console.log(auth)
 
   if (isLoading) {return null}
   return (
@@ -138,14 +133,15 @@ export const FileUpload = () => {
           <br />
           <br />
 
+          <UpdateBio />
+          <br />
+          <br />
+          
           <PassChange />
         </Modal>
         <DeleteUser />
-        <UpdateBio />
       </Card>
     </div>
   );
 };
-
-// (`images/${image.name}`).put(image);
 

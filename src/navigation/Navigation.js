@@ -19,7 +19,6 @@ export const Navigation = (props) => {
             <BrowserRouter>
                 <NavBar />
                 <Switch>
-                    {/* {props.isLoggedIn ? <> */}
                     
                     <Route exact path="/">
                         {props.isLoggedIn ? <Profile /> : <LoginPage />}
@@ -43,11 +42,7 @@ export const Navigation = (props) => {
                         component = {LeaderBoard}>
                     </Route>
 
-                        <GameRoute/>
-
-
-                    {/* Add your routes here */}
-              
+                        <GameRoute/>              
                     
 
                     <Route path="*"> Not found </Route>

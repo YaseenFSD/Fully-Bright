@@ -2,7 +2,6 @@ import React, { useState, Component } from 'react'
 import { useForm } from 'react-hook-form'
 import { auth, db } from "../../firebase"
 import { useQueryCache } from "react-query"
-import { Link } from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -14,7 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import Button from "@material-ui/core/Button";
 
 
@@ -76,11 +75,9 @@ export function CreateUserForm(props) {
         name: typedDisplayName,
         score: 0
       })
-      // await auth.signInWithEmailAndPassword(email, password)
       cache.setQueryData("displayName", typedDisplayName)
       auth.currentUser.updateProfile({ displayName: `${typedDisplayName}` })
       setMessage("User has been created")
-      // history.push("/")
 
     } catch (error) {
       setMessage(error.message)

@@ -116,7 +116,7 @@ export const FileUpload = () => {
         </CardActionArea>
         <CardActions>
           <input type="file" accept="image/*" onChange={handleChange} />
-          <Button onClick={handleUpload}>Change Profile Picture</Button>
+          <Button onClick={handleUpload}>Update</Button>
         </CardActions>
         <Button
                   variant="contatined"

@@ -6,14 +6,12 @@ import { auth, db } from "../../firebase/config";
 
 export const UpdateBio = () => {
   const [bio, setBio] = useState("");
-
-    const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null)
 
 useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged( (user) => {
       if (user) {
       setUser(user)
-      console.log(user)
       }
     })
     return () => unsubscribe()

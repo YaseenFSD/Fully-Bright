@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { NavBar } from "./components"
 import { Navigation } from './navigation'
 import './App.css';
 import './firebase/config'
 import { ReactQueryDevtools } from "react-query-devtools"
-import { UserProvider } from './firebase/UserProvider'
-import { Route } from "react-router-dom"
-import {LoginPage} from './pages/login-page'
 import { useQueryCache } from "react-query"
 import { auth } from './firebase'
 

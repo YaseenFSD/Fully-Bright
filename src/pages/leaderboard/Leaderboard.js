@@ -1,23 +1,14 @@
-import React, { useEffect, useState } from "react";
-import firebase, { database } from "firebase/app";
+import React from "react";
 import "firebase/firestore";
 import "firebase/auth";
-import { auth, db } from "../../firebase";
+import { db } from "../../firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { Collections, Email, Score } from "@material-ui/icons";
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 
 export const LeaderBoard = () => {
-  // const [userArray, setUserArray] = useState([]);
-  // useEffect(() => {
-  //   getUsers();
-  // }, []);
-  // const userArray = []
-
   const userRef = db.collection("users");
   const query = userRef.orderBy("score", "desc").limit(10);
   const [users] = useCollectionData(query, { idField: "id" });

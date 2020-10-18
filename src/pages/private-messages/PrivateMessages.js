@@ -7,12 +7,10 @@ import {
   makeStyles,
   Grid,
   TextField,
-  Container,
-  Icon,
   Paper,
   Typography,
 } from "@material-ui/core";
-import { Alert, AlertTitle } from "@material-ui/lab";
+import { Alert } from "@material-ui/lab";
 import SendIcon from "@material-ui/icons/Send";
 
 const useStyles = makeStyles((theme) => ({

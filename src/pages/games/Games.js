@@ -27,7 +27,6 @@ export const Games = () => {
         let id = false
         const usersCollection = await db.collection("users").get()
         usersCollection.forEach((user) => {
-            // console.log(user.data().email)
             if (user.data().email === email) {
                 id = user.id
             }
@@ -37,7 +36,6 @@ export const Games = () => {
 
     const createGameDoc = async (inviteeEmail, loggedInUserEmail) => {
         let result = await db.collection("counterGame").doc(randomCharacters).get()
-        // console.log(result.exists)
         while (result.exists) {
             setRandomCharacters(randomFiveChars())
             result = await db.collection("counterGame").doc(randomCharacters).get()
@@ -64,7 +62,6 @@ export const Games = () => {
 
     const handleCounterInvite = async (event) => {
         event.preventDefault()
-        // console.log()
         setMessage("")
         if (!invitee) {
             setMessage("Please enter a valid email")
@@ -75,11 +72,9 @@ export const Games = () => {
             setMessage("Email is not found")
             return
         }
-        // console.log(window.location.host)
         createGameDoc(email, invitee)
         setMessage(`Game has been created`)
         setUrl(`/game/${randomCharacters}`)
-        // console.log(inviteeDoc.data())
     }
     return (<Card style={{ width: "400px", margin: "0 auto" }} className="gamesPage">
         <img style={{ width: "200px", height: "200px" }} src={ticTac} />

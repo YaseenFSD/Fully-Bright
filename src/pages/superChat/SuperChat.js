@@ -11,16 +11,13 @@ import { v4 as uuid } from "uuid";
 import {
   Typography,
   Table,
-  TableHead,
   TableCell,
-  TableRow,
   TableBody,
   Avatar,
   Button,
   IconButton,
   makeStyles,
   Container,
-  SnackbarContent,
   TextField,
   Grid,
 } from "@material-ui/core";
@@ -40,12 +37,8 @@ function SuperChat() {
   const classes = useStyles();
   const cache = useQueryCache();
   const userData = cache.getQueryData("userData");
-  //get current user
   const [user] = useAuthState(auth);
-  console.log(user);
-  //used for scroll effect
   const dummy = useRef();
-  //get messages from db
   const messagesRef = db.collection("messages");
 
 

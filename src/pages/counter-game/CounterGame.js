@@ -43,6 +43,7 @@ export const CounterGame = (props) => {
         return (<div className="counterGame">
             You are a player and url is found
             <TicGame currentEmail={email} gameId={params.id}/>
+            {/* //TODO render a tic tac toe game here and pass email as a prop and params.id */}
         </div>)
     }
 

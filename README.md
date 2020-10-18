@@ -15,7 +15,7 @@ Tell us about your team, who was involved, what role did they fulfill and what d
 |----------------|-------------------------------|-----------------------------|
 |Kano|`Product Investor`            |Investing            |
 |Jonathane Leavell         |`QA`            |Fill me out...            |
-|Yaseen Al-Salamy          |`Product Owner]`|Tic tac toe online funcitonality, Login, Create user, Private messaging, private routes for the tic tac toe game (Only the 2 players can access it). |
+|Yaseen Al-Salamy          |`Product Owner]`| Fill me out... |
 |Shanquetta Pelzer         |`Scrum Master`| Fill me out... |
 |Alfred Rodriguez          |`Dev`| Fill me out... |
 |Reginald Jefferson        |`Dev`| Fill me out... |

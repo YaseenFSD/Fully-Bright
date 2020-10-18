@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { useRef, useEffect, useState } from "react"
 import randomstring from "randomstring"
 import { auth, db } from "../../firebase"
 import { useHistory } from "react-router-dom"
-import ticTac from "./ticTacToe.png"
-import { Button, Card, InputLabel, Input } from "@material-ui/core"
 
 const randomFiveChars = () => randomstring.generate(5)
 
@@ -11,6 +9,7 @@ const randomFiveChars = () => randomstring.generate(5)
 export const Games = () => {
     const [email, setEmail] = useState("")
     const [url, setUrl] = useState("")
+    const [isLoading, setLoading] = useState(true)
     const [invitee, setInvitee] = useState("")
     const [message, setMessage] = useState("")
     const [randomCharacters, setRandomCharacters] = useState(randomFiveChars())
@@ -19,6 +18,7 @@ export const Games = () => {
         auth.onAuthStateChanged((user) => {
             if (user) {
                 setEmail(user.email)
+                setLoading(false)
             }
         })
     })
@@ -76,21 +76,17 @@ export const Games = () => {
         setMessage(`Game has been created`)
         setUrl(`/game/${randomCharacters}`)
     }
-    return (<Card style={{ width: "400px", margin: "0 auto" }} className="gamesPage">
-        <img style={{ width: "200px", height: "200px" }} src={ticTac} />
+    return (<div className="gamesPage">
+        render games to invite here
 
         <div className="counterInvite">
             <form onSubmit={handleCounterInvite}>
-                <h2>
-                    Tic Tac Toe
-                    </h2>
-                <br />
-                <InputLabel>Invite to</InputLabel>
-                <Input onChange={(e) => setInvitee(e.target.value)} type="text" placeholder="email" />
-                <Button variant="contained" color="primary" type="submit">Invite!</Button>
+                Counter game <br />
+                Invite to <input onChange={(e) => setInvitee(e.target.value)} type="text" placeholder="email" />
+                <button type="submit">Invite!</button>
             </form>
         </div>
         {message} <br />
-        {url ? <a style={{ color: "blue", cursor: "pointer" }} onClick={() => { history.push(url) }} >{window.location.host + url}</a> : null}
-    </Card>)
+        {url ? <a style={{color:"blue", cursor:"pointer"}} onClick={() => { history.push(url) }} >{window.location.host + url}</a> : null}
+    </div>)
 }

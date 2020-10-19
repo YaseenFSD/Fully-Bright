@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import { Box } from "@material-ui/core";
 
 export const LeaderBoard = () => {
   const userRef = db.collection("users");
@@ -59,7 +60,8 @@ const UserP = (props) => {
         <Typography variant="body2" component="p">
           {email}
           <br />
-         {Bio}
+          <Box fontStyle="italic" fontWeight="fontWeightMedium">{Bio}</Box>
+         
         </Typography>
       </CardContent>
     </Card>

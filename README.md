@@ -3,7 +3,7 @@ Fully-Bright is a social game where friends group up together and have fun. Full
 ## Project Requirements
 Once your project has been completed please fill out the links below. These are a part of the rubric and must be completed before the submission deadline
 **[Scrum Board URL](https://trello.com/b/VV2OpTet/fully-bright)** | 
-**[Deployment URL](https://heroku.com/)** | 
+**[Deployment URL](https://kapstone-fully-bright.vercel.app/)** | 
 **[Kapstone Pitch URL](https://docs.google.com/document/d/1s8TPyLBTY5KwmpV_RQZ5DjJQvjD30PV3O9Qffi4Tgc0/edit?usp=sharing)** | 
 **[Group Retrospective Document URL](https://docs.google.com/document/d/1P7WVnZWcpiG3UFGgp48Q9Cy-VI0LmiXNxB8SxSOpk_U/edit?usp=sharing)** |
 **[Kapstone Feedback Form](https://docs.google.com/forms/d/1yeIyQH6ZE6y5Z0qB2i8yW5_1Gzfxs8YiJsNlcyjR0WA/edit)**

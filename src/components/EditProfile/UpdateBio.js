@@ -56,7 +56,6 @@ useEffect(() => {
           id="bio"
           label="Update Bio"
           bio="bio"
-          autoFocus
           onChange={(event) => setBio(event.target.value)}
         />
 

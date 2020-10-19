@@ -1,16 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button } from "@material-ui/core";
-// import firebase from "firebase";
-import { auth } from "../../firebase"
+import { auth, db } from "../../firebase/config";
 
 export const NameChange = () => {
   const [name, setName] = useState("");
-  const user = auth.currentUser;
+  const [user, setUser] = useState(null)
 
-  const handleName = (event, error) => {
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged( (user) => {
+      if (user) {
+      setUser(user)
+      }
+    })
+    return () => unsubscribe()
+  }); 
+
+
+
+  const getUserDocId = async (email) => {
+    email = email.trim()
+    let docId = false
+    const usersCollection = await db.collection("users").get()
+    usersCollection.forEach((userData) => {
+        let foundEmail = userData.data().email
+        console.log(foundEmail)
+        if (foundEmail.toLowerCase() === user.email) {
+            docId = userData.id
+        }
+    })
+    return docId
+}
+
+
+  const handleName = async (event, error) => {
     event.preventDefault()
+    const userDoc = await getUserDocId(user.email)
+    db.collection("users").doc(userDoc).set({name: name},{merge:true})
     user.updateProfile({
       displayName: name,
+      name: name
     }).then(function () {
       alert("Display name successfully changed!");
     })

@@ -17,7 +17,7 @@ export const LeaderBoard = () => {
   return (
     <>
       <div className="user-listAllUsers">
-        <h1>Users</h1>
+        <h1>Leaderboard</h1>
         {users && users.map((user) => <UserP key={user.id} user={user} />)}
       </div>
     </>

@@ -10,6 +10,9 @@ import { NameChange } from "../components/EditProfile/editName"
 import { GameRoute } from "./game-route"
 import { LeaderBoard } from "../pages/leaderboard/Leaderboard"
 import { NotFound } from "../components/not-found/notFound"
+import { Games, CounterGame} from "../pages"
+
+
 
 
 
@@ -44,26 +47,22 @@ export const Navigation = (props) => {
                         component = {LeaderBoard}>
                     </Route>
 
-                    <Route
-                        exact path='/*'>
-                        <NotFound />
-                        
-                    </Route>
-                        
-
-
                     
-
-                    
-                       
                             
                     {/* <Route path="/"> Not found </Route> */}
 
-          <Route exact path="/" component={LoginPage} />
-                        <GameRoute/>
+                    {/* <Route exact path="/" component={LoginPage} /> */}
+                    <Route path="/games" component={Games} />
+                    <Route path="/game/:id" component={CounterGame} />
+                        {/* <GameRoute/> */}
+                    <Route
+                        path='*'>
+                        <NotFound />
 
+                    </Route>
 
                     {/* Add your routes here */}
+
               
                     
 

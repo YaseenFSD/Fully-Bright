@@ -114,7 +114,7 @@ export function CreateUserForm(props) {
             fullWidth
             id="displayName"
             label="Display Name"
-            autoFocus
+         
             onChange={(event) => setDisplayName(event.target.value)} placeholder="Display Name"
           />
           <TextField

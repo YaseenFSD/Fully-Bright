@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
@@ -40,14 +40,15 @@ function SuperChat() {
   const [user] = useAuthState(auth);
   const dummy = useRef(null);
   const messagesRef = db.collection("messages");
-  
 
   //query a list of messages order it by time created and limit the list to 25
   const query = messagesRef.orderBy("createdAt").limitToLast(25);
- 
+
   //gives acess to use collection data
   const [messages] = useCollectionData(query, { idField: "id" });
-  const scrollToBottom=()=>{dummy.current.scrollIntoView({ behavior: "smooth" })};
+  const scrollToBottom = () => {
+    dummy.current.scrollIntoView({ behavior: "smooth" });
+  };
   useEffect(scrollToBottom, [messages]);
 
   //used for the form to add message
@@ -70,7 +71,7 @@ function SuperChat() {
     //sets form to empty string after submit
     setFormValue("");
   };
-  
+
   return (
     <Container size="xs" className={classes.alignClass}>
       <Typography variant="h3">Bright Chat</Typography>
@@ -96,14 +97,14 @@ function SuperChat() {
 
       <form onSubmit={sendMessage}>
         <TextField
-         large
+          large
           variant="outlined"
           label="Enter message"
           value={formValue}
           onChange={(e) => setFormValue(e.target.value)}
           placeholder="Brighten Someone's Day!"
         />
-        
+
         <Button type="submit" disabled={!formValue}>
           <EmojiObjects align="right" float="right" fontSize="large" />
         </Button>
@@ -185,7 +186,3 @@ function LikeChat(props) {
   );
 }
 export default SuperChat;
-
-
-
-

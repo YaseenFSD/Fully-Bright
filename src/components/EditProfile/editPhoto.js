@@ -10,12 +10,12 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { NameChange } from "./editName"
-import  Modal  from "../Modal/Modal";
-import { PassChange } from "./editPassword"
-import { DeleteUser } from "./deleteUser"
-import { UpdateBio } from '../../components/EditProfile/UpdateBio'
-
+import { NameChange } from "./editName";
+import Modal from "../Modal/Modal";
+import { PassChange } from "./editPassword";
+import { DeleteUser } from "./deleteUser";
+import { UpdateBio } from "../../components/EditProfile/UpdateBio";
+import { db } from "../../firebase";
 
 const useStyles = makeStyles({
   root: {
@@ -38,21 +38,34 @@ export const FileUpload = () => {
   const [progress, setProgress] = useState(0);
   const [uid, setUid] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
   const cache = useQueryCache();
 
-  const [isLoading, setLoading] = useState(true)
+  const [isLoading, setLoading] = useState(true);
+  const getUserDocId = async (email) => {
+    email = email.trim();
+    let docId = false;
+    const usersCollection = await db.collection("users").get();
+    usersCollection.forEach((userData) => {
+      let foundEmail = userData.data().email;
+      console.log(foundEmail);
+      if (foundEmail.toLowerCase() === user.email) {
+        docId = userData.id;
+      }
+    });
+    return docId;
+  };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged( (user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-      setUid(user.uid);
-      setUser(user)
-      setLoading(false)
-      console.log(user)
+        setUid(user.uid);
+        setUser(user);
+        setLoading(false);
+        console.log(user);
       }
-    })
-    return () => unsubscribe()
+    });
+    return () => unsubscribe();
   });
 
   const handleChange = (e) => {
@@ -62,7 +75,7 @@ export const FileUpload = () => {
   };
 
   const handleUpload = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     const uploadTask = storage.ref("users/" + uid + "/profile.jpg").put(image);
     uploadTask.on(
       "state_changed",
@@ -79,18 +92,27 @@ export const FileUpload = () => {
         storage
           .ref("users/" + uid + "/profile.jpg")
           .getDownloadURL()
-          .then((url) => {
+          .then(async (url) => {
             setUrl(url);
             user.updateProfile({
               photoURL: url,
             });
+            const userDoc = await getUserDocId(user.email);
+            db.collection("users")
+              .doc(userDoc)
+              .set({ photoURL: url }, { merge: true })
+              .then(function () {
+                alert("Photo updated successfully!");
+              })
+              .catch(function (error) {});
           });
       }
     );
   };
 
-
-  if (isLoading) {return null}
+  if (isLoading) {
+    return null;
+  }
   return (
     <div>
       <LinearProgress variant="determinate" value={progress} />
@@ -119,16 +141,16 @@ export const FileUpload = () => {
           <Button onClick={handleUpload}>Update</Button>
         </CardActions>
         <Button
-                  variant="contatined"
-                  color="secondary"
-                  onClick={() => {
-                    setOpenModal(true);
-                  }}
-                > 
-                  Change Account Details
-                </Button>
+          variant="contatined"
+          color="secondary"
+          onClick={() => {
+            setOpenModal(true);
+          }}
+        >
+          Change Account Details
+        </Button>
 
-                <Modal openModal={openModal} setOpenModal={setOpenModal}>
+        <Modal openModal={openModal} setOpenModal={setOpenModal}>
           <NameChange />
           <br />
           <br />
@@ -136,7 +158,7 @@ export const FileUpload = () => {
           <UpdateBio />
           <br />
           <br />
-          
+
           <PassChange />
         </Modal>
         <DeleteUser />
@@ -144,4 +166,3 @@ export const FileUpload = () => {
     </div>
   );
 };
-

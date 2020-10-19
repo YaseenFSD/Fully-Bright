@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "firebase/firestore";
 import "firebase/auth";
 import { db } from "../../firebase";
@@ -13,6 +13,11 @@ export const LeaderBoard = () => {
   const userRef = db.collection("users");
   const query = userRef.orderBy("score", "desc");
   const [users] = useCollectionData(query, { idField: "id" });
+  const dummy = useRef(null);
+  const scrollToTop = () => {
+    dummy.current.scrollIntoView({ behavior: "smooth" });
+  };
+  
 
   return (
     <>

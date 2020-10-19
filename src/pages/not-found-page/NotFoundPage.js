@@ -1,16 +1,13 @@
-import React from "react"
+// import React from "react"
 
-export const NotFoundPage = () => {
-    return (
-        <>
-            <div>
+// import { NotFound } from "../../components/not-found/notFound"
 
-            <h1>404</h1>
-            <br />
-            <p>Page Not Found</p>
+// export const NotFoundPage = () => {
+//     return (
+//         <>
+//           < NotFound />
 
-            </div>
-    </>
+//     </>
 
-    )
-}
+//     )
+// }

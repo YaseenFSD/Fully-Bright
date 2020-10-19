@@ -57,7 +57,6 @@ export const Games = () => {
             },
             players: [inviteeEmail, loggedInUserEmail]
         })
-        console.log(randomCharacters)
     }
 
     const handleCounterInvite = async (event) => {

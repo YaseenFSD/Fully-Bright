@@ -1,4 +1,6 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import "firebase/auth"
+import "firebase/firestore"
 import "firebase/storage"
 
 firebase.initializeApp({
@@ -11,7 +13,7 @@ firebase.initializeApp({
 });
 
 
-console.log(firebase.app().options)
+firebase.app()
 
 
 export const auth = firebase.auth()

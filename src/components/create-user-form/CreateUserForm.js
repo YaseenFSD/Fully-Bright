@@ -1,5 +1,4 @@
-import React, { useState, Component } from 'react'
-import { useForm } from 'react-hook-form'
+import React, { useState } from 'react'
 import { auth, db } from "../../firebase"
 import { useQueryCache } from "react-query"
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,7 +7,6 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useHistory, Link } from 'react-router-dom'
 import Button from "@material-ui/core/Button";
 
 
@@ -46,25 +44,20 @@ export function CreateUserForm(props) {
   const [confirmPassword, setConfirm] = useState("")
   const [message, setMessage] = useState("")
   const [typedDisplayName, setDisplayName] = useState("")
-  const { reset } = useForm()
-  const [isLoading, setLoading] = useState(false)
   const classes = useStyles();
-  const history = useHistory();
 
 
   // React Query Sync Data Example 
   const cache = useQueryCache()
   const handleCreateUser = async (event) => {
     event.preventDefault()
-    let newUser
-    setLoading(true)
     if (password !== confirmPassword) {
       setMessage("Passwords do not match")
       return
     }
     setMessage("")
     try {
-      newUser = await auth.createUserWithEmailAndPassword(email, password)
+      await auth.createUserWithEmailAndPassword(email, password)
       db.collection("users").doc().set({
         email,
         name: typedDisplayName,
@@ -78,13 +71,9 @@ export function CreateUserForm(props) {
       setMessage(error.message)
 
     }
-    finally {
-      setLoading(false)
-    }
   }
 
 
-  const formClassName = `ui form ${isLoading ? 'loading' : ''}`
 
 
   return (

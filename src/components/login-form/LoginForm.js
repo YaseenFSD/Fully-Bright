@@ -1,15 +1,10 @@
-import React, { useState, Component } from 'react'
-import { useForm } from 'react-hook-form'
+import React, { useState } from 'react'
 import { auth } from "../../firebase"
 import { useQueryCache } from "react-query"
-import { useHistory } from 'react-router-dom'
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import { Link as StyleLink } from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
@@ -59,9 +54,6 @@ export function LoginForm(props) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [message, setMessage] = useState("")
-  const { reset } = useForm()
-  const [isLoading, setLoading] = useState(false)
-  const history = useHistory()
   const [openModal, setOpenModal] = useState(false)
 
   const cache = useQueryCache()
@@ -72,8 +64,6 @@ export function LoginForm(props) {
 
   const handleSignIn = async (event) => {
     event.preventDefault()
-    let user
-    setLoading(true)
 
     try {
       const userData = await auth.signInWithEmailAndPassword(email, password)
@@ -81,10 +71,8 @@ export function LoginForm(props) {
 
       cache.setQueryData("userData", userData)
       const getUserData = JSON.stringify(cache.getQueryData("userData"))
-      console.log("getUserData", getUserData)
       window.localStorage.setItem("userDataLocalStorage", getUserData)
 
-      console.log(userData)
 
       const user = userData.user
       await user.updateProfile({ displayName: `${email}` })
@@ -94,18 +82,9 @@ export function LoginForm(props) {
       setMessage(error.message)
       return
     }
-    finally {
-      setLoading(false)
-    }
-    if (user) {
-      props.history.push("/profile")
-    } else {
-      setLoading(false)
-    }
 
   }
 
-  const formClassName = `ui form ${isLoading ? 'loading' : ''}`
 
   return (
     <Grid container component="main" className={classes.root}>

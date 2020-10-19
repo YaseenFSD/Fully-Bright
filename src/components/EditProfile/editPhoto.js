@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { storage, auth } from "../../firebase/config";
-import { useQueryCache } from "react-query";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -33,13 +32,11 @@ const useStyles = makeStyles({
 export const FileUpload = () => {
   const classes = useStyles();
   const [image, setImage] = useState(null);
-  const [message, setMessage] = useState("");
   const [url, setUrl] = useState("");
   const [progress, setProgress] = useState(0);
   const [uid, setUid] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [user, setUser] = useState(null);
-  const cache = useQueryCache();
 
   const [isLoading, setLoading] = useState(true);
   const getUserDocId = async (email) => {
@@ -48,7 +45,6 @@ export const FileUpload = () => {
     const usersCollection = await db.collection("users").get();
     usersCollection.forEach((userData) => {
       let foundEmail = userData.data().email;
-      console.log(foundEmail);
       if (foundEmail.toLowerCase() === user.email) {
         docId = userData.id;
       }
@@ -62,7 +58,6 @@ export const FileUpload = () => {
         setUid(user.uid);
         setUser(user);
         setLoading(false);
-        console.log(user);
       }
     });
     return () => unsubscribe();

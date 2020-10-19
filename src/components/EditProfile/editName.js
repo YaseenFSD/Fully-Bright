@@ -43,8 +43,8 @@ export const NameChange = () => {
     }).then(function () {
       alert("Display name successfully changed!");
     })
-    .catch(function (error) {});
-    
+      .catch(function (error) { });
+
 
 
   };

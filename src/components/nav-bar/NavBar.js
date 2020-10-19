@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-// TODO Create nav bar component here
 export function NavBar() {
     const history = useHistory();
     const classes = useStyles();

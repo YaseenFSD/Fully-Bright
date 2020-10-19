@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import "firebase/firestore";
 import "firebase/auth";
 import { db } from "../../firebase";
@@ -7,12 +7,14 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Avatar, Box, CardMedia } from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 
 export const LeaderBoard = () => {
   const userRef = db.collection("users");
   const query = userRef.orderBy("score", "desc");
   const [users] = useCollectionData(query, { idField: "id" });
+
+
 
   return (
     <>
@@ -42,7 +44,6 @@ const UserP = (props) => {
     },
   });
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
 
   const { name, score, email, Bio, photoURL } = props.user;
 
@@ -73,9 +74,7 @@ const UserP = (props) => {
           <Typography variant="body2" component="p">
             {email}
             <br />
-            <Box fontStyle="italic" fontWeight="fontWeightMedium">
-              {Bio}
-            </Box>
+            {Bio}
           </Typography>
         </CardContent>
       </Card>

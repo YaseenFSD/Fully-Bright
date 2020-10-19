@@ -25,7 +25,6 @@ useEffect(() => {
     const usersCollection = await db.collection("users").get()
     usersCollection.forEach((userData) => {
         let foundEmail = userData.data().email
-        console.log(foundEmail)
         if (foundEmail.toLowerCase() === user.email) {
             docId = userData.id
         }

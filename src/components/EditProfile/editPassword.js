@@ -9,7 +9,8 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { VisibilityOff, Visibility } from "@material-ui/icons";
-import firebase from "firebase";
+// import firebase from "firebase";
+import { auth } from "../../firebase/config"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +35,7 @@ export const PassChange = () => {
     weightRange: "",
     showPassword: false,
   });
-  const user = firebase.auth().currentUser;
+  const user = auth.currentUser;
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -46,7 +47,7 @@ export const PassChange = () => {
       .then(function () {
         alert("Password successfully changed!");
       })
-      .catch(function (error) {});
+      .catch(function (error) { });
   };
 
   const handleMouseDownPassword = (event) => {

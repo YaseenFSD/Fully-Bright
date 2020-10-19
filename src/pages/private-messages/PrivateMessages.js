@@ -9,7 +9,6 @@ import {
   TextField,
   Paper,
   Typography,
-  InputBase,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import SendIcon from "@material-ui/icons/Send";
@@ -56,7 +55,6 @@ export const PrivateMessages = () => {
   const cache = useQueryCache();
   useEffect(() => {
     const currentUser = cache.getQueryData("userData");
-    console.log(currentUser);
     if (currentUser) {
       setEmail(currentUser.email);
     }
@@ -119,7 +117,6 @@ export const PrivateMessages = () => {
   };
 
   const getMessages = async () => {
-    console.log(email);
     if (email) {
       const messagesData = await db
         .collection("privateMessages")
@@ -127,7 +124,6 @@ export const PrivateMessages = () => {
         .collection("inbox")
         .get();
       messagesData.forEach((doc) => {
-        console.log(doc.data());
         setMessages((msgs) => {
           return [...msgs, doc.data()];
         });

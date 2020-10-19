@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Navigation } from './navigation'
 import './App.css';
 import './firebase/config'
-import { ReactQueryDevtools } from "react-query-devtools"
 import { useQueryCache } from "react-query"
 import { auth } from './firebase'
 
@@ -31,7 +30,6 @@ function App() {
       
       <Navigation isLoggedIn = {isLoggedIn} />
     </div>
-    <ReactQueryDevtools />
   </>
 
   );

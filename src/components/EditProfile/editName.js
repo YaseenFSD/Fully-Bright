@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
-import firebase from "firebase";
+// import firebase from "firebase";
+import { auth } from "../../firebase"
 
 export const NameChange = () => {
   const [name, setName] = useState("");
-  const user = firebase.auth().currentUser;
+  const user = auth.currentUser;
 
   const handleName = (event, error) => {
     event.preventDefault()
@@ -13,8 +14,8 @@ export const NameChange = () => {
     }).then(function () {
       alert("Display name successfully changed!");
     })
-    .catch(function (error) {});
-    
+      .catch(function (error) { });
+
 
 
   };

@@ -13,7 +13,6 @@ export const TicGame = (props) => {
     const [currentTurn, setTurn] = useState("")
     const [gameIsFinished, setGameIsFinsihed] = useState(false)
     const [isScoreIncremented, setScoreIsIncremented] = useState(JSON.parse(localStorage.getItem("isScoreIncremented")) || false)
-    // const [currentUserWin, setCurrentUserWin] = useState()
     useEffect(() => {
         getRealTimeData()
         getOppenentEmail()
@@ -34,6 +33,7 @@ export const TicGame = (props) => {
         renderBox()
         return () => setJsxString(null)
     }, [game, currentTurn, opponentEmail, gameIsFinished])
+    //eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (game != null && checkWin(game, props.currentEmail) && gameIsFinished) {
             updateWinnerScore()
@@ -41,7 +41,6 @@ export const TicGame = (props) => {
 
     }, [gameIsFinished])
     // useEffect(() => {
-    //     //     console.log(currentTurn)
     // })
     const gameRef = db.collection("counterGame").doc(props.gameId)
 
@@ -49,7 +48,6 @@ export const TicGame = (props) => {
         gameRef.get().then(async (doc) => {
             let values = doc.data()
             let result = await values.players.find((element) => element !== props.currentEmail)
-            // console.log(result)
             setOpponentEmail(result)
         })
     }
@@ -60,14 +58,9 @@ export const TicGame = (props) => {
             setGame(snapshot.data().game)
             let turnEmail = await snapshot.data().currentPlayer
             setTurn(turnEmail)
-            // setMessage("")
-            // console.log(turnEmail)
-            // console.log(currentTurn)
-            console.log(snapshot.data().currentPlayer)
         })
     }
     const updateGame = async (dataKey) => {
-        // console.log(dataKey)
         try {
             await db.runTransaction(async (t) => {
 
@@ -81,15 +74,11 @@ export const TicGame = (props) => {
             setMessage("An error has occured")
         }
     }
-    // console.log(Object.values(game))
     const getUserDocId = async (email) => {
         email = email.trim()
         let docId = false
-        // console.log(email)
         const usersCollection = await db.collection("users").get()
         usersCollection.forEach((userData) => {
-            // console.log("email",email)
-            // console.log(userData.id)
             let foundEmail = userData.data().email
             if (foundEmail.toLowerCase() === email) {
                 docId = userData.id
@@ -98,13 +87,10 @@ export const TicGame = (props) => {
         return docId
     }
     const updateWinnerScore = async () => {
-        // if(checkWin(game, props.email) && )
-        console.log(isScoreIncremented)
         if (isScoreIncremented) {
             return
         }
         const userId = await getUserDocId(props.currentEmail)
-        console.log(userId)
         const userRef = db.collection("users").doc(userId)
         userRef.update({ score: incrementOnce })
 
@@ -155,7 +141,6 @@ export const TicGame = (props) => {
 
     const handleCheckBox = async (event) => {
         // event.persist()
-        // console.log(event.currentTarget.dataset.key)
         // setTurn()
         if (gameIsFinished) {
             return
@@ -165,7 +150,6 @@ export const TicGame = (props) => {
             return
         }
         let dataKey = event.currentTarget.dataset.key
-        // console.log(game[dataKey])
 
         if (game[dataKey] !== null) {
             setMessage("That spot is not empty")
@@ -173,11 +157,8 @@ export const TicGame = (props) => {
         }
         try {
             updateGame(dataKey)
-            console.log(opponentEmail)
             gameRef.update({ currentPlayer: opponentEmail })
             event.currentTarget.classList.add("currentPlayer")
-            console.log(game)
-            // console.log(checkWin(game, props.currentEmail))
             // if (checkWin(game, props.currentEmail)) {
             if (!gameIsFinished) {
                 setMessage("")
@@ -197,12 +178,10 @@ export const TicGame = (props) => {
 
     // let currentKeyIndex = gameKeys[0]
     const renderBox = () => {
-        // console.log(game)
         if (!game) {
             return null
         }
         for (let [key, value] of Object.entries(game)) {
-            // console.log(value)
             if (!value) {
                 setJsxString((prev) => {
                     return <>{prev}<div className='ticBox' data-key={key} onClick={(event) => handleCheckBox(event)}></div></>
@@ -222,7 +201,6 @@ export const TicGame = (props) => {
         }
         setLoading(false)
     }
-    // console.log(props)
     return (<div className="ticGame">
         {!isLoading ? JSXstring : null}
         <br />
@@ -230,8 +208,6 @@ export const TicGame = (props) => {
         <br />
         You are X
         <br />
-        {/* TODO instead of null, have it display a play again button */}
         {gameIsFinished ? <RestartTic setScoreIsIncremented={setScoreIsIncremented} gameRef={gameRef} setMessage={setMessage} setGame={setGameIsFinsihed} /> : <>{currentTurn}'s turn</>}
     </div>)
 }
-{/* {game ? <>{Object.values(game).map(renderBox)}</>: null} */ }

@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Switch, Route, Redirect, BrowserRouter, useHistory } from "react-router-dom"
+import React from "react"
+import { Switch, Route, BrowserRouter } from "react-router-dom"
 import { LoginPage, PrivateMessages } from "../pages"
 import { Profile } from "../pages/profile-page/Profile"
 import { UserProvider } from '../firebase/UserProvider'
@@ -14,7 +14,6 @@ import { NotFound } from "../components/not-found/notFound"
 
 
 export const Navigation = (props) => {
-    const history = useHistory()
 
     return (
         <UserProvider>

@@ -37,7 +37,6 @@ function SuperChat() {
   const classes = useStyles();
   const cache = useQueryCache();
   const userData = cache.getQueryData("userData");
-  const [user] = useAuthState(auth);
   const dummy = useRef(null);
   const messagesRef = db.collection("messages");
 
@@ -113,11 +112,10 @@ function SuperChat() {
   );
 }
 function ChatMessage(props) {
-  const classes = useStyles;
   const cache = useQueryCache();
   const userData = cache.getQueryData("userData");
   //response from the database
-  const { text, uid, photoURL, messageUser, count, id } = props.message;
+  const { text, uid, photoURL, messageUser, count } = props.message;
   //adds a class to weather the message was sent or received
   const messageClass = uid === userData.uid ? "sent" : "received";
   return (
@@ -160,13 +158,12 @@ function LikeChat(props) {
   });
   const handleLike = (e, id) => {
     const alreadyLiked = userLike.includes(id);
-    console.log(alreadyLiked);
-    if (alreadyLiked == false) {
+    if (alreadyLiked === false) {
       messagesRef.update({
         count: increment,
         userLikes: firebase.firestore.FieldValue.arrayUnion(userData.email),
       });
-    } else if (alreadyLiked == true) {
+    } else if (alreadyLiked === true) {
       messagesRef.update({
         count: decrement,
         userLikes: firebase.firestore.FieldValue.arrayRemove(userData.email),

@@ -1,5 +1,4 @@
 import React, { useState, useEffect} from "react";
-import firebase from "firebase";
 import { Button } from "@material-ui/core";
 import { auth, db } from "../../firebase/config";
 
@@ -23,7 +22,6 @@ export const DeleteUser = () => {
     const usersCollection = await db.collection("users").get()
     usersCollection.forEach((userData) => {
         let foundEmail = userData.data().email
-        console.log(foundEmail)
         if (foundEmail.toLowerCase() === user.email) {
             docId = userData.id
         }

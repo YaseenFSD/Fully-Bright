@@ -13,11 +13,6 @@ export const LeaderBoard = () => {
   const userRef = db.collection("users");
   const query = userRef.orderBy("score", "desc");
   const [users] = useCollectionData(query, { idField: "id" });
-  const dummy = useRef(null);
-  const scrollToTop = () => {
-    dummy.current.scrollIntoView({ behavior: "smooth" });
-  };
-  
 
   return (
     <>

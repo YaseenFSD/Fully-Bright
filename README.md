@@ -16,5 +16,5 @@ Tell us about your team, who was involved, what role did they fulfill and what d
 |Jonathane Leavell         |`QA`            |SuperChat funcatlity, bio and profile pic on user page, tictactoe        |
 |Yaseen Al-Salamy          |`Product Owner]`| Tic tac toe online funcitonality, Login, Create user, Private messaging, private routes for the tic tac toe game (Only the 2 players can access it). |
 |Shanquetta Pelzer         |`Scrum Master`| Leaderboard, List of Users, Login Form, React Router, Private Routes, Configure Firebase, Logout, Favicon, and Tab Title |
-|Alfred Rodriguez          |`Dev`| Fill me out... |
+|Alfred Rodriguez          |`Dev`| Upload user pic, update user pic, change display name, change password, delete user, delete user from collection, Styling (login/signup, navbar, profile page, superchat, messages) |
 |Reginald Jefferson        |`Dev`| UserBio, Routing, NotFound, Styling (NotFound) |

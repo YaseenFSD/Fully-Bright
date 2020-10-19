@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
@@ -38,15 +38,18 @@ function SuperChat() {
   const cache = useQueryCache();
   const userData = cache.getQueryData("userData");
   const [user] = useAuthState(auth);
-  const dummy = useRef();
+  const dummy = useRef(null);
   const messagesRef = db.collection("messages");
-
+  
 
   //query a list of messages order it by time created and limit the list to 25
   const query = messagesRef.orderBy("createdAt").limitToLast(25);
  
   //gives acess to use collection data
   const [messages] = useCollectionData(query, { idField: "id" });
+  const scrollToBottom=()=>{dummy.current.scrollIntoView({ behavior: "smooth" })};
+  useEffect(scrollToBottom, [messages]);
+
   //used for the form to add message
   const [formValue, setFormValue] = useState("");
   const sendMessage = async (e) => {
@@ -66,8 +69,8 @@ function SuperChat() {
     });
     //sets form to empty string after submit
     setFormValue("");
-    dummy.current.scrollIntoView({ behavior: "smooth" });
   };
+  
   return (
     <Container size="xs" className={classes.alignClass}>
       <Typography variant="h3">Bright Chat</Typography>

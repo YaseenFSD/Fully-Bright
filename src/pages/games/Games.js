@@ -1,7 +1,9 @@
-import React, { useRef, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import randomstring from "randomstring"
 import { auth, db } from "../../firebase"
 import { useHistory } from "react-router-dom"
+import ticTac from "./ticTacToe.png"
+import { Button, Card, InputLabel, Input } from "@material-ui/core"
 
 const randomFiveChars = () => randomstring.generate(5)
 
@@ -9,7 +11,6 @@ const randomFiveChars = () => randomstring.generate(5)
 export const Games = () => {
     const [email, setEmail] = useState("")
     const [url, setUrl] = useState("")
-    const [isLoading, setLoading] = useState(true)
     const [invitee, setInvitee] = useState("")
     const [message, setMessage] = useState("")
     const [randomCharacters, setRandomCharacters] = useState(randomFiveChars())
@@ -18,7 +19,6 @@ export const Games = () => {
         auth.onAuthStateChanged((user) => {
             if (user) {
                 setEmail(user.email)
-                setLoading(false)
             }
         })
     })
@@ -27,7 +27,6 @@ export const Games = () => {
         let id = false
         const usersCollection = await db.collection("users").get()
         usersCollection.forEach((user) => {
-            // console.log(user.data().email)
             if (user.data().email === email) {
                 id = user.id
             }
@@ -37,7 +36,6 @@ export const Games = () => {
 
     const createGameDoc = async (inviteeEmail, loggedInUserEmail) => {
         let result = await db.collection("counterGame").doc(randomCharacters).get()
-        // console.log(result.exists)
         while (result.exists) {
             setRandomCharacters(randomFiveChars())
             result = await db.collection("counterGame").doc(randomCharacters).get()
@@ -64,7 +62,6 @@ export const Games = () => {
 
     const handleCounterInvite = async (event) => {
         event.preventDefault()
-        // console.log()
         setMessage("")
         if (!invitee) {
             setMessage("Please enter a valid email")
@@ -75,23 +72,25 @@ export const Games = () => {
             setMessage("Email is not found")
             return
         }
-        // console.log(window.location.host)
         createGameDoc(email, invitee)
         setMessage(`Game has been created`)
         setUrl(`/game/${randomCharacters}`)
-        // console.log(inviteeDoc.data())
     }
-    return (<div className="gamesPage">
-        render games to invite here
+    return (<Card style={{ width: "400px", margin: "0 auto" }} className="gamesPage">
+        <img style={{ width: "200px", height: "200px" }} src={ticTac} />
 
         <div className="counterInvite">
             <form onSubmit={handleCounterInvite}>
-                Counter game <br />
-                Invite to <input onChange={(e) => setInvitee(e.target.value)} type="text" placeholder="email" />
-                <button type="submit">Invite!</button>
+                <h2>
+                    Tic Tac Toe
+                    </h2>
+                <br />
+                <InputLabel>Invite to</InputLabel>
+                <Input onChange={(e) => setInvitee(e.target.value)} type="text" placeholder="email" />
+                <Button variant="contained" color="primary" type="submit">Invite!</Button>
             </form>
         </div>
         {message} <br />
-        {url ? <a style={{color:"blue", cursor:"pointer"}} onClick={() => { history.push(url) }} >{window.location.host + url}</a> : null}
-    </div>)
+        {url ? <a style={{ color: "blue", cursor: "pointer" }} onClick={() => { history.push(url) }} >{window.location.host + url}</a> : null}
+    </Card>)
 }

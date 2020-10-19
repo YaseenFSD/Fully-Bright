@@ -1,20 +1,15 @@
 import React from 'react'
 import './style.css'
-import { signout } from '../../pages/signout-page/Signout'
 import { useHistory, Route } from 'react-router-dom'
-import { useSession } from '../../firebase/UserProvider'
 import { auth } from '../../firebase'
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
-import { LoginPage } from '../../pages';
 import { SignedInLinks } from './SignedInLinks';
 
-import firebase from "firebase"
 import { useQueryCache } from 'react-query'
 
 
@@ -46,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 // TODO Create nav bar component here
 export function NavBar() {
     const history = useHistory();
-    // const user = useSession();
     const classes = useStyles();
     const cache = useQueryCache()
     
@@ -58,7 +52,6 @@ export function NavBar() {
         ) 
         
       }
-      // console.log(user)
 
     const signout = async () => {
         await auth.signOut();

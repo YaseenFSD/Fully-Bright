@@ -12,8 +12,6 @@ export function Profile() {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        // const userData = cache.getQueryData("userData");
-        // const uniqueId = userData.uid || userData.user.uid;
         const unsubscribe = auth.onAuthStateChanged( (user) => {
           if (user) {
           setUser(user)
@@ -22,8 +20,6 @@ export function Profile() {
         })
         return () => unsubscribe()
       });
-
-    // const { user } = useSession()
 
     if (!user) {
         return null
@@ -36,15 +32,10 @@ export function Profile() {
             <p>Email: {user.email}</p>
             <p>Bio: {user.bio}</p>
 
-           
            <FileUpload />
          
          
         </div>
     )
 }
-
-
-
-// let user = cache.getQueryData("displayName")
 

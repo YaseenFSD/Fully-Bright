@@ -1,31 +1,23 @@
-import React, { useEffect, useState } from "react";
-import firebase, { database } from "firebase/app";
+import React from "react";
 import "firebase/firestore";
 import "firebase/auth";
-import { auth, db } from "../../firebase";
+import { db } from "../../firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { Collections, Email, Score } from "@material-ui/icons";
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import { Avatar, Box, CardMedia } from "@material-ui/core";
 
 export const LeaderBoard = () => {
-  // const [userArray, setUserArray] = useState([]);
-  // useEffect(() => {
-  //   getUsers();
-  // }, []);
-  // const userArray = []
-
   const userRef = db.collection("users");
-  const query = userRef.orderBy("score", "desc").limit(10);
+  const query = userRef.orderBy("score", "desc");
   const [users] = useCollectionData(query, { idField: "id" });
-  
+
   return (
     <>
       <div className="user-listAllUsers">
-        <h1>Users</h1>
+        <h1>Leaderboard</h1>
         {users && users.map((user) => <UserP key={user.id} user={user} />)}
       </div>
     </>
@@ -38,9 +30,9 @@ const UserP = (props) => {
       minWidth: 275,
     },
     bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
+      display: "inline-block",
+      margin: "0 2px",
+      transform: "scale(0.8)",
     },
     title: {
       fontSize: 14,
@@ -51,27 +43,42 @@ const UserP = (props) => {
   });
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
-  
-  const { name, score ,email} = props.user;
+
+  const { name, score, email, Bio, photoURL } = props.user;
 
   return (
     <>
-     <Card className={classes.root}>
-      <CardContent>
-        <Typography className={classes.title} color="textPrimary" gutterBottom>
-          {name}
-        </Typography>
-       
-        <Typography className={classes.pos} color="textSecondary">
-         {score}
-        </Typography>
-        <Typography variant="body2" component="p">
-          {email}
-          <br />
-         
-        </Typography>
-      </CardContent>
-    </Card>
+      <Card
+        className={classes.root}
+        style={{
+          flexDirection: "column",
+          justifyContent: "center",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <Avatar className={classes.large} src={photoURL || "/lightbulb.png"} />
+        <CardContent>
+          <Typography
+            className={classes.title}
+            color="textPrimary"
+            gutterBottom
+          >
+            {name}
+          </Typography>
+
+          <Typography className={classes.pos} color="textSecondary">
+            {score}
+          </Typography>
+          <Typography variant="body2" component="p">
+            {email}
+            <br />
+            <Box fontStyle="italic" fontWeight="fontWeightMedium">
+              {Bio}
+            </Box>
+          </Typography>
+        </CardContent>
+      </Card>
     </>
   );
 };

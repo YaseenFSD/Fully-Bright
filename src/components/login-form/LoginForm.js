@@ -2,7 +2,7 @@ import React, { useState, Component } from 'react'
 import { useForm } from 'react-hook-form'
 import { auth } from "../../firebase"
 import { useQueryCache } from "react-query"
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,8 +16,6 @@ import Grid from "@material-ui/core/Grid";
 import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Snackbar } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
 import Modal from "../Modal/Modal";
 import { CreateUserForm } from "../create-user-form/CreateUserForm";
 
@@ -57,8 +55,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-// TODO Create Login form component
 export function LoginForm(props) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -68,11 +64,9 @@ export function LoginForm(props) {
   const history = useHistory()
   const [openModal, setOpenModal] = useState(false)
 
-  //TODO Delete this before submission or when nessecary
   const cache = useQueryCache()
   //                  Query key     data
   cache.setQueryData("TestingData", "This is made inside of 'LoginForm.js'")
-  //
 
   const classes = useStyles()
 
@@ -94,10 +88,8 @@ export function LoginForm(props) {
 
       const user = userData.user
       await user.updateProfile({ displayName: `${email}` })
-      // history.push('/profile')
       return user
 
-      //return userData.user
     } catch (error) {
       setMessage(error.message)
       return

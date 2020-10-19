@@ -9,7 +9,8 @@ import SuperChat from "../pages/superChat/SuperChat"
 import { NameChange } from "../components/EditProfile/editName"
 import { GameRoute } from "./game-route"
 import { LeaderBoard } from "../pages/leaderboard/Leaderboard"
-import { NotFoundPage } from "../pages/not-found-page/NotFoundPage"
+import { NotFound } from "../components/not-found/notFound"
+
 
 
 export const Navigation = (props) => {
@@ -20,7 +21,6 @@ export const Navigation = (props) => {
             <BrowserRouter>
                 <NavBar />
                 <Switch>
-                    {/* {props.isLoggedIn ? <> */}
                     
                     <Route exact path="/">
                         {props.isLoggedIn ? <Profile /> : <LoginPage />}
@@ -46,7 +46,7 @@ export const Navigation = (props) => {
 
                     <Route
                         exact path='/*'>
-                        <NotFoundPage />
+                        <NotFound />
                         
                     </Route>
                         

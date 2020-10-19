@@ -48,7 +48,15 @@ const UserP = (props) => {
 
   return (
     <>
-      <Card className={classes.root} style={{ flexDirection: "column" ,justifyContent: "center", display: "flex" , alignItems: "center"}}>
+      <Card
+        className={classes.root}
+        style={{
+          flexDirection: "column",
+          justifyContent: "center",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
         <Avatar className={classes.large} src={photoURL || "/lightbulb.png"} />
         <CardContent>
           <Typography

@@ -15,7 +15,7 @@ import Modal from "../Modal/Modal";
 import { PassChange } from "./editPassword";
 import { DeleteUser } from "./deleteUser";
 import { UpdateBio } from "../../components/EditProfile/UpdateBio";
-import {db} from "../../firebase"
+import { db } from "../../firebase";
 
 const useStyles = makeStyles({
   root: {
@@ -74,7 +74,7 @@ export const FileUpload = () => {
     }
   };
 
-  const  handleUpload =  (event) => {
+  const handleUpload = (event) => {
     event.preventDefault();
     const uploadTask = storage.ref("users/" + uid + "/profile.jpg").put(image);
     uploadTask.on(
@@ -92,23 +92,22 @@ export const FileUpload = () => {
         storage
           .ref("users/" + uid + "/profile.jpg")
           .getDownloadURL()
-          .then(async(url) => {
+          .then(async (url) => {
             setUrl(url);
             user.updateProfile({
               photoURL: url,
-              
             });
-            const userDoc =  await getUserDocId(user.email)
-            db.collection("users").doc(userDoc).set({photoURL: url},{merge:true})
-            .then(function () {
-              alert("Photo updated successfully!");
-            })
-            .catch(function (error) {});
+            const userDoc = await getUserDocId(user.email);
+            db.collection("users")
+              .doc(userDoc)
+              .set({ photoURL: url }, { merge: true })
+              .then(function () {
+                alert("Photo updated successfully!");
+              })
+              .catch(function (error) {});
           });
-       
       }
     );
-    
   };
 
   if (isLoading) {

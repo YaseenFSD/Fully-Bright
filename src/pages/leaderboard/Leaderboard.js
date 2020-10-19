@@ -7,10 +7,11 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import { Box } from "@material-ui/core";
 
 export const LeaderBoard = () => {
   const userRef = db.collection("users");
-  const query = userRef.orderBy("score", "desc").limit(10);
+  const query = userRef.orderBy("score", "desc");
   const [users] = useCollectionData(query, { idField: "id" });
   
   return (
@@ -43,7 +44,7 @@ const UserP = (props) => {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
   
-  const { name, score ,email} = props.user;
+  const { name, score ,email,Bio} = props.user;
 
   return (
     <>
@@ -59,6 +60,7 @@ const UserP = (props) => {
         <Typography variant="body2" component="p">
           {email}
           <br />
+          <Box fontStyle="italic" fontWeight="fontWeightMedium">{Bio}</Box>
          
         </Typography>
       </CardContent>

@@ -7,10 +7,6 @@ export const NotFoundPage = () => {
         <>
           < NotFound />
 
-            {/* <li><Link to="/leaderboard">Leaderboard</Link></li> */}
-            {/* will add routes on a updated routes branch */}
-
-
     </>
 
     )

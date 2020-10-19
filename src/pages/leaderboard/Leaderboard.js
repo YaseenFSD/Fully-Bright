@@ -10,7 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 
 export const LeaderBoard = () => {
   const userRef = db.collection("users");
-  const query = userRef.orderBy("score", "desc").limit(10);
+  const query = userRef.orderBy("score", "desc");
   const [users] = useCollectionData(query, { idField: "id" });
   
   return (
@@ -43,7 +43,7 @@ const UserP = (props) => {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
   
-  const { name, score ,email} = props.user;
+  const { name, score ,email,Bio} = props.user;
 
   return (
     <>
@@ -59,7 +59,7 @@ const UserP = (props) => {
         <Typography variant="body2" component="p">
           {email}
           <br />
-         
+         {Bio}
         </Typography>
       </CardContent>
     </Card>

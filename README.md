@@ -1,6 +1,4 @@
 # Kapstone Q
-TODO: Change this
-What problem are you solving?
 Fully-Bright is a social game where friends group up together and have fun. Fully-bright will have permanent accounts and also a leader-board 
 ## Project Requirements
 Once your project has been completed please fill out the links below. These are a part of the rubric and must be completed before the submission deadline
@@ -15,8 +13,8 @@ Tell us about your team, who was involved, what role did they fulfill and what d
 |      Name          |Scrum Role                          |I worked on                         |
 |----------------|-------------------------------|-----------------------------|
 |Kano|`Product Investor`            |Investing            |
-|Jonathane Leavell         |`QA`            |Fill me out...            |
+|Jonathane Leavell         |`QA`            |SuperChat funcatlity, bio and profile pic on user page, tictactoe        |
 |Yaseen Al-Salamy          |`Product Owner]`| Tic tac toe online funcitonality, Login, Create user, Private messaging, private routes for the tic tac toe game (Only the 2 players can access it). |
 |Shanquetta Pelzer         |`Scrum Master`| Leaderboard, List of Users, Login Form, React Router, Private Routes, Configure Firebase, Logout, Favicon, and Tab Title |
 |Alfred Rodriguez          |`Dev`| Fill me out... |
-|Reginald Jefferson        |`Dev`| UserBio, Routing, NotFound, Styling (NotFound) |
+|Reginald Jefferson        |`Dev`| Fill me out... |

@@ -1,5 +1,5 @@
 # Kapstone Q
-Fully-Bright is a social game where friends group up together and have fun. Fully-bright will have permanent accounts and also a leader-board 
+Fully-Bright is a social game where friends group up together and have fun. Fully-bright will have permanent accounts with a leader-board, chat and direct messaging capabilities. Playing with friends couldn't get any easier with our private play room where only the players have access to. 
 ## Project Requirements
 Once your project has been completed please fill out the links below. These are a part of the rubric and must be completed before the submission deadline
 **[Scrum Board URL](https://trello.com/b/VV2OpTet/fully-bright)** | 

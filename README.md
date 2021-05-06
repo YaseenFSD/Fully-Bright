@@ -1,3 +1,5 @@
+<img src="https://media4.giphy.com/media/QstBkhoEqNXAogvFDt/giphy.gif"/>
+
 # Kapstone Q
 Fully-Bright is a social game where friends group up together and have fun. Fully-bright will have permanent accounts with a leader-board, chat and direct messaging capabilities. Playing with friends couldn't get any easier with our private play room where only the players have access to. 
 ## Project Requirements
